@@ -1,0 +1,52 @@
+<section class="form-card" data-form-card="003-operaciya">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Протокол оперативного вмешательства</h3>
+      <p class="form-card-sub">Внутренний бланк медицинской карты. Заполняется оперирующим хирургом, подписывается участниками бригады.</p>
+    </div>
+    <div class="form-card-tools"><span class="badge badge-soft">Операционный блок</span></div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-3"><label for="opDate">Дата операции</label><input class="form-input" id="opDate" type="date" data-bind="treatment.operation.opDate" data-rule="date"></div>
+      <div class="field span-6"><label for="opName">Наименование операции</label><input class="form-input" id="opName" type="text" data-bind="treatment.operation.opName" placeholder="Лапароскопическая аппендэктомия"></div>
+      <div class="field span-3"><label for="opCode">Код по номенклатуре медицинских услуг</label><input class="form-input" id="opCode" type="text" data-bind="treatment.operation.opCode" placeholder="A16.30.001"></div>
+      <div class="field span-8"><label for="opIndication">Показания к операции</label><input class="form-input" id="opIndication" type="text" data-bind="treatment.operation.opIndication"></div>
+      <div class="field span-4"><label for="opBlood">Кровопотеря, мл</label><input class="form-input" id="opBlood" type="number" min="0" data-bind="treatment.operation.opBloodLoss" data-rule="number" data-min="0" data-max="20000"></div>
+    </div>
+
+    <div class="form-section">
+      <h4>Ход операции</h4>
+      <div class="form-grid">
+        <div class="field span-12"><label for="opAccess">Оперативный доступ</label><textarea class="form-textarea" id="opAccess" data-bind="treatment.operation.opAccess"></textarea></div>
+        <div class="field span-12"><label for="opCourse">Описание хода операции</label><textarea class="form-textarea" id="opCourse" data-bind="treatment.operation.opCourse" style="min-height:150px" placeholder="Последовательно опишите этапы вмешательства, обнаруженные изменения, выполненные манипуляции, гемостаз, дренирование, ушивание"></textarea></div>
+        <div class="field span-6"><label for="opFindings">Интраоперационные находки</label><textarea class="form-textarea" id="opFindings" data-bind="treatment.operation.opFindings"></textarea></div>
+        <div class="field span-6"><label for="opComplications">Осложнения</label><textarea class="form-textarea" id="opComplications" data-bind="treatment.operation.opComplications"></textarea></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Состав оперирующей бригады</h4>
+      <div class="form-grid">
+        <div class="field span-6"><label for="opSurgeon">Оператор (хирург)</label><input class="form-input" id="opSurgeon" type="text" data-bind="treatment.operation.opSurgeon"></div>
+        <div class="field span-6"><label for="opAssistant">Ассистент</label><input class="form-input" id="opAssistant" type="text" data-bind="treatment.operation.opAssistant"></div>
+        <div class="field span-6"><label for="opAnesth">Анестезиолог</label><input class="form-input" id="opAnesth" type="text" data-bind="treatment.operation.opAnesthesiologist"></div>
+        <div class="field span-6"><label for="opNurse">Операционная медицинская сестра</label><input class="form-input" id="opNurse" type="text" data-bind="treatment.operation.opNurse"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Подсчёт инструментов и салфеток</h4>
+      <div class="form-grid">
+        <div class="field span-3"><label for="opInstBefore">Инструментов до операции</label><input class="form-input" id="opInstBefore" type="number" min="0" data-bind="treatment.operation.opInstrumentsBefore" data-rule="number" data-min="0" data-max="999"></div>
+        <div class="field span-3"><label for="opInstAfter">Инструментов после операции</label><input class="form-input" id="opInstAfter" type="number" min="0" data-bind="treatment.operation.opInstrumentsAfter" data-rule="number" data-min="0" data-max="999"></div>
+        <div class="field span-3"><label for="opTampBefore">Салфеток до операции</label><input class="form-input" id="opTampBefore" type="number" min="0" data-bind="treatment.operation.opTamponsBefore" data-rule="number" data-min="0" data-max="999"></div>
+        <div class="field span-3"><label for="opTampAfter">Салфеток после операции</label><input class="form-input" id="opTampAfter" type="number" min="0" data-bind="treatment.operation.opTamponsAfter" data-rule="number" data-min="0" data-max="999"></div>
+        <div class="field span-8"><label for="opCountResult">Результат подсчёта</label><input class="form-input" id="opCountResult" type="text" data-bind="treatment.operation.opCountResult" placeholder="Инструменты и салфетки сходятся"></div>
+        <div class="field span-4"><label>Автоматический контроль</label><div class="consent-box" data-computed="instrumentConsistency">Заполните количество до и после операции</div></div>
+      </div>
+    </div>
+
+    <div class="signature-line"><span>Оператор</span><span class="line"></span><span>Ассистент</span><span class="line"></span><span>Операционная сестра</span></div>
+  </div>
+</section>

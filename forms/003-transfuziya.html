@@ -1,0 +1,85 @@
+<section class="form-card" data-form-card="003-transfuziya">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Лист регистрации переливания крови и её компонентов</h3>
+      <p class="form-card-sub">Трансфузионный анамнез, пробы на совместимость, группа крови, Rh-фактор и Kell-антиген.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="transfusion-import">⇄ Взять группу из 003/у</button>
+      <span class="badge" data-computed="transfusionMatch">Проверка совместимости</span>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <p class="form-note is-danger">Критический контроль: группа крови, резус-фактор и Kell-антиген реципиента в этом листе должны совпадать с титульным листом 003/у. Перед трансфузией обязательны проба на индивидуальную совместимость и трёхкратная биологическая проба.</p>
+
+    <div class="form-section">
+      <h4>Данные реципиента</h4>
+      <div class="form-grid">
+        <div class="field span-6"><label for="trFio">ФИО реципиента</label><input class="form-input" id="trFio" type="text" data-bind="treatment.transfusion.recipientFio" data-rule="fio"></div>
+        <div class="field span-3"><label for="trGroup">Группа крови реципиента</label><input class="form-input" id="trGroup" type="text" data-bind="treatment.transfusion.recipientGroup" data-rule="blood" data-mask="blood"></div>
+        <div class="field span-2"><label for="trRh">Резус реципиента</label>
+          <select class="form-select" id="trRh" data-bind="treatment.transfusion.recipientRh" data-rule="rh"><option value="">—</option><option>Rh+</option><option>Rh-</option></select>
+        </div>
+        <div class="field span-1"><label for="trKell">Kell</label>
+          <select class="form-select" id="trKell" data-bind="treatment.transfusion.recipientKell" data-rule="kell"><option value="">—</option><option>K+</option><option>K-</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Данные донора и гемокона</h4>
+      <div class="form-grid">
+        <div class="field span-3"><label for="trDate">Дата трансфузии</label><input class="form-input" id="trDate" type="date" data-bind="treatment.transfusion.date" data-rule="date"></div>
+        <div class="field span-2"><label for="trTime">Время</label><input class="form-input" id="trTime" type="time" data-bind="treatment.transfusion.time"></div>
+        <div class="field span-7"><label for="trDonorName">Компонент, донор</label><input class="form-input" id="trDonorName" type="text" data-bind="treatment.transfusion.donorName"></div>
+        <div class="field span-3"><label for="trDonorGroup">Группа крови донора</label><input class="form-input" id="trDonorGroup" type="text" data-bind="treatment.transfusion.donorGroup" data-rule="blood" data-mask="blood"></div>
+        <div class="field span-2"><label for="trDonorRh">Резус донора</label>
+          <select class="form-select" id="trDonorRh" data-bind="treatment.transfusion.donorRh"><option value="">—</option><option>Rh+</option><option>Rh-</option></select>
+        </div>
+        <div class="field span-2"><label for="trDonorKell">Kell донора</label>
+          <select class="form-select" id="trDonorKell" data-bind="treatment.transfusion.donorKell"><option value="">—</option><option>K+</option><option>K-</option></select>
+        </div>
+        <div class="field span-2"><label for="trUnitNo">№ гемокона</label><input class="form-input" id="trUnitNo" type="text" data-bind="treatment.transfusion.donorUnitNo"></div>
+        <div class="field span-3"><label for="trDonorDate">Дата заготовки</label><input class="form-input" id="trDonorDate" type="date" data-bind="treatment.transfusion.donorDate"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Пробы на совместимость</h4>
+      <div class="form-grid">
+        <div class="field span-2"><label for="trTestGroup">Группа по пробе</label><input class="form-input" id="trTestGroup" type="text" data-bind="treatment.transfusion.testGroup" data-rule="blood" data-mask="blood"></div>
+        <div class="field span-2"><label for="trTestRh">Резус по пробе</label>
+          <select class="form-select" id="trTestRh" data-bind="treatment.transfusion.testRh"><option value="">—</option><option>Rh+</option><option>Rh-</option></select>
+        </div>
+        <div class="field span-2"><label for="trTestKell">Kell по пробе</label>
+          <select class="form-select" id="trTestKell" data-bind="treatment.transfusion.testKell"><option value="">—</option><option>K+</option><option>K-</option></select>
+        </div>
+        <div class="field span-3"><label for="trCross">Проба на индивидуальную совместимость</label><input class="form-input" id="trCross" type="text" data-bind="treatment.transfusion.crossMatch"></div>
+        <div class="field span-3"><label for="trCrossRes">Результат</label><input class="form-input" id="trCrossRes" type="text" data-bind="treatment.transfusion.crossMatchResult"></div>
+        <div class="field span-4"><label for="trBio">Биологическая проба</label><input class="form-input" id="trBio" type="text" data-bind="treatment.transfusion.biologicalTest" placeholder="Трёхкратная биологическая проба"></div>
+        <div class="field span-3"><label for="trBioRes">Результат биологической пробы</label><input class="form-input" id="trBioRes" type="text" data-bind="treatment.transfusion.biologicalTestResult"></div>
+        <div class="field span-2"><label for="trVolume">Объём, мл</label><input class="form-input" id="trVolume" type="number" min="0" data-bind="treatment.transfusion.volume" data-rule="number" data-min="0" data-max="5000"></div>
+        <div class="field span-3"><label for="trStart">Начало</label><input class="form-input" id="trStart" type="time" data-bind="treatment.transfusion.transfusionStart"></div>
+        <div class="field span-3"><label for="trEnd">Окончание</label><input class="form-input" id="trEnd" type="time" data-bind="treatment.transfusion.transfusionEnd"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Реакция и согласие</h4>
+      <div class="form-grid">
+        <div class="field span-3"><label for="trReaction">Реакция на трансфузию</label>
+          <select class="form-select" id="trReaction" data-bind="treatment.transfusion.reaction"><option value="">—</option><option>Нет</option><option>Да</option></select>
+        </div>
+        <div class="field span-9"><label for="trReactionDesc">Описание реакции</label><input class="form-input" id="trReactionDesc" type="text" data-bind="treatment.transfusion.reactionDesc"></div>
+        <div class="field span-6"><label for="trDoctor">Врач</label><input class="form-input" id="trDoctor" type="text" data-bind="treatment.transfusion.doctor"></div>
+        <div class="field span-6"><label for="trNurse">Медицинская сестра</label><input class="form-input" id="trNurse" type="text" data-bind="treatment.transfusion.nurse"></div>
+      </div>
+      <label class="check-row" style="margin-top:12px">
+        <input type="checkbox" data-bind="treatment.transfusion.consent" data-type="bool">
+        <span>Информированное добровольное согласие на переливание крови и (или) её компонентов получено, оформлено в установленном порядке</span>
+      </label>
+    </div>
+
+    <div class="signature-line"><span>Врач</span><span class="line"></span><span>Медицинская сестра</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

@@ -1,0 +1,98 @@
+<section class="form-card" id="form007u" data-form-card="007u">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">007/у</span>Лист ежедневного учёта движения пациентов и коечного фонда</h3>
+      <p class="form-card-sub">Учётная форма № 007/у. Заполняется ежедневно к 9:00 за период с 9:00 предыдущих суток до 9:00 текущих суток.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="bed-add">+ Профиль коек</button>
+      <button type="button" class="btn btn-sm btn-primary" data-action="recalc-beds">Σ Пересчитать</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-3">
+        <label for="d007Date">Дата</label>
+        <input class="form-input" id="d007Date" type="date" data-bind="dept007.date" data-rule="required|date">
+      </div>
+      <div class="field span-6">
+        <label for="d007Dept">Наименование отделения</label>
+        <input class="form-input" id="d007Dept" type="text" data-bind="dept007.department" data-rule="required" placeholder="Хирургическое отделение № 2">
+      </div>
+      <div class="field span-3">
+        <label for="d007Org">Медицинская организация, ОГРН</label>
+        <input class="form-input" id="d007Org" type="text" data-bind="doc.organization" placeholder="МК РАМН">
+      </div>
+    </div>
+
+    <p class="form-note">Формула баланса: <strong>графа 19 = графа 4 + графа 5 + графа 11 − графа 10 − графа 12 − графа 16</strong>. Свободные места (графы 22–23) рассчитываются как число коек минус койки, на которые не осуществляется госпитализация, минус состоящие пациенты. Расхождение подсвечивается автоматически.</p>
+
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Лист движения пациентов и коечного фонда, таблица 23 графы">
+      <table class="data-table" id="table007" style="min-width:2050px">
+        <thead>
+          <tr>
+            <th rowspan="2" style="min-width:180px">Наименование профиля коек</th>
+            <th rowspan="2" class="col-sm">Число<br>коек</th>
+            <th rowspan="2" class="col-sm">В том числе койки,<br>на которые не осуществляется<br>госпитализация</th>
+            <th colspan="8">Движение пациентов за истекшие сутки</th>
+            <th colspan="6">На начало текущего дня</th>
+            <th rowspan="2" class="col-sm">Состоит<br>пациентов</th>
+            <th rowspan="2" class="col-sm">В том числе<br>старше<br>трудоспособного<br>возраста</th>
+            <th rowspan="2" class="col-sm">Находилось родителей,<br>законных представителей,<br>иных лиц по уходу</th>
+            <th colspan="2">Свободных мест</th>
+            <th rowspan="2" class="row-actions">—</th>
+          </tr>
+          <tr>
+            <th class="col-sm">Находилось<br>пациентов<br>на начало<br>истекших суток<br>(гр. 4)</th>
+            <th class="col-sm">Поступило<br>всего<br>(гр. 5)</th>
+            <th class="col-sm">В том числе<br>из дневного<br>стационара<br>(гр. 6)</th>
+            <th class="col-sm">Из них<br>сельских<br>жителей<br>(гр. 7)</th>
+            <th class="col-sm">Из них<br>0–17 лет<br>(гр. 8)</th>
+            <th class="col-sm">Из них старше<br>трудоспособного<br>возраста (гр. 9)</th>
+            <th class="col-sm">Переведено<br>из других<br>отделений<br>(гр. 11)</th>
+            <th class="col-sm">Переведено<br>в другие<br>отделения<br>(гр. 10)</th>
+            <th class="col-sm">Выписано<br>всего<br>(гр. 12)</th>
+            <th class="col-sm">В том числе<br>старше<br>трудоспособного<br>возраста (гр. 13)</th>
+            <th class="col-sm">В том числе<br>в дневной<br>стационар<br>(гр. 14)</th>
+            <th class="col-sm">В том числе<br>в стационары<br>(гр. 15)</th>
+            <th class="col-sm">Умерло<br>всего<br>(гр. 16)</th>
+            <th class="col-sm">В том числе<br>0–17 лет<br>(гр. 17)</th>
+            <th class="col-sm">В том числе<br>старше<br>трудоспособного<br>возраста (гр. 18)</th>
+            <th class="col-sm">Мужских<br>(гр. 22)</th>
+            <th class="col-sm">Женских<br>(гр. 23)</th>
+          </tr>
+        </thead>
+        <tbody data-render="dept007">
+          <tr><td colspan="23" class="muted">Загрузка строк…</td></tr>
+        </tbody>
+        <tfoot data-render="dept007Totals">
+          <tr><td colspan="23" class="muted">Итоги появятся после заполнения строк.</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="summary-strip" style="margin-top:12px">
+      <div class="summary-item"><span>Коечный фонд</span><strong data-summary="bedsTotal">0</strong></div>
+      <div class="summary-item"><span>Состоит пациентов (гр. 19)</span><strong data-summary="bedsCurrent">0</strong></div>
+      <div class="summary-item"><span>Свободных мест</span><strong data-summary="bedsFree">0</strong></div>
+      <div class="summary-item" data-summary-box="bedsBalance"><span>Баланс</span><strong data-summary="bedsBalance">—</strong></div>
+    </div>
+
+    <div class="table-toolbar">
+      <div class="table-toolbar-left">
+        <button type="button" class="btn btn-sm btn-outline" data-action="bed-add">+ Добавить профиль</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-action="bed-clear">Очистить</button>
+      </div>
+      <div class="table-legend">
+        <span>Строк: <strong data-counter="bedRows">0</strong></span>
+        <span>Графа 19 рассчитывается автоматически при нажатии «Пересчитать»</span>
+      </div>
+    </div>
+
+    <div class="signature-line">
+      <span>Медицинская сестра поста отделения</span>
+      <span class="line"></span>
+      <span>подпись / ФИО</span>
+    </div>
+  </div>
+</section>

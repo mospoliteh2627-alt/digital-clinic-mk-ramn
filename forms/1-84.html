@@ -1,0 +1,93 @@
+<section class="form-card" id="form184" data-form-card="1-84">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">1-84</span>Порционное требование на питание больных (порционник)</h3>
+      <p class="form-card-sub">Форма № 1-84 к Инструкции по организации лечебного питания (приказ МЗ РФ от 05.08.2003 № 330).</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="diet-add">+ Отделение</button>
+      <button type="button" class="btn btn-sm btn-primary" data-action="recalc-diets">Σ Сверить</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-3">
+        <label for="n184Date">Дата</label>
+        <input class="form-input" id="n184Date" type="date" data-bind="nutrition.date" data-rule="required|date">
+      </div>
+      <div class="field span-6">
+        <label for="n184Dept">Наименование отделения</label>
+        <input class="form-input" id="n184Dept" type="text" data-bind="nutrition.department" data-rule="required" placeholder="Хирургическое отделение № 2">
+      </div>
+      <div class="field span-3">
+        <label for="n184Beds">Число пациентов по 007/у</label>
+        <input class="form-input" id="n184Beds" type="number" min="0" data-bind="nutrition.bedsReference" data-rule="number" data-min="0" data-max="500">
+      </div>
+    </div>
+
+    <p class="form-note">Сумма порций по всем стандартным диетам должна равняться числу питающихся пациентов и соответствовать графе 19 формы 007/у. Расхождение выделяется красным.</p>
+
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Порционник на питание">
+      <table class="data-table" id="table184" style="min-width:980px">
+        <thead>
+          <tr>
+            <th class="col-lg" rowspan="2">Наименование отделения</th>
+            <th class="col-sm" rowspan="2">Количество<br>больных</th>
+            <th colspan="7">Стандартные диеты</th>
+            <th class="col-sm" rowspan="2">Сумма<br>порций</th>
+            <th class="row-actions" rowspan="2">—</th>
+          </tr>
+          <tr>
+            <th class="col-sm">ОВД</th>
+            <th class="col-sm">ЩД</th>
+            <th class="col-sm">ВБД</th>
+            <th class="col-sm">НКД</th>
+            <th class="col-sm">ВКД</th>
+            <th class="col-sm">ОВД-1</th>
+            <th class="col-sm">Высокобелковая<br>(ВБД-1)</th>
+          </tr>
+        </thead>
+        <tbody data-render="nutrition">
+          <tr><td colspan="11" class="muted">Загрузка строк…</td></tr>
+        </tbody>
+        <tfoot data-render="nutritionTotals">
+          <tr><td colspan="11" class="muted">Итоги появятся после заполнения.</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="summary-strip" style="margin-top:12px">
+      <div class="summary-item"><span>Пациентов</span><strong data-summary="dietPatients">0</strong></div>
+      <div class="summary-item"><span>Порций по диетам</span><strong data-summary="dietPortions">0</strong></div>
+      <div class="summary-item" data-summary-box="dietDelta"><span>Расхождение</span><strong data-summary="dietDelta">0</strong></div>
+    </div>
+
+    <div class="table-toolbar">
+      <div class="table-toolbar-left">
+        <button type="button" class="btn btn-sm btn-outline" data-action="diet-add">+ Добавить отделение</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-action="diet-clear">Очистить</button>
+      </div>
+      <div class="table-legend"><span>Строк: <strong data-counter="dietRows">0</strong></span></div>
+    </div>
+
+    <div class="form-grid" style="margin-top:16px">
+      <div class="field span-4">
+        <label for="n184Head">Заведующий отделением</label>
+        <input class="form-input" id="n184Head" type="text" data-bind="nutrition.signatures.head">
+      </div>
+      <div class="field span-4">
+        <label for="n184Senior">Старшая медицинская сестра отделения</label>
+        <input class="form-input" id="n184Senior" type="text" data-bind="nutrition.signatures.senior">
+      </div>
+      <div class="field span-4">
+        <label for="n184Diet">Медицинская сестра диетическая</label>
+        <input class="form-input" id="n184Diet" type="text" data-bind="nutrition.signatures.diet">
+      </div>
+    </div>
+    <div class="signature-line">
+      <span>Подписи лиц, ответственных за порционное требование</span>
+      <span class="line"></span>
+      <span>дата</span>
+    </div>
+  </div>
+</section>

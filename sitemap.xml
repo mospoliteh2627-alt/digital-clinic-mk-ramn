@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Карта сайта учебно-симуляционного комплекса
+  «Цифровая клиника МК РАМН».
+  Приложение одностраничное: разделы открываются внутри интерфейса.
+  Адрес указан для локального запуска через start.command.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://localhost:8080/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

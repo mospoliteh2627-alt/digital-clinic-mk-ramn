@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Учебно-симуляционный комплекс «Цифровая клиника МК РАМН» — интерактивный тренажёр ведения медицинской документации.">
+  <meta name="color-scheme" content="light">
+  <title>Цифровая клиника МК РАМН — учебно-симуляционный комплекс</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function () {
+      try {
+        var saved = JSON.parse(localStorage.getItem('mkramn.clinic.theme.v1') || '{}');
+        var theme = saved.theme || 'light';
+        if (theme === 'system') {
+          theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.contrast = saved.highContrast ? 'high' : 'normal';
+      } catch (e) {
+        document.documentElement.dataset.theme = 'light';
+        document.documentElement.dataset.contrast = 'normal';
+      }
+    })();
+  </script>
+  <link rel="icon" href="assets/logo-emblem.png">
+</head>
+<body>
+<div id="scrollProgress" aria-hidden="true"></div>
+
+<!-- ================= ЭКРАН 1. АВТОРИЗАЦИЯ ================= -->
+<section id="screenLogin" class="screen screen-login" aria-labelledby="loginTitle">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="brand-mark">
+        <img class="brand-logo" src="assets/logo-emblem.png" alt="Герб ФГБПОУ «Медицинский колледж» (МК РАМН)">
+      </div>
+      <p class="eyebrow">ФГБПОУ «Медицинский колледж» (МК РАМН)</p>
+      <h1>Цифровая<br>клиника</h1>
+      <p class="login-brand-sub">Учебно-симуляционный комплекс ведения медицинской документации</p>
+      <ul class="login-features">
+        <li>23 интерактивных документа: полный набор форм 530н, 004/у, 1-84, 366/у, 157/у</li>
+        <li>4 клинических кейса и свободный режим — со скрытыми ошибками</li>
+        <li>Автопроверка, оценка, отчёт преподавателю и журнал аудита</li>
+        <li>DOCX/PDF, электронная подпись SHA-256, тёмная тема и автодополнение</li>
+      </ul>
+      <p class="login-legal">Работа выполняется только с синтетическими данными. Реальные персональные данные не вводятся (ФЗ-152 «О персональных данных»).</p>
+    </div>
+
+    <div class="login-form-side">
+      <div class="login-form-head">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span>Вход в информационную систему</span>
+      </div>
+      <h2 id="loginTitle">Авторизация студента</h2>
+      <p class="muted">Укажите фамилию и имя так, как они записаны в журнале группы. Данные сохраняются только на этом компьютере.</p>
+
+      <form id="loginForm" novalidate autocomplete="off">
+        <div class="field">
+          <label for="studentFio">Фамилия, Имя студента <span class="req">*</span></label>
+          <input id="studentFio" name="fio" type="text" placeholder="Например: Петрова Анна" maxlength="80" autocomplete="off" required>
+          <p class="field-message" data-for="studentFio"></p>
+        </div>
+        <div class="field">
+          <label for="studentGroup">Академическая группа <span class="req">*</span></label>
+          <input id="studentGroup" name="group" type="text" placeholder="Например: СД-23-1" maxlength="20" autocomplete="off" required>
+          <p class="field-message" data-for="studentGroup"></p>
+        </div>
+        <label class="check-row">
+          <input type="checkbox" id="consentCheck" checked>
+          <span>Подтверждаю, что работаю с учебными (синтетическими) данными и не ввожу сведения о реальных пациентах.</span>
+        </label>
+        <p id="loginError" class="form-error" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Войти в систему</button>
+      </form>
+
+      <div class="login-foot">
+        <span>Версия 1.2</span>
+        <span>© МК РАМН, 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЭКРАН 2. ГЛАВНАЯ ================= -->
+<section id="screenWelcome" class="screen screen-welcome" hidden aria-labelledby="welcomeTitle">
+  <header class="welcome-top">
+    <div class="welcome-logo">
+      <img class="welcome-logo-img" src="assets/logo-emblem.png" alt="Герб Медицинского колледжа">
+      <span>МИС «Цифровая клиника»</span>
+    </div>
+    <div class="welcome-user">
+      <span id="welcomeUser" class="user-chip"></span>
+      <button type="button" class="btn btn-ghost btn-sm" id="welcomeLogout">Выйти</button>
+    </div>
+  </header>
+
+  <div class="welcome-hero">
+    <p class="eyebrow">Информационные технологии в профессиональной деятельности</p>
+    <h1 id="welcomeTitle">Учебно-симуляционный комплекс<br><span>«Цифровая клиника МК РАМН»</span></h1>
+    <p class="welcome-org">ФГБПОУ «Медицинский колледж» (МК РАМН)</p>
+    <p class="welcome-lead">Практическое освоение сквозных процессов ведения медицинской документации приёмного и лечебного отделений стационара — от журнала приёма до выписного эпикриза, с автоматической проверкой, экспортом и электронной подписью.</p>
+    <div class="welcome-actions">
+      <button type="button" class="btn btn-primary btn-xl" id="btnStartWorkspace">Запустить рабочие места МИС</button>
+      <button type="button" class="btn btn-outline btn-xl" id="btnWelcomeInstruction">Инструкция по заполнению</button>
+    </div>
+    <p class="welcome-resume" id="welcomeResume" hidden></p>
+  </div>
+
+  <div class="welcome-stats" aria-label="Ключевые показатели комплекса">
+    <div><strong>23</strong><span>интерактивных документа</span></div>
+    <div><strong>4 + 1</strong><span>кейс и свободный режим</span></div>
+    <div><strong>5,00</strong><span>автоматическая оценка</span></div>
+    <div><strong>SHA-256</strong><span>подпись и журнал аудита</span></div>
+  </div>
+
+  <div class="welcome-features">
+    <article class="feature-card">
+      <span class="feature-icon"><svg class="icon"><use href="assets/icons.svg#icon-clipboard"></use></svg></span>
+      <h3>Полный комплект форм</h3>
+      <p>001/у, 003/у, 007/у, 008/у, 016/у, 066/у, 004/у, 1-84, 366/у, 157/у и 13 внутренних бланков 003/у.</p>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon"><svg class="icon"><use href="assets/icons.svg#icon-stethoscope"></use></svg></span>
+      <h3>Кейсы с ошибками</h3>
+      <p>Аппендицит, холецистит, панкреатит и свободный кейс. Скрытые ошибки: группа крови, отменённые препараты, баланс коек, порционник, температура.</p>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon"><svg class="icon"><use href="assets/icons.svg#icon-check-circle"></use></svg></span>
+      <h3>Проверка и оценка</h3>
+      <p>Перекрёстные контроли, подсветка полей, оценка по 5-балльной шкале, контрольный лист и отчёт TXT для преподавателя.</p>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon"><svg class="icon"><use href="assets/icons.svg#icon-download"></use></svg></span>
+      <h3>Экспорт и печать</h3>
+      <p>Печать и PDF, DOCX текущего раздела или всей документации, JSON-резервная копия. Всё формируется автономно.</p>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon"><svg class="icon"><use href="assets/icons.svg#icon-user"></use></svg></span>
+      <h3>Подпись и аудит</h3>
+      <p>Учебная электронная подпись SHA-256, проверка неизменности документа, журнал «кто, когда и что изменил» с выгрузкой CSV.</p>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon"><svg class="icon"><use href="assets/icons.svg#icon-sun"></use></svg></span>
+      <h3>Доступность и динамика</h3>
+      <p>Светлая и тёмная тема, высокая контрастность, автодополнение МКБ-10, лекарств и диет, палитра ⌘K.</p>
+    </article>
+  </div>
+
+  <div class="welcome-grid">
+    <article class="info-card">
+      <h2>Назначение комплекса</h2>
+      <p>Тренажёр предназначен для практического освоения сквозных процессов ведения медицинской документации, развития цифровой грамотности будущих медицинских сестёр и лабораторных техников, а также минимизации ошибок на преаналитическом и лечебном этапах стационарной помощи.</p>
+      <p>Студент проходит полный маршрут пациента: приём и регистрация, оформление медицинской карты и статистической карты, ведение внутренних бланков лечебного отделения, учёт движения пациентов и питания, контроль предстерилизационной очистки изделий медицинского назначения.</p>
+    </article>
+    <article class="info-card info-card-accent">
+      <h2>Нормативное соответствие</h2>
+      <p>Полный набор форм приказа Минздрава России от 05.08.2022 № 530н: 001/у, 003/у, 007/у, 008/у, 016/у, 066/у. Дополнительно: 004/у (температурный лист), 1-84 (приказ МЗ РФ № 330), 366/у (ЦСО), 157/у (эндоскопия, приказ № 222). Согласие на вмешательство — по статье 20 Федерального закона № 323-ФЗ.</p>
+      <p>Все сведения синтетические. Обработка персональных данных не выполняется, требования ФЗ-152 «О персональных данных» соблюдаются. Приложение работает автономно, без внешних серверов и интернета.</p>
+    </article>
+    <article class="info-card">
+      <h2>Авторский коллектив</h2>
+      <p>Разработано и подготовлено совместно с преподавателями колледжа.</p>
+      <p><strong>Преподаватель информатики: Шамухаммедов Г.</strong></p>
+      <p class="muted">Методическое наполнение — преподаватели профессиональных модулей МК РАМН. Учебная версия 1.2.</p>
+    </article>
+    <article class="info-card">
+      <h2>Что внутри</h2>
+      <ul class="chip-list">
+        <li>001/у — журнал приёма</li>
+        <li>003/у — медкарта</li>
+        <li>066/у — статкарта</li>
+        <li>007/у — движение коек</li>
+        <li>1-84 — порционник</li>
+        <li>366/у — ЦСО</li>
+        <li>008/у — журнал операций</li>
+        <li>016/у — сводная ведомость</li>
+        <li>157/у — эндоскопия</li>
+        <li>DOCX · PDF · подпись · аудит</li>
+        <li>004/у — температурный лист</li>
+      </ul>
+      <p class="muted">4 клинических кейса и режим «с нуля», 23 интерактивных документа, Canvas-график, проверка преподавателя, DOCX/PDF, подпись и аудит.</p>
+    </article>
+  </div>
+  <footer class="welcome-footer">
+    <span>Учебно-симуляционный комплекс «Цифровая клиника МК РАМН»</span>
+    <span>Только синтетические данные · ФЗ-152</span>
+  </footer>
+</section>
+
+<!-- ================= ЭКРАН 3. РАБОЧЕЕ МЕСТО ================= -->
+<div id="app" class="app" hidden>
+  <a class="skip-link" href="#mainContent">Перейти к содержимому</a>
+
+  <aside class="sidebar" id="sidebar" aria-label="Навигация по отделениям">
+    <div class="sidebar-brand">
+      <img class="sidebar-logo" src="assets/logo-emblem.png" alt="Герб Медицинского колледжа">
+      <div class="sidebar-brand-text">
+        <strong>Цифровая клиника</strong>
+        <span>МИС МК РАМН</span>
+      </div>
+      <button type="button" class="icon-btn sidebar-collapse" id="btnCollapseSidebar" aria-label="Свернуть боковую панель" title="Свернуть боковую панель"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-chevron-left"></use></svg></button>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebarNav">
+      <button type="button" class="nav-item is-active" data-tab="reception" title="Приёмное отделение: 001/у, 003/у, 066/у">
+        <span class="nav-icon" aria-hidden="true"><svg class="icon nav-icon" aria-hidden="true"><use href="assets/icons.svg#icon-hospital"></use></svg></span>
+        <span class="nav-text"><strong>Приёмное отделение</strong><small>001/у · 003/у · 066/у</small></span>
+        <span class="nav-count" data-count="reception">3</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="treatment" title="Лечебное отделение: внутренние бланки 003/у">
+        <span class="nav-icon" aria-hidden="true"><svg class="icon nav-icon" aria-hidden="true"><use href="assets/icons.svg#icon-stethoscope"></use></svg></span>
+        <span class="nav-text"><strong>Лечебное отделение</strong><small>Внутренние бланки 003/у</small></span>
+        <span class="nav-count" data-count="treatment">13</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="department" title="Учёт отделения и питание: 007/у, 1-84, 016/у">
+        <span class="nav-icon" aria-hidden="true"><svg class="icon nav-icon" aria-hidden="true"><use href="assets/icons.svg#icon-bed"></use></svg></span>
+        <span class="nav-text"><strong>Учёт и питание</strong><small>007/у · 1-84</small></span>
+        <span class="nav-count" data-count="department">3</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="cso" title="Процедурный кабинет и ЦСО: 366/у, 157/у">
+        <span class="nav-icon" aria-hidden="true"><svg class="icon nav-icon" aria-hidden="true"><use href="assets/icons.svg#icon-flask"></use></svg></span>
+        <span class="nav-text"><strong>Процедурный кабинет и ЦСО</strong><small>366/у</small></span>
+        <span class="nav-count" data-count="cso">2</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="teacher" title="Панель преподавателя: кейсы, проверка, отчёт">
+        <span class="nav-icon" aria-hidden="true"><svg class="icon nav-icon" aria-hidden="true"><use href="assets/icons.svg#icon-graduation"></use></svg></span>
+        <span class="nav-text"><strong>Панель преподавателя</strong><small>Кейсы и контроль ошибок</small></span>
+        <span class="nav-count nav-count-dot" aria-hidden="true"></span>
+      </button>
+    </nav>
+
+    <div class="sidebar-case">
+      <p class="sidebar-case-label">Активный клинический кейс</p>
+      <p class="sidebar-case-name" id="sidebarCaseName">Не выбран</p>
+      <button type="button" class="btn btn-outline btn-sm btn-block" id="btnOpenCases">Выбрать кейс</button>
+    </div>
+
+    <div class="sidebar-foot">
+      <div class="progress-mini" aria-hidden="true"><span id="progressFill"></span></div>
+      <p><span id="progressLabel">Заполнено 0%</span><br><span class="muted">Готовность документации</span></p>
+      <button type="button" class="sitemap-link" id="btnSitemap">
+        <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-map"></use></svg> Карта сайта
+      </button>
+    </div>
+  </aside>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" class="icon-btn only-mobile" id="btnMenu" aria-label="Меню" aria-expanded="false"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></button>
+        <div class="topbar-title">
+          <p class="topbar-crumb" id="topbarCrumb">Приёмное отделение</p>
+          <h1 id="topbarTitle">Журнал учёта приёма пациентов</h1>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="session-timer" id="sessionTimerBox" title="Чистое время работы в системе без учёта пауз">
+          <span class="timer-label" id="timerLabel">Время</span>
+          <strong id="sessionTimer">00:00:00</strong>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm timer-toggle" id="btnPauseTimer" title="Остановить таймер на время перерыва" aria-pressed="false">
+          <span id="pauseIcon" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-pause"></use></svg></span><span id="pauseLabel">Пауза</span>
+        </button>
+        <button type="button" class="icon-btn" id="btnAppearance" aria-label="Оформление" title="Тема и контрастность">
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-sun"></use></svg>
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm palette-trigger" id="btnPalette" title="Быстрый переход по разделам (Ctrl/⌘ + K)">
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg><span class="palette-trigger-label">⌘ K</span>
+        </button>
+        <button type="button" class="btn btn-instruction" id="btnInstruction">
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-book"></use></svg> Инструкция по заполнению
+        </button>
+        <button type="button" class="btn btn-primary" id="btnCheck">
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg> Проверить работу
+        </button>
+        <button type="button" class="btn btn-ghost" id="btnExport" title="Печать, PDF, DOCX и резервная копия">
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-file"></use></svg> Экспорт
+        </button>
+        <button type="button" class="btn btn-ghost" id="btnReport" title="Скачать отчёт о практике TXT">
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-download"></use></svg> Отчёт
+        </button>
+        <div class="current-user" id="currentUser" title="Текущий пользователь">
+          <span class="avatar" id="userAvatar">С</span>
+          <span class="current-user-text"><strong id="userName">—</strong><small id="userGroup">—</small></span>
+          <button type="button" class="icon-btn" id="btnLogout" aria-label="Выйти из системы" title="Выйти"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-logout"></use></svg></button>
+        </div>
+      </div>
+    </header>
+
+    <div class="case-banner" id="caseBanner" hidden>
+      <div>
+        <span class="badge badge-case">Кейс</span>
+        <strong id="caseBannerTitle"></strong>
+        <span class="muted" id="caseBannerDiag"></span>
+      </div>
+      <div class="case-banner-actions">
+        <span class="badge" id="caseBannerDifficulty"></span>
+        <button type="button" class="btn btn-sm btn-outline" id="btnCaseLoadForms">Заполнить формы кейсом</button>
+        <button type="button" class="btn btn-sm btn-ghost" id="btnCaseClose">Сбросить кейс</button>
+      </div>
+    </div>
+
+    <main id="mainContent" class="main-content" tabindex="-1">
+
+      <section class="tab-panel is-active" data-tab-panel="reception" aria-labelledby="tabReception">
+        <div class="panel-head">
+          <div>
+            <h2 id="tabReception">Приёмное отделение</h2>
+            <p class="muted">Регистрация пациента, титульный лист медицинской карты и статистическая карта. Данные синхронизируются из журнала 001/у.</p>
+          </div>
+          <div class="panel-tools">
+            <button type="button" class="btn btn-outline btn-sm" data-action="sync-all">⇄ Синхронизировать 001/у → 003/у → 066/у</button>
+            <button type="button" class="btn btn-outline btn-sm" data-action="select-case">Клинический кейс</button>
+          </div>
+        </div>
+        <div class="form-slot" data-include="forms/001u.html"></div>
+        <div class="form-slot" data-include="forms/003u.html"></div>
+        <div class="form-slot" data-include="forms/066u.html"></div>
+      </section>
+
+      <section class="tab-panel" data-tab-panel="treatment" aria-labelledby="tabTreatment" hidden>
+        <div class="panel-head">
+          <div>
+            <h2 id="tabTreatment">Лечебное отделение</h2>
+            <p class="muted">Внутренние бланки медицинской карты № 003/у. Переключайте разделы, данные сохраняются автоматически.</p>
+          </div>
+          <div class="panel-tools">
+            <span class="badge badge-soft" id="treatmentCaseBadge">Кейс не выбран</span>
+          </div>
+        </div>
+        <nav class="subnav" id="treatmentSubnav" aria-label="Разделы медицинской карты">
+          <button type="button" class="subnav-item is-active" data-subform="003-osmotr">Первичный осмотр</button>
+          <button type="button" class="subnav-item" data-subform="003-preop">Предоперационный</button>
+          <button type="button" class="subnav-item" data-subform="003-operaciya">Операция</button>
+          <button type="button" class="subnav-item" data-subform="008u">Журнал операций 008/у</button>
+          <button type="button" class="subnav-item" data-subform="003-anesteziya">Анестезия</button>
+          <button type="button" class="subnav-item" data-subform="003-reanimaciya">Реанимация</button>
+          <button type="button" class="subnav-item" data-subform="003-naznacheniya">Назначения</button>
+          <button type="button" class="subnav-item" data-subform="003-transfuziya">Трансфузия</button>
+          <button type="button" class="subnav-item" data-subform="004u">Температурный лист</button>
+          <button type="button" class="subnav-item" data-subform="003-luchevaya">Лучевая нагрузка</button>
+          <button type="button" class="subnav-item" data-subform="003-vypisnoy">Выписной эпикриз</button>
+          <button type="button" class="subnav-item" data-subform="003-dnevnik">Дневник наблюдения</button>
+          <button type="button" class="subnav-item" data-subform="003-soglasie">Согласие на операцию</button>
+        </nav>
+        <div id="treatmentContainer" class="form-slot" aria-live="polite"></div>
+      </section>
+
+      <section class="tab-panel" data-tab-panel="department" aria-labelledby="tabDepartment" hidden>
+        <div class="panel-head">
+          <div>
+            <h2 id="tabDepartment">Учёт отделения и питание</h2>
+            <p class="muted">Ежедневное движение пациентов и коечного фонда, порционное требование на питание.</p>
+          </div>
+          <div class="panel-tools">
+            <button type="button" class="btn btn-outline btn-sm" data-action="recalc-beds">Σ Пересчитать баланс коек</button>
+            <button type="button" class="btn btn-outline btn-sm" data-action="recalc-diets">Σ Сверить порционник</button>
+          </div>
+        </div>
+        <div class="form-slot" data-include="forms/007u.html"></div>
+        <div class="form-slot" data-include="forms/1-84.html"></div>
+        <div class="form-slot" data-include="forms/016u.html"></div>
+      </section>
+
+      <section class="tab-panel" data-tab-panel="cso" aria-labelledby="tabCso" hidden>
+        <div class="panel-head">
+          <div>
+            <h2 id="tabCso">Процедурный кабинет и ЦСО</h2>
+            <p class="muted">Журнал учёта качества предстерилизационной очистки изделий медицинского назначения (форма 366/у).</p>
+          </div>
+          <div class="panel-tools">
+            <span class="badge badge-soft">Азопирамовая / фенолфталеиновая проба</span>
+          </div>
+        </div>
+        <div class="form-slot" data-include="forms/366u.html"></div>
+        <div class="form-slot" data-include="forms/157u.html"></div>
+      </section>
+
+      <section class="tab-panel" data-tab-panel="teacher" aria-labelledby="tabTeacher" hidden>
+        <div class="panel-head">
+          <div>
+            <h2 id="tabTeacher">Панель преподавателя и контроль ошибок</h2>
+            <p class="muted">Клинические кейсы, глубокая перекрёстная проверка документации, оценивание и отчёт о практике.</p>
+          </div>
+          <div class="panel-tools">
+            <button type="button" class="btn btn-primary btn-sm" id="btnCheckFromTeacher">Проверить работу студента</button>
+          </div>
+        </div>
+        <div class="form-slot" data-include="forms/teacher.html"></div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>МИС «Цифровая клиника МК РАМН» · учебная версия 1.2 · только синтетические данные</span>
+      <span class="app-footer-right">
+        <button type="button" class="signature-badge" id="btnSignatureBadge" title="Статус электронной подписи">Не подписано</button>
+        <button type="button" class="footer-link" id="btnSitemapFooter">Карта сайта</button>
+        <span id="footerSave">Автосохранение включено</span>
+      </span>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: ИНСТРУКЦИЯ ================= -->
+<div class="modal" id="modalInstruction" role="dialog" aria-modal="true" aria-labelledby="instructionTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window modal-window-xl">
+    <header class="modal-head">
+      <div>
+        <p class="eyebrow">Методические материалы для студентов</p>
+        <h2 id="instructionTitle">Инструкция по заполнению медицинской документации</h2>
+      </div>
+      <button type="button" class="icon-btn modal-close" data-close-modal aria-label="Закрыть инструкцию">✕</button>
+    </header>
+    <div class="modal-body instruction-body">
+      <div class="instruction-intro">
+        <p><strong>Цель работы.</strong> Пройти полный маршрут документального сопровождения пациента в стационаре: приём и регистрация → титульный лист медицинской карты → статистическая карта → внутренние бланки лечебного отделения → учёт движения коек и питания → контроль предстерилизационной очистки → проверка и отчёт.</p>
+        <p><strong>Регламент.</strong> Комплекс воспроизводит требования приказа Минздрава России от 05.08.2022 № 530н, Инструкции по организации лечебного питания (приказ МЗ РФ № 330) и действующих методик ЦСО. Все пациенты вымышлены, совпадения случайны.</p>
+        <ol class="steps">
+          <li><span>1</span> Выберите клинический кейс или введите данные пациента вручную.</li>
+          <li><span>2</span> Заполните журнал 001/у, затем нажмите «Синхронизировать» — данные перейдут в 003/у и 066/у.</li>
+          <li><span>3</span> Проверьте паспортную часть медкарты, группу крови, Rh-фактор и Kell-антиген.</li>
+          <li><span>4</span> Заполните внутренние бланки лечебного отделения и температурный лист.</li>
+          <li><span>5</span> Сведите баланс коек в 007/у и порционник 1-84.</li>
+          <li><span>6</span> Нажмите «Проверить работу», устраните красные подсветки и скачайте отчёт.</li>
+        </ol>
+      </div>
+
+      <div class="instruction-grid">
+        <details open>
+          <summary>Форма 001/у — журнал учёта приёма пациентов</summary>
+          <div class="instruction-content">
+            <p><strong>Кто заполняет:</strong> медицинская сестра приёмного отделения при поступлении пациента и при отказе в госпитализации.</p>
+            <p><strong>Что вносится:</strong> дата и время поступления, ФИО, дата рождения, пол, паспорт, гражданство, адреса регистрации, телефон законного представителя, СНИЛС, полис ОМС, кем доставлен, номер медицинской карты, диагноз направившей организации, причина травмы (код МКБ), факт употребления алкоголя и психоактивных веществ, отделение, исход госпитализации, дата и время сообщения, причина отказа, ФИО медработника.</p>
+            <p><strong>Правила:</strong> запись ведётся в день обращения; номер медицинской карты должен совпадать с фактически заведённой картой; при отказе заполняются графы 21–22; исправления заверяются подписью. СНИЛС — 11 цифр, полис ОМС — 16 цифр, паспорт — серия 4 цифры и номер 6 цифр.</p>
+            <p class="tip">Частая ошибка: время поступления округляют до часа. Указывайте точное время (час. мин.) — оно сверяется с 003/у и 066/у.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Форма 003/у — медицинская карта пациента</summary>
+          <div class="instruction-content">
+            <p><strong>Кто заполняет:</strong> медицинская сестра приёмного отделения заполняет титульный лист до строки «Переведён в отделение», далее карту ведёт лечебное отделение.</p>
+            <p><strong>Обязательные блоки:</strong> паспортная часть, дата и время поступления, кем направлен, номер и дата направления, отделение/профиль/палата, диагноз при направлении и предварительный диагноз с кодами МКБ, аллергоанамнез, трансфузионный анамнез, группа крови, резус-принадлежность, антиген K1 системы Kell.</p>
+            <p><strong>Правила:</strong> диагноз формулируется по МКБ-10; код состоит из латинской буквы и двух-трёх цифр с точкой (например, K35.8). Группа крови записывается в формате 0(I), A(II), B(III), AB(IV). Резус — Rh+ или Rh−. Данные группы крови переносятся в лист трансфузии без изменений.</p>
+            <p class="tip">Критическая ошибка: расхождение группы крови/Rh/Kell между титульным листом и листом регистрации трансфузии. Это прямая угроза безопасности пациента.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Форма 066/у — статистическая карта выбывшего</summary>
+          <div class="instruction-content">
+            <p><strong>Кто заполняет:</strong> медицинская сестра приёмного отделения заполняет паспортную часть и левую сторону карты до жёлтой отметки; остальное — при выписке.</p>
+            <p><strong>Что вносится:</strong> номер карты, ФИО, дата рождения, пол, гражданство, адреса, местность, семейное положение, образование, занятость, место работы, должность, инвалидность, радиационное облучение, полис ОМС и дата выдачи, страховая организация, СНИЛС, дата и время поступления, через сколько часов после начала заболевания, кем направлен, первично/повторно, форма помощи, факт опьянения, вид оплаты, диагнозы с кодами МКБ.</p>
+            <p><strong>Правила:</strong> кодирование — строго по МКБ-10; поля с выбором заполняются цифровым кодом; статистическая карта должна полностью совпадать с титульным листом 003/у по паспортным данным.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Форма 007/у — лист движения пациентов и коечного фонда</summary>
+          <div class="instruction-content">
+            <p><strong>Кто заполняет:</strong> медицинская сестра поста лечебного отделения ежедневно к 9:00.</p>
+            <p><strong>Период учёта:</strong> с 9:00 предыдущих суток до 9:00 текущих суток.</p>
+            <p><strong>Формула баланса:</strong> графа 19 (состоит на начало текущего дня) = графа 4 (находилось на начало истекших суток) + графа 5 (поступило) + графа 11 (переведено из других отделений) − графа 10 (переведено в другие отделения) − графа 12 (выписано) − графа 16 (умерло).</p>
+            <p><strong>Свободные места:</strong> графы 22–23 = число коек (графа 2) − койки, на которые не осуществляется госпитализация (графа 3) − состоит пациентов (графа 19), с разделением по полу.</p>
+            <p class="tip">Частая ошибка: в графе 19 указывают механически перенесённое число, не сверяя с движением. Проверяйте арифметику по каждой строке профиля.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Форма 1-84 — порционное требование на питание</summary>
+          <div class="instruction-content">
+            <p><strong>Кто заполняет:</strong> старшая медицинская сестра отделения, подписывают заведующий отделением, старшая и диетическая медицинская сестра.</p>
+            <p><strong>Что вносится:</strong> наименование отделения, количество больных, количество порций по каждой стандартной диете (ОВД, ЩД, ВБД, НКД, ВКД, ОВД-1 и др.).</p>
+            <p><strong>Правила:</strong> сумма порций по всем диетам должна равняться числу пациентов, получающих питание; число питающихся сверяется с графой 19 формы 007/у. Диета назначается врачом и фиксируется в листе назначений.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Форма 366/у — предстерилизационная очистка (ЦСО)</summary>
+          <div class="instruction-content">
+            <p><strong>Кто заполняет:</strong> медицинская сестра ЦСО / процедурного кабинета.</p>
+            <p><strong>Что вносится:</strong> дата, способ обработки (ручной, механизированный), применяемое средство, наименование изделия, количество изделий, количество загрязнённых (кровью, моющими средствами), ФИО проводившего контроль.</p>
+            <p><strong>Методы контроля:</strong> азопирамовая проба — на остатки крови (фиолетовое окрашивание), фенолфталеиновая — на остатки моющих средств (розовое окрашивание). Контролю подлежит не менее 1 % изделий каждого наименования за смену, но не менее 3–5 единиц.</p>
+            <p class="tip">Число загрязнённых изделий не может превышать общее число проверенных. При выявлении загрязнения партия направляется на повторную обработку.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Форма 004/у — температурный лист</summary>
+          <div class="instruction-content">
+            <p><strong>Кто заполняет:</strong> палатная медицинская сестра утром и вечером.</p>
+            <p><strong>Что вносится:</strong> пульс (П), артериальное давление (АД), температура тела (T°) в утренние (У) и вечерние (В) часы, дыхание, вес, выпитая жидкость, суточное количество мочи, стул, ванна.</p>
+            <p><strong>Правила:</strong> график строится автоматически; критические значения подсвечиваются: температура ≥ 39 °C или ≤ 35 °C, пульс &gt; 120 или &lt; 50, систолическое АД &gt; 180 или &lt; 90 мм рт. ст. Отклонения фиксируются в дневнике наблюдений и доводятся до врача.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Форма 008/у — журнал учёта операций</summary>
+          <div class="instruction-content">
+            <p><strong>Кто заполняет:</strong> оперирующий врач в каждой операционной.</p>
+            <p><strong>Что вносится:</strong> номер операции и карты, ФИО, пол, дата рождения, дата и время операции, длительность, диагнозы до и после вмешательства, наименование и код операции, высокотехнологичная помощь, использованная аппаратура, кратность, микрохирургический характер, премедикация, вид анестезии, описание хода, исход, операционный материал, осложнения, состав хирургической и анестезиологической бригады.</p>
+            <p><strong>Правила:</strong> запись ведётся по каждой операции; при летальном исходе указываются дата и время смерти; кнопка «Из протокола операции» переносит данные из внутреннего бланка 003/у.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Форма 016/у — сводная ведомость движения пациентов</summary>
+          <div class="instruction-content">
+            <p><strong>Кто заполняет:</strong> заведующий отделением и старшая медицинская сестра за отчётный период.</p>
+            <p><strong>Что вносится:</strong> профиль коек, число и среднемесячное число коек, состояние пациентов на начало и конец периода, поступление, переводы, выписка, умершие, проведённые койко-дни, койко-дни на закрытых койках и по уходу, свободные места.</p>
+            <p><strong>Правила:</strong> ведомость формируется на основании листов 007/у. Баланс: состояло на конец = состояло на начало + поступило + переведено из других отделений − переведено в другие − выписано − умерло. Кнопка «Из 007/у» переносит остатки и движение, койко-дни за период заполняются вручную.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Форма 157/у — журнал эндоскопических исследований</summary>
+          <div class="instruction-content">
+            <p><strong>Кто заполняет:</strong> медицинская сестра кабинета эндоскопии.</p>
+            <p><strong>Что вносится:</strong> дата исследования, ФИО и год рождения пациента, домашний адрес, кем направлен, клинический диагноз, метод исследования, заключение, особые отметки.</p>
+            <p><strong>Правила:</strong> регистрируются все выполненные исследования; заключение формулируется врачом-эндоскопистом; кнопка «Из 003/у» переносит паспортные данные текущего пациента.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Дневник наблюдения и согласие на операцию</summary>
+          <div class="instruction-content">
+            <p><strong>Дневник наблюдения</strong> — ежедневная запись лечащего врача: жалобы и динамика, состояние, температура, АД, ЧСС, объективный статус, назначения и выполненные мероприятия, подписи врача и медицинской сестры.</p>
+            <p><strong>Информированное добровольное согласие</strong> оформляется до операции по статье 20 Федерального закона № 323-ФЗ. Указываются диагноз, характер вмешательства, вид обезболивания, риски, альтернативы, последствия отказа, решение пациента, подписи пациента, врача и свидетеля. Отказ фиксируется отдельно с указанием причины.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Внутренние бланки 003/у лечебного отделения</summary>
+          <div class="instruction-content">
+            <p><strong>Первичный осмотр</strong> — жалобы, анамнез заболевания и жизни, эпиданамнез, объективный статус, антропометрия, предварительный диагноз и план обследования.</p>
+            <p><strong>Предоперационный осмотр анестезиолога и предоперационный эпикриз</strong> — оценка риска (ASA), план анестезии, обоснование операции, результаты обследований.</p>
+            <p><strong>Протокол операции</strong> — дата, название и код операции, доступ, ход, находки, кровопотеря, состав бригады, подсчёт инструментов и салфеток до и после.</p>
+            <p><strong>Протокол анестезии и карта анестезии</strong> — вид пособия, премедикация, индукция, поддержание, параметры ИВЛ, газовый состав, анестетики, мониторинг АД/ЧСС/SpO₂/EtCO₂.</p>
+            <p><strong>Карта реанимации</strong> — почасовой гидробаланс: введено парентерально и внутрь, диурез, потери, суточный баланс.</p>
+            <p><strong>Лист назначений</strong> — препарат, дозировка, способ введения, питание, режим, отметка медсестры с датой, временем и подписью. Отменённый препарат не выполняется.</p>
+            <p><strong>Лист трансфузии</strong> — данные реципиента и донора, пробы на совместимость, биологическая проба, объём, реакция, подписи врача и медсестры, информированное согласие.</p>
+            <p><strong>Лучевая нагрузка</strong> — исследование, доза в мЗв, суммарная доза за госпитализацию.</p>
+            <p><strong>Выписной эпикриз</strong> — заключительный диагноз по МКБ, результаты обследования и лечения, исход, рекомендации, трудоспособность.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Тема, автодополнение, экспорт и электронная подпись</summary>
+          <div class="instruction-content">
+            <p><strong>Оформление.</strong> Кнопка с солнцем/луной в шапке открывает выбор светлой, тёмной или системной темы и режим высокой контрастности. Настройки сохраняются; печатная версия всегда светлая.</p>
+            <p><strong>Автодополнение.</strong> В полях кодов МКБ-10, лекарственных препаратов и диет появляется список подсказок: начните вводить код или название, выберите стрелками и нажмите Enter. Для препарата доза и способ введения заполнятся автоматически, если поля пусты.</p>
+            <p><strong>Экспорт.</strong> Кнопка «Экспорт»: печать текущего раздела или всей документации с сохранением в PDF через диалог печати, DOCX текущего раздела/всей документации, резервная копия JSON и отчёт TXT.</p>
+            <p><strong>Электронная подпись.</strong> «Подписать документацию» фиксирует ФИО, роль, дату, время и SHA-256 хеш. После изменения документа подпись помечается как недействительная. Это учебная подпись, не УКЭП.</p>
+            <p><strong>Журнал аудита.</strong> Автоматически фиксирует вход, выбор кейса, синхронизацию, изменения полей, проверку, экспорт, печать и подписание. Журнал доступен в «Экспорт → Журнал аудита» и выгружается в CSV.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Критерии проверки и оценивания</summary>
+          <div class="instruction-content">
+            <p>Проверка выполняется по трём контурам: формальные правила полей (маски, обязательность, диапазоны), перекрёстная сверка документов и клинические несоответствия кейса.</p>
+            <ul>
+              <li><strong>Критическая ошибка</strong> (−0,7 балла): угроза безопасности пациента — несовпадение группы крови, выполнение отменённого препарата, разбалансировка коек, трансфузия без проб.</li>
+              <li><strong>Существенная ошибка</strong> (−0,4 балла): неверные коды МКБ, превышение порционника, отсутствие подписи, дата выписки раньше поступления.</li>
+              <li><strong>Недочёт</strong> (−0,15 балла): незаполненные второстепенные поля, форматные неточности.</li>
+            </ul>
+            <p>Оценка выставляется от 5,0 с понижением, но не ниже 2,0. Итоговая ведомость и отчёт о практике формируются кнопкой «Отчёт» и содержат ФИО, группу, время работы, перечень ошибок и оценку.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Горячие клавиши и сохранение</summary>
+          <div class="instruction-content">
+            <p><kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>S</kbd> — сохранить и показать уведомление. <kbd>Esc</kbd> — закрыть модальное окно. <kbd>Alt</kbd> + <kbd>1…5</kbd> — переключение отделений. <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd> — быстрый переход к любому разделу, форме или действию.</p>
+            <p><strong>Боковая панель.</strong> Кнопка-стрелка в верхней части меню сворачивает его до панели иконок и освобождает место для таблиц; состояние сохраняется после перезагрузки. Развернуть панель можно той же кнопкой.</p>
+            <p><strong>Карта сайта.</strong> Кнопка «Карта сайта» внизу бокового меню, ссылка в подвале или команда «Карта сайта» в палитре открывают перечень всех разделов, форм и сервисов с переходом в один клик.</p>
+            <p><strong>Учёт времени по кейсам.</strong> При выборе учебного кейса с заложенными ошибками таймер запускается автоматически с 00:00:00. Кнопка «⏸ Пауза» останавливает отсчёт на время перерыва; время паузы не входит в отчёт. В самостоятельном режиме (кейс «Орлова» или «С нуля») время не учитывается: в шапке отображается «Свободный режим», а в отчёте — «Учёт времени не ведётся».</p>
+            <p><strong>Режим «С нуля».</strong> В окне выбора кейса первая карточка «Заполнить с нуля, без кейса» очищает документацию: студент регистрирует пациента в 001/у, синхронизирует данные в 003/у и 066/у и заполняет все разделы самостоятельно. Заложенных ошибок в этом режиме нет.</p>
+            <p>Данные автоматически сохраняются в localStorage браузера после каждого изменения. При случайном закрытии вкладки сессия и таймер восстанавливаются. Кнопка «Выйти» очищает сессию — используйте её перед передачей компьютера другому студенту.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+    <footer class="modal-foot">
+      <p class="muted">Инструкция составлена на основе приказа МЗ РФ № 530н, приказа МЗ РФ № 330 и методических материалов МК РАМН.</p>
+      <button type="button" class="btn btn-primary" data-close-modal>Понятно, приступить к работе</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: ВЫБОР КЕЙСА ================= -->
+<div class="modal" id="modalCases" role="dialog" aria-modal="true" aria-labelledby="casesTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window">
+    <header class="modal-head">
+      <div>
+        <p class="eyebrow">Клинические кейсы</p>
+        <h2 id="casesTitle">Выберите пациента</h2>
+      </div>
+      <button type="button" class="icon-btn modal-close" data-close-modal aria-label="Закрыть">✕</button>
+    </header>
+    <div class="modal-body">
+      <p class="muted">В учебных кейсах заложены логические ошибки: задача студента — выявить и устранить их при проверке. Если нужно заполнить документацию полностью самостоятельно, выберите режим «С нуля».</p>
+      <div id="casesGrid" class="cases-grid"></div>
+    </div>
+    <footer class="modal-foot">
+      <p class="muted">Кейс заполняет формы синтетическими данными. Ручное редактирование разрешено.</p>
+      <button type="button" class="btn btn-outline" data-close-modal>Отмена</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: РЕЗУЛЬТАТЫ ПРОВЕРКИ ================= -->
+<div class="modal" id="modalCheck" role="dialog" aria-modal="true" aria-labelledby="checkTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window modal-window-lg">
+    <header class="modal-head">
+      <div>
+        <p class="eyebrow">Контроль документации</p>
+        <h2 id="checkTitle">Результаты проверки работы</h2>
+      </div>
+      <button type="button" class="icon-btn modal-close" data-close-modal aria-label="Закрыть">✕</button>
+    </header>
+    <div class="modal-body" id="checkBody"></div>
+    <footer class="modal-foot">
+      <p class="muted" id="checkFootNote"></p>
+      <div class="modal-foot-actions">
+        <button type="button" class="btn btn-outline" data-close-modal>Продолжить работу</button>
+        <button type="button" class="btn btn-primary" id="btnReportFromCheck">⭳ Скачать отчёт</button>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: ПОДТВЕРЖДЕНИЕ ================= -->
+<div class="modal" id="modalConfirm" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window modal-window-sm">
+    <header class="modal-head">
+      <h2 id="confirmTitle">Подтверждение</h2>
+      <button type="button" class="icon-btn modal-close" data-close-modal aria-label="Закрыть">✕</button>
+    </header>
+    <div class="modal-body"><p id="confirmText"></p></div>
+    <footer class="modal-foot">
+      <div class="modal-foot-actions">
+        <button type="button" class="btn btn-outline" data-close-modal>Отмена</button>
+        <button type="button" class="btn btn-danger" id="confirmAccept">Подтвердить</button>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: СИНХРОНИЗАЦИЯ ================= -->
+<div class="modal" id="modalSync" role="dialog" aria-modal="true" aria-labelledby="syncTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window modal-window-sm">
+    <header class="modal-head">
+      <h2 id="syncTitle">Синхронизация данных</h2>
+      <button type="button" class="icon-btn modal-close" data-close-modal aria-label="Закрыть">✕</button>
+    </header>
+    <div class="modal-body">
+      <p>Перенести паспортные данные из журнала 001/у в медицинскую карту 003/у и статистическую карту 066/у? Текущие значения в этих полях будут заменены.</p>
+      <ul class="sync-list" id="syncPreview"></ul>
+    </div>
+    <footer class="modal-foot">
+      <div class="modal-foot-actions">
+        <button type="button" class="btn btn-outline" data-close-modal>Отмена</button>
+        <button type="button" class="btn btn-primary" id="syncAccept">Синхронизировать</button>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: ОФОРМЛЕНИЕ ================= -->
+<div class="modal" id="modalAppearance" role="dialog" aria-modal="true" aria-labelledby="appearanceTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window modal-window-sm">
+    <header class="modal-head">
+      <div>
+        <p class="eyebrow">Доступность и комфорт</p>
+        <h2 id="appearanceTitle">Тема и контрастность</h2>
+      </div>
+      <button type="button" class="icon-btn modal-close" data-close-modal aria-label="Закрыть">✕</button>
+    </header>
+    <div class="modal-body">
+      <p class="muted">Настройки сохраняются на этом компьютере и применяются ко всем экранам интерфейса. Печатная версия всегда остаётся светлой для читаемости на бумаге.</p>
+      <div class="theme-options" role="radiogroup" aria-label="Цветовая тема">
+        <label class="theme-option">
+          <input type="radio" name="themeChoice" value="light">
+          <span class="theme-preview theme-preview-light"><svg class="icon"><use href="assets/icons.svg#icon-sun"></use></svg></span>
+          <span><strong>Светлая</strong><small>Классическая медицинская</small></span>
+        </label>
+        <label class="theme-option">
+          <input type="radio" name="themeChoice" value="dark">
+          <span class="theme-preview theme-preview-dark"><svg class="icon"><use href="assets/icons.svg#icon-moon"></use></svg></span>
+          <span><strong>Тёмная</strong><small>Меньше нагрузки на глаза</small></span>
+        </label>
+        <label class="theme-option">
+          <input type="radio" name="themeChoice" value="system">
+          <span class="theme-preview theme-preview-system"><svg class="icon"><use href="assets/icons.svg#icon-monitor"></use></svg></span>
+          <span><strong>Как в системе</strong><small>Автоматически</small></span>
+        </label>
+      </div>
+      <label class="check-row" style="margin-top:16px">
+        <input type="checkbox" id="highContrastToggle">
+        <span><strong>Режим высокой контрастности.</strong> Усиливает границы, текст и фокус — для слабовидящих и проекторов.</span>
+      </label>
+      <div class="consent-box" style="margin-top:12px">
+        <strong>Предпросмотр:</strong> карточка формы, таблица и кнопки обновляются сразу. Настройка не влияет на данные документации.
+      </div>
+    </div>
+    <footer class="modal-foot">
+      <p class="muted">Соответствует рекомендациям по доступности: контраст текста не ниже 4,5:1.</p>
+      <button type="button" class="btn btn-primary" data-close-modal>Готово</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: ЭКСПОРТ ================= -->
+<div class="modal" id="modalExport" role="dialog" aria-modal="true" aria-labelledby="exportTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window modal-window-lg">
+    <header class="modal-head">
+      <div>
+        <p class="eyebrow">Документы и данные</p>
+        <h2 id="exportTitle">Экспорт, печать и подпись</h2>
+      </div>
+      <button type="button" class="icon-btn modal-close" data-close-modal aria-label="Закрыть">✕</button>
+    </header>
+    <div class="modal-body">
+      <div class="export-grid">
+        <section class="export-card">
+          <h3><svg class="icon"><use href="assets/icons.svg#icon-file"></use></svg> Печать и PDF</h3>
+          <p class="muted">Печатная версия с логотипом, пациентом и всеми заполненными полями. В диалоге печати выберите «Сохранить как PDF».</p>
+          <div class="export-actions">
+            <button type="button" class="btn btn-primary" data-export="print-current">Печать текущего раздела</button>
+            <button type="button" class="btn btn-outline" data-export="print-all">Печать всей документации</button>
+          </div>
+        </section>
+        <section class="export-card">
+          <h3><svg class="icon"><use href="assets/icons.svg#icon-download"></use></svg> Microsoft Word</h3>
+          <p class="muted">DOCX с заголовками, таблицами и подписями. Формируется автономно, без внешних сервисов.</p>
+          <div class="export-actions">
+            <button type="button" class="btn btn-primary" data-export="docx-current">DOCX текущего раздела</button>
+            <button type="button" class="btn btn-outline" data-export="docx-all">DOCX всей документации</button>
+          </div>
+        </section>
+        <section class="export-card">
+          <h3><svg class="icon"><use href="assets/icons.svg#icon-clipboard"></use></svg> Данные</h3>
+          <p class="muted">Резервная копия всей сессии в JSON и текстовый отчёт о практике.</p>
+          <div class="export-actions">
+            <button type="button" class="btn btn-outline" data-export="json">Скачать JSON</button>
+            <button type="button" class="btn btn-outline" data-export="txt">Скачать отчёт TXT</button>
+          </div>
+        </section>
+        <section class="export-card export-card-sign">
+          <h3><svg class="icon"><use href="assets/icons.svg#icon-check-circle"></use></svg> Электронная подпись</h3>
+          <p class="muted" id="exportSignatureStatus">Документация не подписана.</p>
+          <div class="export-actions">
+            <button type="button" class="btn btn-primary" id="btnSignDocument">Подписать документацию</button>
+            <button type="button" class="btn btn-outline" id="btnOpenAudit">Журнал аудита</button>
+          </div>
+        </section>
+      </div>
+      <p class="form-note" style="margin-top:16px">Экспорт формируется из текущего состояния форм. Перед подписанием убедитесь, что документация проверена: после изменений подпись помечается как недействительная.</p>
+    </div>
+    <footer class="modal-foot">
+      <p class="muted">Все данные синтетические. Файлы сохраняются только на этом компьютере.</p>
+      <button type="button" class="btn btn-outline" data-close-modal>Закрыть</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: ПОДПИСЬ ================= -->
+<div class="modal" id="modalSign" role="dialog" aria-modal="true" aria-labelledby="signTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window modal-window-sm">
+    <header class="modal-head">
+      <div>
+        <p class="eyebrow">Электронная подпись</p>
+        <h2 id="signTitle">Подписать документацию</h2>
+      </div>
+      <button type="button" class="icon-btn modal-close" data-close-modal aria-label="Закрыть">✕</button>
+    </header>
+    <div class="modal-body">
+      <p class="muted">Учебная электронная подпись фиксирует автора и состояние документа. Это не усиленная квалифицированная электронная подпись; для учебного комплекса используется криптографический хеш SHA-256.</p>
+      <div class="field">
+        <label for="signFio">Фамилия, имя, отчество <span class="req">*</span></label>
+        <input class="form-input" id="signFio" type="text" autocomplete="off" placeholder="Петрова Анна Сергеевна">
+      </div>
+      <div class="field">
+        <label for="signRole">Роль подписанта</label>
+        <select class="form-select" id="signRole">
+          <option value="Студент">Студент</option>
+          <option value="Преподаватель">Преподаватель</option>
+        </select>
+      </div>
+      <label class="check-row">
+        <input type="checkbox" id="signConfirm">
+        <span>Подтверждаю, что документация заполнена и проверена, а подпись ставится осознанно. После любых изменений подпись будет помечена как недействительная.</span>
+      </label>
+      <div class="consent-box">
+        <strong>Что фиксируется:</strong> ФИО, роль, дата и время, SHA-256 хеш документации. Хеш не содержит персональных данных и позволяет проверить неизменность документа.
+      </div>
+      <p id="signError" class="form-error" hidden role="alert"></p>
+    </div>
+    <footer class="modal-foot">
+      <div class="modal-foot-actions">
+        <button type="button" class="btn btn-outline" data-close-modal>Отмена</button>
+        <button type="button" class="btn btn-primary" id="signAccept">Подписать</button>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: ЖУРНАЛ АУДИТА ================= -->
+<div class="modal" id="modalAudit" role="dialog" aria-modal="true" aria-labelledby="auditTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window modal-window-lg">
+    <header class="modal-head">
+      <div>
+        <p class="eyebrow">Кто, когда и что изменил</p>
+        <h2 id="auditTitle">Журнал аудита</h2>
+      </div>
+      <button type="button" class="icon-btn modal-close" data-close-modal aria-label="Закрыть">✕</button>
+    </header>
+    <div class="modal-body">
+      <div class="audit-toolbar">
+        <input class="form-input" id="auditSearch" type="search" placeholder="Поиск по пользователю, действию или объекту…" aria-label="Поиск по журналу аудита">
+        <button type="button" class="btn btn-outline btn-sm" id="auditExport"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#icon-download"></use></svg> CSV</button>
+      </div>
+      <div class="table-wrap" style="margin-top:12px">
+        <table class="data-table audit-table">
+          <thead><tr><th>Дата и время</th><th>Пользователь</th><th>Действие</th><th>Объект</th><th>Детали</th></tr></thead>
+          <tbody id="auditBody"><tr><td colspan="5" class="muted">Записей нет.</td></tr></tbody>
+        </table>
+      </div>
+      <p class="field-hint">Журнал ведётся автоматически, хранится в localStorage и не редактируется из интерфейса. Для контроля сохраняйте CSV или JSON-резервную копию.</p>
+    </div>
+    <footer class="modal-foot">
+      <p class="muted">Хранится последние 1000 записей.</p>
+      <button type="button" class="btn btn-outline" data-close-modal>Закрыть</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: КАРТА САЙТА ================= -->
+<div class="modal" id="modalSitemap" role="dialog" aria-modal="true" aria-labelledby="sitemapTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window modal-window-lg">
+    <header class="modal-head">
+      <div>
+        <p class="eyebrow">Навигация по комплексу</p>
+        <h2 id="sitemapTitle">Карта сайта МИС «Цифровая клиника»</h2>
+      </div>
+      <button type="button" class="icon-btn modal-close" data-close-modal aria-label="Закрыть карту сайта">✕</button>
+    </header>
+    <div class="modal-body" id="sitemapBody">
+      <p class="muted">Загрузка структуры…</p>
+    </div>
+    <footer class="modal-foot">
+      <p class="muted">Все разделы и формы доступны по клику. Карта сайта не содержит персональных данных.</p>
+      <button type="button" class="btn btn-outline" data-close-modal>Закрыть</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= МОДАЛЬНОЕ ОКНО: БЫСТРЫЙ ПЕРЕХОД ================= -->
+<div class="modal" id="modalPalette" role="dialog" aria-modal="true" aria-labelledby="paletteTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-window modal-window-palette">
+    <h2 id="paletteTitle" class="visually-hidden">Быстрый переход по разделам</h2>
+    <div class="palette-search">
+      <span aria-hidden="true">⌘</span>
+      <input id="paletteInput" type="text" autocomplete="off" spellcheck="false" placeholder="Раздел, форма или действие…" aria-label="Поиск раздела или действия">
+      <kbd>Esc</kbd>
+    </div>
+    <div class="palette-list" id="paletteList" role="listbox" aria-label="Результаты поиска"></div>
+    <footer class="palette-foot">
+      <span><kbd>↑</kbd><kbd>↓</kbd> выбор</span>
+      <span><kbd>Enter</kbd> открыть</span>
+      <span><kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd> вызвать</span>
+    </footer>
+  </div>
+</div>
+
+<div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
+
+<script src="js/auth.js"></script>
+<script src="js/cases.js"></script>
+<script src="js/canvas_chart.js"></script>
+<script src="js/validation.js"></script>
+<script src="js/dictionaries.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

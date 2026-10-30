@@ -1,0 +1,335 @@
+<section class="form-card" id="form066u" data-form-card="066u">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">066/у</span>Статистическая карта выбывшего из медицинской организации</h3>
+      <p class="form-card-sub">Учётная форма № 066/у. Паспортную часть и левую сторону карты заполняет медицинская сестра приёмного отделения до жёлтой отметки.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="sync-from-journal">⇄ Заполнить из 001/у</button>
+      <button type="button" class="btn btn-sm btn-ghost" data-action="focus-form" data-target="form003u">↑ К 003/у</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <p class="form-note">Данные статистической карты должны полностью совпадать с титульным листом 003/у по ФИО, дате рождения, полу, СНИЛС, полису ОМС, дате и времени поступления.</p>
+
+    <div class="form-section">
+      <h4>Паспортная часть</h4>
+      <div class="form-grid">
+        <div class="field span-2">
+          <label for="s066No">№ карты</label>
+          <input class="form-input" id="s066No" type="text" data-bind="stat066.cardNo" placeholder="1245/26">
+        </div>
+        <div class="field span-6">
+          <label for="s066Fio">Фамилия, имя, отчество пациента <span class="req">*</span></label>
+          <input class="form-input" id="s066Fio" type="text" data-bind="stat066.fio" data-rule="required|fio" placeholder="Петров Иван Сергеевич">
+        </div>
+        <div class="field span-2">
+          <label for="s066Birth">Дата рождения</label>
+          <input class="form-input" id="s066Birth" type="date" data-bind="stat066.birth">
+        </div>
+        <div class="field span-2">
+          <label for="s066Sex">Пол</label>
+          <select class="form-select" id="s066Sex" data-bind="stat066.sex">
+            <option value="">—</option>
+            <option>Мужской</option>
+            <option>Женский</option>
+          </select>
+        </div>
+        <div class="field span-4">
+          <label for="s066Cit">Гражданство</label>
+          <input class="form-input" id="s066Cit" type="text" data-bind="stat066.citizenship" placeholder="Российская Федерация">
+        </div>
+        <div class="field span-4">
+          <label for="s066Locality">Местность</label>
+          <select class="form-select" id="s066Locality" data-bind="stat066.locality">
+            <option value="">—</option>
+            <option>Городская</option>
+            <option>Сельская</option>
+          </select>
+        </div>
+        <div class="field span-4">
+          <label for="s066Marital">Семейное положение</label>
+          <select class="form-select" id="s066Marital" data-bind="stat066.marital">
+            <option value="">—</option>
+            <option>Состоит в зарегистрированном браке</option>
+            <option>Не состоит в зарегистрированном браке</option>
+            <option>Неизвестно</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Регистрация по месту жительства</h4>
+      <div class="form-grid">
+        <div class="field span-3"><label for="s066Ls">Субъект РФ</label><input class="form-input" id="s066Ls" type="text" data-bind="stat066.regLiveSubject" placeholder="г. Москва"></div>
+        <div class="field span-3"><label for="s066Ld">Район</label><input class="form-input" id="s066Ld" type="text" data-bind="stat066.regLiveDistrict"></div>
+        <div class="field span-2"><label for="s066Lc">Город</label><input class="form-input" id="s066Lc" type="text" data-bind="stat066.regLiveCity"></div>
+        <div class="field span-2"><label for="s066Lset">Населённый пункт</label><input class="form-input" id="s066Lset" type="text" data-bind="stat066.regLiveSettlement"></div>
+        <div class="field span-3"><label for="s066Lst">Улица</label><input class="form-input" id="s066Lst" type="text" data-bind="stat066.regLiveStreet"></div>
+        <div class="field span-2"><label for="s066Lh">Дом</label><input class="form-input" id="s066Lh" type="text" data-bind="stat066.regLiveHouse"></div>
+        <div class="field span-2"><label for="s066Lb">Строение/корпус</label><input class="form-input" id="s066Lb" type="text" data-bind="stat066.regLiveBuilding"></div>
+        <div class="field span-2"><label for="s066Lf">Квартира</label><input class="form-input" id="s066Lf" type="text" data-bind="stat066.regLiveFlat"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Регистрация по месту пребывания</h4>
+      <div class="form-grid">
+        <div class="field span-3"><label for="s066Ss">Субъект РФ</label><input class="form-input" id="s066Ss" type="text" data-bind="stat066.regStaySubject"></div>
+        <div class="field span-3"><label for="s066Sd">Район</label><input class="form-input" id="s066Sd" type="text" data-bind="stat066.regStayDistrict"></div>
+        <div class="field span-2"><label for="s066Sc">Город</label><input class="form-input" id="s066Sc" type="text" data-bind="stat066.regStayCity"></div>
+        <div class="field span-2"><label for="s066Sset">Населённый пункт</label><input class="form-input" id="s066Sset" type="text" data-bind="stat066.regStaySettlement"></div>
+        <div class="field span-3"><label for="s066Sst">Улица</label><input class="form-input" id="s066Sst" type="text" data-bind="stat066.regStayStreet"></div>
+        <div class="field span-2"><label for="s066Sh">Дом</label><input class="form-input" id="s066Sh" type="text" data-bind="stat066.regStayHouse"></div>
+        <div class="field span-2"><label for="s066Sb">Строение/корпус</label><input class="form-input" id="s066Sb" type="text" data-bind="stat066.regStayBuilding"></div>
+        <div class="field span-2"><label for="s066Sf">Квартира</label><input class="form-input" id="s066Sf" type="text" data-bind="stat066.regStayFlat"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Образование, занятость, социальный статус</h4>
+      <div class="form-grid">
+        <div class="field span-4">
+          <label for="s066Edu">Общее и профессиональное образование</label>
+          <select class="form-select" id="s066Edu" data-bind="stat066.education">
+            <option value="">—</option>
+            <option>Дошкольное образование</option>
+            <option>Начальное общее образование</option>
+            <option>Основное общее образование</option>
+            <option>Среднее общее образование</option>
+            <option>Среднее профессиональное образование</option>
+            <option>Высшее образование</option>
+            <option>Неизвестно</option>
+          </select>
+        </div>
+        <div class="field span-4">
+          <label for="s066Emp">Занятость</label>
+          <select class="form-select" id="s066Emp" data-bind="stat066.employment">
+            <option value="">—</option>
+            <option>Работает</option>
+            <option>Проходит военную и приравненную к ней службу</option>
+            <option>Пенсионер</option>
+            <option>Обучающийся</option>
+            <option>Не работает</option>
+            <option>Прочее</option>
+          </select>
+        </div>
+        <div class="field span-4">
+          <label for="s066Child">Для детей: дошкольник / школьник / социальное положение</label>
+          <select class="form-select" id="s066Child" data-bind="stat066.childStatus">
+            <option value="">—</option>
+            <option>Дошкольник, организован</option>
+            <option>Дошкольник, не организован</option>
+            <option>Школьник</option>
+            <option>Ребёнок-сирота</option>
+            <option>Без попечения родителей</option>
+            <option>Проживающий в организации для детей-сирот</option>
+          </select>
+        </div>
+        <div class="field span-5"><label for="s066Work">Место работы, учёбы, наименование ДОУ</label><input class="form-input" id="s066Work" type="text" data-bind="stat066.workplace"></div>
+        <div class="field span-3"><label for="s066Pos">Должность</label><input class="form-input" id="s066Pos" type="text" data-bind="stat066.position"></div>
+        <div class="field span-2"><label for="s066Dis">Группа инвалидности</label><input class="form-input" id="s066Dis" type="text" data-bind="stat066.disability" placeholder="Нет / I / II / III"></div>
+        <div class="field span-2">
+          <label for="s066Rad">Радиационное облучение</label>
+          <select class="form-select" id="s066Rad" data-bind="stat066.radiation"><option value="">—</option><option>Да</option><option>Нет</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Полис ОМС и СНИЛС</h4>
+      <div class="form-grid">
+        <div class="field span-4">
+          <label for="s066Oms">Полис обязательного медицинского страхования <span class="req">*</span></label>
+          <input class="form-input" id="s066Oms" type="text" data-bind="stat066.oms" data-rule="required|oms" data-mask="oms" inputmode="numeric" placeholder="7701 0000 0000 0001">
+        </div>
+        <div class="field span-2">
+          <label for="s066OmsDate">Дата выдачи полиса</label>
+          <input class="form-input" id="s066OmsDate" type="date" data-bind="stat066.omsDate">
+        </div>
+        <div class="field span-6">
+          <label for="s066Insurer">Страховая медицинская организация</label>
+          <input class="form-input" id="s066Insurer" type="text" data-bind="stat066.insurer">
+        </div>
+        <div class="field span-4">
+          <label for="s066Snils">СНИЛС <span class="req">*</span></label>
+          <input class="form-input" id="s066Snils" type="text" data-bind="stat066.snils" data-rule="required|snils" data-mask="snils" inputmode="numeric" placeholder="123-456-789 01">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Сведения о госпитализации</h4>
+      <div class="form-grid">
+        <div class="field span-2"><label for="s066AdmDate">Дата поступления</label><input class="form-input" id="s066AdmDate" type="date" data-bind="stat066.admissionDate"></div>
+        <div class="field span-2"><label for="s066AdmTime">Время</label><input class="form-input" id="s066AdmTime" type="time" data-bind="stat066.admissionTime"></div>
+        <div class="field span-2"><label for="s066Hours">Через, часов после начала</label><input class="form-input" id="s066Hours" type="number" min="0" data-bind="stat066.hoursAfter" data-rule="number" data-min="0" data-max="720"></div>
+        <div class="field span-3">
+          <label for="s066Ref">Кем направлен</label>
+          <select class="form-select" id="s066Ref" data-bind="stat066.referral">
+            <option value="">—</option>
+            <option>Поликлиникой</option>
+            <option>Выездной бригадой скорой медицинской помощи</option>
+            <option>Полицией</option>
+            <option>Обратился самостоятельно</option>
+            <option>Другое</option>
+          </select>
+        </div>
+        <div class="field span-3">
+          <label for="s066Order">По поводу основного заболевания</label>
+          <select class="form-select" id="s066Order" data-bind="stat066.admissionOrder"><option value="">—</option><option>Первично</option><option>Повторно</option></select>
+        </div>
+        <div class="field span-3">
+          <label for="s066Care">Форма оказания помощи</label>
+          <select class="form-select" id="s066Care" data-bind="stat066.careForm"><option value="">—</option><option>Плановая</option><option>Экстренная</option></select>
+        </div>
+        <div class="field span-9">
+          <label for="s066Alcohol">Факт употребления алкоголя и иных психоактивных веществ, признаки опьянения</label>
+          <input class="form-input" id="s066Alcohol" type="text" data-bind="stat066.alcohol">
+        </div>
+        <div class="field span-6">
+          <label for="s066Payment">Основной вид оплаты</label>
+          <select class="form-select" id="s066Payment" data-bind="stat066.payment">
+            <option value="">—</option>
+            <option>Обязательное медицинское страхование</option>
+            <option>Средства бюджета (всех уровней)</option>
+            <option>Платные медицинские услуги</option>
+            <option>Добровольное медицинское страхование</option>
+            <option>Другое</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Диагнозы</h4>
+      <div class="form-grid">
+        <div class="field span-7"><label for="s066RefDiag">Диагноз при направлении</label><input class="form-input" id="s066RefDiag" type="text" data-bind="stat066.referralDiag"></div>
+        <div class="field span-2"><label for="s066RefIcd">Код по МКБ</label><input class="form-input" id="s066RefIcd" type="text" data-bind="stat066.referralIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-6"><label for="s066PrelimMain">Основное заболевание (предварительный диагноз)</label><input class="form-input" id="s066PrelimMain" type="text" data-bind="stat066.prelimMain"></div>
+        <div class="field span-2"><label for="s066PrelimIcd">Код по МКБ</label><input class="form-input" id="s066PrelimIcd" type="text" data-bind="stat066.prelimIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-4"><label for="s066PrelimComp">Осложнения</label><input class="form-input" id="s066PrelimComp" type="text" data-bind="stat066.prelimComplication"></div>
+        <div class="field span-2"><label for="s066PrelimCompIcd">Код осложнения</label><input class="form-input" id="s066PrelimCompIcd" type="text" data-bind="stat066.prelimCompIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-4"><label for="s066PrelimExt">Внешняя причина</label><input class="form-input" id="s066PrelimExt" type="text" data-bind="stat066.prelimExternal"></div>
+        <div class="field span-2"><label for="s066PrelimExtIcd">Код внешней причины</label><input class="form-input" id="s066PrelimExtIcd" type="text" data-bind="stat066.prelimExtIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-6"><label for="s066PrelimConc">Сопутствующие заболевания</label><input class="form-input" id="s066PrelimConc" type="text" data-bind="stat066.prelimConcomitant"></div>
+        <div class="field span-2"><label for="s066PrelimConcIcd">Код сопутствующего</label><input class="form-input" id="s066PrelimConcIcd" type="text" data-bind="stat066.prelimConcIcd" data-rule="icd" data-mask="icd"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Исход и выбытие</h4>
+      <div class="form-grid">
+        <div class="field span-3">
+          <label for="s066Outcome">Исход госпитализации</label>
+          <select class="form-select" id="s066Outcome" data-bind="stat066.outcome"><option value="">—</option><option>Выписан</option><option>Выписан в дневной стационар</option><option>Выписан в стационар</option><option>Переведён</option><option>Умер</option></select>
+        </div>
+        <div class="field span-3">
+          <label for="s066Result">Результат госпитализации</label>
+          <select class="form-select" id="s066Result" data-bind="stat066.result"><option value="">—</option><option>Выздоровление</option><option>Улучшение</option><option>Без перемен</option><option>Ухудшение</option><option>Умер</option></select>
+        </div>
+        <div class="field span-2"><label for="s066BedDays">Койко-дней</label><input class="form-input" id="s066BedDays" type="number" min="0" data-bind="stat066.bedDays" data-rule="number" data-min="0" data-max="365"></div>
+        <div class="field span-4"><label for="s066Profile">Профиль отделения</label><input class="form-input" id="s066Profile" type="text" data-bind="stat066.profile"></div>
+        <div class="field span-8"><label for="s066Ops">Проведённые оперативные вмешательства</label><input class="form-input" id="s066Ops" type="text" data-bind="stat066.operations"></div>
+        <div class="field span-4"><label for="s066Doctor">Лечащий врач</label><input class="form-input" id="s066Doctor" type="text" data-bind="stat066.doctor"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Оборотная сторона: движение пациента по отделениям</h4>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Движение пациента по отделениям">
+        <table class="data-table" id="table066mov" style="min-width:1100px">
+          <thead><tr>
+            <th class="col-num">№</th><th class="col-md">Наименование отделения</th><th class="col-sm">Профиль коек</th>
+            <th class="col-md">Лечащий врач</th><th class="col-date">Дата поступления</th>
+            <th class="col-date">Дата и время выписки, смерти</th><th class="col-md">Основное заболевание</th>
+            <th class="col-sm">Код по МКБ</th><th class="col-sm">Дней</th><th class="row-actions">—</th>
+          </tr></thead>
+          <tbody data-render="stat066Movements"><tr><td colspan="10" class="muted">Нет записей. Добавьте отделение.</td></tr></tbody>
+        </table>
+      </div>
+      <div class="table-toolbar">
+        <div class="table-toolbar-left"><button type="button" class="btn btn-sm btn-outline" data-action="stat066-move-add">+ Отделение</button></div>
+        <div class="table-legend"><span>Строк: <strong data-counter="s066MoveRows">0</strong></span></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Оборотная сторона: группа крови и инфекционный скрининг</h4>
+      <div class="form-grid">
+        <div class="field span-3"><label for="s066Blood">Группа крови</label><input class="form-input" id="s066Blood" type="text" data-bind="stat066.bloodGroup" data-rule="blood" data-mask="blood" placeholder="A(II)"></div>
+        <div class="field span-2"><label for="s066Rh">Резус-принадлежность</label>
+          <select class="form-select" id="s066Rh" data-bind="stat066.rhFactor"><option value="">—</option><option>Rh+</option><option>Rh-</option></select>
+        </div>
+        <div class="field span-2"><label for="s066Kell">Kell-антиген</label>
+          <select class="form-select" id="s066Kell" data-bind="stat066.kell"><option value="">—</option><option>K+</option><option>K-</option></select>
+        </div>
+        <div class="field span-5"><label for="s066BloodOther">Иные сведения групповой принадлежности</label><input class="form-input" id="s066BloodOther" type="text" data-bind="stat066.bloodOther"></div>
+        <div class="field span-4"><label for="s066Hiv">Обследование на ВИЧ</label>
+          <select class="form-select" id="s066Hiv" data-bind="stat066.hivTest"><option value="">—</option><option>Да</option><option>Нет</option></select>
+        </div>
+        <div class="field span-4"><label for="s066Syph">Обследование на сифилис</label>
+          <select class="form-select" id="s066Syph" data-bind="stat066.syphilisTest"><option value="">—</option><option>Да</option><option>Нет</option></select>
+        </div>
+        <div class="field span-4"><label for="s066Hep">Обследование на гепатиты B, C</label>
+          <select class="form-select" id="s066Hep" data-bind="stat066.hepatitisTest"><option value="">—</option><option>Да</option><option>Нет</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Оборотная сторона: клинический и патологоанатомический диагноз</h4>
+      <div class="form-grid">
+        <div class="field span-7"><label for="s066FinalMain">Клинический диагноз: основное заболевание</label><input class="form-input" id="s066FinalMain" type="text" data-bind="stat066.finalMain"></div>
+        <div class="field span-2"><label for="s066FinalIcd">Код по МКБ</label><input class="form-input" id="s066FinalIcd" type="text" data-bind="stat066.finalIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-7"><label for="s066FinalComp">Осложнения основного заболевания</label><input class="form-input" id="s066FinalComp" type="text" data-bind="stat066.finalComplication"></div>
+        <div class="field span-2"><label for="s066FinalCompIcd">Код осложнения</label><input class="form-input" id="s066FinalCompIcd" type="text" data-bind="stat066.finalCompIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-7"><label for="s066FinalConc">Сопутствующие заболевания</label><input class="form-input" id="s066FinalConc" type="text" data-bind="stat066.finalConcomitant"></div>
+        <div class="field span-2"><label for="s066FinalConcIcd">Код сопутствующего</label><input class="form-input" id="s066FinalConcIcd" type="text" data-bind="stat066.finalConcIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-7"><label for="s066FinalExt">Внешняя причина при травмах</label><input class="form-input" id="s066FinalExt" type="text" data-bind="stat066.finalExternal"></div>
+        <div class="field span-2"><label for="s066FinalExtIcd">Код внешней причины</label><input class="form-input" id="s066FinalExtIcd" type="text" data-bind="stat066.finalExtIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-12"><label for="s066FinalExtra">Дополнительные сведения о заболевании</label><input class="form-input" id="s066FinalExtra" type="text" data-bind="stat066.finalExtra"></div>
+        <div class="field span-7"><label for="s066PathoMain">Патологоанатомический диагноз: основное заболевание</label><input class="form-input" id="s066PathoMain" type="text" data-bind="stat066.pathoMain"></div>
+        <div class="field span-2"><label for="s066PathoIcd">Код по МКБ</label><input class="form-input" id="s066PathoIcd" type="text" data-bind="stat066.pathoIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-7"><label for="s066PathoComp">Осложнения</label><input class="form-input" id="s066PathoComp" type="text" data-bind="stat066.pathoComplication"></div>
+        <div class="field span-2"><label for="s066PathoCompIcd">Код осложнения</label><input class="form-input" id="s066PathoCompIcd" type="text" data-bind="stat066.pathoCompIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-7"><label for="s066PathoConc">Сопутствующие заболевания</label><input class="form-input" id="s066PathoConc" type="text" data-bind="stat066.pathoConcomitant"></div>
+        <div class="field span-2"><label for="s066PathoConcIcd">Код сопутствующего</label><input class="form-input" id="s066PathoConcIcd" type="text" data-bind="stat066.pathoConcIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-7"><label for="s066PathoExt">Внешняя причина</label><input class="form-input" id="s066PathoExt" type="text" data-bind="stat066.pathoExternal"></div>
+        <div class="field span-2"><label for="s066PathoExtIcd">Код внешней причины</label><input class="form-input" id="s066PathoExtIcd" type="text" data-bind="stat066.pathoExtIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-12"><label for="s066PathoExtra">Дополнительные сведения</label><input class="form-input" id="s066PathoExtra" type="text" data-bind="stat066.pathoExtra"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Оборотная сторона: выписка, смерть и трудоспособность</h4>
+      <div class="form-grid">
+        <div class="field span-2"><label for="s066DisDate">Дата выписки</label><input class="form-input" id="s066DisDate" type="date" data-bind="stat066.dischargeDate"></div>
+        <div class="field span-2"><label for="s066DisTime">Время выписки</label><input class="form-input" id="s066DisTime" type="time" data-bind="stat066.dischargeTime"></div>
+        <div class="field span-4"><label for="s066DeathDept">Умер в отделении</label><input class="form-input" id="s066DeathDept" type="text" data-bind="stat066.deathDept"></div>
+        <div class="field span-2"><label for="s066DeathDate">Дата смерти</label><input class="form-input" id="s066DeathDate" type="date" data-bind="stat066.deathDate"></div>
+        <div class="field span-2"><label for="s066DeathTime">Время смерти</label><input class="form-input" id="s066DeathTime" type="time" data-bind="stat066.deathTime"></div>
+        <div class="field span-3"><label for="s066Pregnant">Умерла беременная</label>
+          <select class="form-select" id="s066Pregnant" data-bind="stat066.deathPregnant"><option value="">—</option><option>До 22 недель беременности</option><option>После 22 недель беременности</option></select>
+        </div>
+        <div class="field span-3"><label for="s066SickNo">Листок нетрудоспособности №</label><input class="form-input" id="s066SickNo" type="text" data-bind="stat066.sickLeaveNo"></div>
+        <div class="field span-2"><label for="s066SickDate">Дата выдачи</label><input class="form-input" id="s066SickDate" type="date" data-bind="stat066.sickLeaveDate"></div>
+        <div class="field span-2"><label for="s066SickFrom">Освобождение с</label><input class="form-input" id="s066SickFrom" type="date" data-bind="stat066.sickLeaveFrom"></div>
+        <div class="field span-2"><label for="s066SickTo">По</label><input class="form-input" id="s066SickTo" type="date" data-bind="stat066.sickLeaveTo"></div>
+        <div class="field span-2"><label for="s066SickDup">Дубликат №</label><input class="form-input" id="s066SickDup" type="text" data-bind="stat066.sickLeaveDuplicate"></div>
+        <div class="field span-3"><label for="s066Return">Приступить к работе с</label><input class="form-input" id="s066Return" type="date" data-bind="stat066.returnWork"></div>
+        <div class="field span-3"><label for="s066Appearance">Явка в другую МО</label><input class="form-input" id="s066Appearance" type="date" data-bind="stat066.appearanceDate"></div>
+        <div class="field span-6"><label for="s066SickCare">Листок по уходу за членом семьи</label><input class="form-input" id="s066SickCare" type="text" data-bind="stat066.sickLeaveCare"></div>
+        <div class="field span-6"><label for="s066Head">Заведующий отделением</label><input class="form-input" id="s066Head" type="text" data-bind="stat066.headDoctor"></div>
+        <div class="field span-6"><label for="s066HeadSign">Подпись заведующего</label><input class="form-input" id="s066HeadSign" type="text" data-bind="stat066.headDoctorSign"></div>
+      </div>
+    </div>
+
+    <div class="signature-line">
+      <span>Медицинская сестра приёмного отделения</span>
+      <span class="line"></span>
+      <span>подпись / ФИО</span>
+    </div>
+  </div>
+</section>

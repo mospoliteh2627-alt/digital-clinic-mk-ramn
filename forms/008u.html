@@ -1,0 +1,33 @@
+<section class="form-card" id="form008u" data-form-card="008u">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">008/у</span>Журнал учёта оперативных вмешательств (операций)</h3>
+      <p class="form-card-sub">Учётная форма № 008/у, утверждена приказом МЗ РФ от 05.08.2022 № 530н. Ведётся в каждой операционной; операцию регистрирует оперирующий врач.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="op008-add">+ Операция</button>
+      <button type="button" class="btn btn-sm btn-outline" data-action="op008-from-protocol">⇄ Из протокола операции</button>
+      <button type="button" class="btn btn-sm btn-ghost" data-action="op008-clear">Очистить</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-3"><label for="op008Start">Журнал начат</label><input class="form-input" id="op008Start" type="date" data-bind="operations008.started"></div>
+      <div class="field span-3"><label for="op008End">Журнал окончен</label><input class="form-input" id="op008End" type="date" data-bind="operations008.ended"></div>
+      <div class="field span-3"><label for="op008Code">Код отделения</label><input class="form-input" id="op008Code" type="text" data-bind="operations008.departmentCode" placeholder="ХО-2"></div>
+      <div class="field span-3"><label for="op008Org">Медицинская организация</label><input class="form-input" id="op008Org" type="text" data-bind="doc.organization"></div>
+    </div>
+    <p class="form-note">Запись содержит 17 пунктов унифицированной формы: паспортные данные, дату и время операции, диагнозы до и после, вид вмешательства, анестезию, описание хода, исход, патоморфологический материал, осложнения и состав бригады. Кнопка «Из протокола операции» переносит данные из бланка 003/у.</p>
+    <div id="operations008List" data-render="operations008">
+      <p class="muted">Записей нет. Добавьте операцию или заполните форму из протокола.</p>
+    </div>
+    <div class="table-toolbar">
+      <div class="table-toolbar-left">
+        <button type="button" class="btn btn-sm btn-outline" data-action="op008-add">+ Добавить операцию</button>
+        <button type="button" class="btn btn-sm btn-outline" data-action="op008-from-protocol">⇄ Заполнить из протокола</button>
+      </div>
+      <div class="table-legend"><span>Записей: <strong data-counter="op008Rows">0</strong></span></div>
+    </div>
+    <div class="signature-line"><span>Оперирующий врач</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

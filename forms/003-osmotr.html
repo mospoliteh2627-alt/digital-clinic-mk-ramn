@@ -1,0 +1,76 @@
+<section class="form-card" data-form-card="003-osmotr">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Первичный осмотр врачом в приёмном отделении</h3>
+      <p class="form-card-sub">Внутренний бланк медицинской карты. Заполняется врачом, медицинская сестра переносит антропометрию и назначения.</p>
+    </div>
+    <div class="form-card-tools">
+      <span class="badge badge-soft">Осмотр</span>
+      <button type="button" class="btn btn-sm btn-outline" data-action="copy-patient">⇄ Паспортные данные</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-3"><label for="exDate">Дата осмотра</label><input class="form-input" id="exDate" type="date" data-bind="treatment.exam.examDate" data-rule="date"></div>
+      <div class="field span-2"><label for="exTime">Время</label><input class="form-input" id="exTime" type="time" data-bind="treatment.exam.examTime"></div>
+      <div class="field span-4"><label for="exDoctor">Врач</label><input class="form-input" id="exDoctor" type="text" data-bind="treatment.exam.doctor"></div>
+      <div class="field span-3"><label for="exCond">Общее состояние</label>
+        <select class="form-select" id="exCond" data-bind="treatment.exam.generalCondition">
+          <option value="">—</option><option>Удовлетворительное</option><option>Средней тяжести</option><option>Тяжёлое</option><option>Крайне тяжёлое</option><option>Терминальное</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Жалобы и анамнез</h4>
+      <div class="form-grid">
+        <div class="field span-12"><label for="exComplaints">Жалобы при поступлении <span class="req">*</span></label><textarea class="form-textarea" id="exComplaints" data-bind="treatment.exam.complaints" data-rule="required" placeholder="Боли, их локализация, иррадиация, тошнота, рвота, температура, слабость…"></textarea></div>
+        <div class="field span-6"><label for="exDisease">Анамнез заболевания <span class="req">*</span></label><textarea class="form-textarea" id="exDisease" data-bind="treatment.exam.diseaseAnamnesis" data-rule="required" placeholder="Когда и как началось заболевание, динамика, обращение за помощью, лечение до госпитализации"></textarea></div>
+        <div class="field span-6"><label for="exLife">Анамнез жизни</label><textarea class="form-textarea" id="exLife" data-bind="treatment.exam.lifeAnamnesis" placeholder="Перенесённые заболевания, операции, вредные привычки, наследственность, гинекологический анамнез"></textarea></div>
+        <div class="field span-12"><label for="exEpid">Эпидемиологический анамнез</label><textarea class="form-textarea" id="exEpid" data-bind="treatment.exam.epidAnamnesis" placeholder="Контакты с инфекционными больными, выезды за пределы РФ, гемотрансфузии"></textarea></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Физикальное исследование</h4>
+      <div class="form-grid">
+        <div class="field span-3"><label for="exConsc">Сознание</label>
+          <select class="form-select" id="exConsc" data-bind="treatment.exam.consciousness"><option value="">—</option><option>Ясное</option><option>Оглушение</option><option>Сопор</option><option>Кома</option></select>
+        </div>
+        <div class="field span-3"><label for="exPos">Положение</label><input class="form-input" id="exPos" type="text" data-bind="treatment.exam.position" placeholder="Активное, вынужденное"></div>
+        <div class="field span-3"><label for="exTemp">Температура тела, °C</label><input class="form-input" id="exTemp" type="number" step="0.1" data-bind="treatment.exam.temperature" data-rule="number" data-min="30" data-max="45"></div>
+        <div class="field span-3"><label for="exRR">ЧДД, в минуту</label><input class="form-input" id="exRR" type="number" data-bind="treatment.exam.respRate" data-rule="number" data-min="5" data-max="80"></div>
+        <div class="field span-6"><label for="exSkin">Кожные покровы</label><textarea class="form-textarea" id="exSkin" data-bind="treatment.exam.skin" placeholder="Окраска, влажность, сыпь, кровоизлияния, рубцы"></textarea></div>
+        <div class="field span-6"><label for="exMucosa">Слизистые оболочки</label><textarea class="form-textarea" id="exMucosa" data-bind="treatment.exam.mucosa"></textarea></div>
+        <div class="field span-12"><label for="exLymph">Лимфатические узлы</label><input class="form-input" id="exLymph" type="text" data-bind="treatment.exam.lymphNodes"></div>
+        <div class="field span-6"><label for="exLungs">Лёгкие (аускультация, перкуссия)</label><textarea class="form-textarea" id="exLungs" data-bind="treatment.exam.lungAuscultation"></textarea></div>
+        <div class="field span-6"><label for="exHeart">Сердце (тоны, шумы)</label><textarea class="form-textarea" id="exHeart" data-bind="treatment.exam.heartSounds"></textarea></div>
+        <div class="field span-12"><label for="exAbdomen">Живот (осмотр, пальпация, симптомы)</label><textarea class="form-textarea" id="exAbdomen" data-bind="treatment.exam.abdomen"></textarea></div>
+        <div class="field span-6"><label for="exStool">Стул</label><input class="form-input" id="exStool" type="text" data-bind="treatment.exam.stool"></div>
+        <div class="field span-6"><label for="exUrine">Диурез</label><input class="form-input" id="exUrine" type="text" data-bind="treatment.exam.urine"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Антропометрия и гемодинамика</h4>
+      <div class="form-grid">
+        <div class="field span-2"><label for="exHeight">Рост, см</label><input class="form-input" id="exHeight" type="number" step="0.1" data-bind="treatment.exam.height" data-rule="number" data-min="40" data-max="250"></div>
+        <div class="field span-2"><label for="exWeight">Масса тела, кг</label><input class="form-input" id="exWeight" type="number" step="0.1" data-bind="treatment.exam.weight" data-rule="number" data-min="1" data-max="400"></div>
+        <div class="field span-2"><label for="exBmi">ИМТ, кг/м²</label><input class="form-input" id="exBmi" type="text" data-computed="bmi" readonly placeholder="—"></div>
+        <div class="field span-2"><label for="exHr">ЧСС, уд/мин</label><input class="form-input" id="exHr" type="number" data-bind="treatment.exam.hr" data-rule="number" data-min="20" data-max="250"></div>
+        <div class="field span-2"><label for="exSyst">АД систолическое</label><input class="form-input" id="exSyst" type="number" data-bind="treatment.exam.bpSystolic" data-rule="number" data-min="40" data-max="300"></div>
+        <div class="field span-2"><label for="exDiast">АД диастолическое</label><input class="form-input" id="exDiast" type="number" data-bind="treatment.exam.bpDiastolic" data-rule="number" data-min="20" data-max="200"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Заключение и план</h4>
+      <div class="form-grid">
+        <div class="field span-8"><label for="exDiag">Диагноз первичного осмотра <span class="req">*</span></label><textarea class="form-textarea" id="exDiag" data-bind="treatment.exam.diagnosis" data-rule="required"></textarea></div>
+        <div class="field span-4"><label for="exPlan">План обследования и лечения <span class="req">*</span></label><textarea class="form-textarea" id="exPlan" data-bind="treatment.exam.plan" data-rule="required"></textarea></div>
+      </div>
+    </div>
+
+    <div class="signature-line"><span>Врач приёмного отделения</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

@@ -1,0 +1,56 @@
+<section class="form-card" id="formConsent" data-form-card="003-soglasie">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Информированное добровольное согласие на медицинское вмешательство</h3>
+      <p class="form-card-sub">Внутренний бланк медицинской карты. Оформляется перед оперативным вмешательством в соответствии со статьёй 20 Федерального закона № 323-ФЗ.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="consent-fill">⇄ Из 003/у и протокола</button>
+      <span class="badge" data-computed="consentStatus">Статус согласия</span>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <div class="consent-box" style="margin-bottom:16px">
+      <p style="margin-bottom:8px"><strong>Я, нижеподписавшийся(аяся),</strong> добровольно даю согласие на проведение указанного медицинского вмешательства. Мне разъяснены цели, характер, объём, ожидаемые результаты, возможные риски и осложнения, альтернативные методы лечения, а также последствия отказа от вмешательства. Мне предоставлена возможность задать вопросы, на которые я получил(а) полные ответы. Информация изложена в доступной для меня форме и понятна.</p>
+      <p style="margin:0">Я подтверждаю, что сведения о пациенте и характере вмешательства внесены верно, а подпись поставлена собственноручно.</p>
+    </div>
+
+    <div class="form-grid">
+      <div class="field span-6"><label for="consFio">Фамилия, имя, отчество пациента</label><input class="form-input" id="consFio" type="text" data-bind="consent.fio" data-rule="fio" placeholder="Орлова Мария Сергеевна"></div>
+      <div class="field span-3"><label for="consBirth">Дата рождения</label><input class="form-input" id="consBirth" type="date" data-bind="consent.birth"></div>
+      <div class="field span-3"><label for="consDecision">Решение пациента</label>
+        <select class="form-select" id="consDecision" data-bind="consent.decision">
+          <option value="">—</option>
+          <option>Согласен на медицинское вмешательство</option>
+          <option>Отказываюсь от медицинского вмешательства</option>
+        </select>
+      </div>
+      <div class="field span-12"><label for="consDiagnosis">Диагноз, по поводу которого планируется вмешательство</label><input class="form-input" id="consDiagnosis" type="text" data-bind="consent.diagnosis" placeholder="Острый парапроктит (K61.0)"></div>
+      <div class="field span-8"><label for="consIntervention">Наименование медицинского вмешательства (операции)</label><input class="form-input" id="consIntervention" type="text" data-bind="consent.intervention" placeholder="Вскрытие и дренирование острого парапроктита"></div>
+      <div class="field span-4"><label for="consAnesthesia">Вид обезболивания</label><input class="form-input" id="consAnesthesia" type="text" data-bind="consent.anesthesia" placeholder="Общая анестезия с интубацией трахеи"></div>
+      <div class="field span-6"><label for="consRisks">Возможные риски и осложнения</label><textarea class="form-textarea" id="consRisks" data-bind="consent.risks" placeholder="Кровотечение, инфекция, повреждение окружающих тканей, аллергическая реакция, тромбоэмболия…"></textarea></div>
+      <div class="field span-6"><label for="consAlternatives">Альтернативные методы и последствия отказа</label><textarea class="form-textarea" id="consAlternatives" data-bind="consent.alternatives" placeholder="Консервативная терапия, иной объём вмешательства; при отказе — прогрессирование заболевания…"></textarea></div>
+      <div class="field span-6"><label for="consDoctor">Врач, проводивший разъяснение</label><input class="form-input" id="consDoctor" type="text" data-bind="consent.doctor" placeholder="Иванов Игорь Иванович"></div>
+      <div class="field span-3"><label for="consDate">Дата подписания</label><input class="form-input" id="consDate" type="date" data-bind="consent.date"></div>
+      <div class="field span-3"><label for="consTime">Время подписания</label><input class="form-input" id="consTime" type="time" data-bind="consent.time"></div>
+      <div class="field span-6"><label for="consPatientSign">Подпись пациента (фамилия, инициалы)</label><input class="form-input" id="consPatientSign" type="text" data-bind="consent.patientSign" placeholder="Орлова М. С."></div>
+      <div class="field span-6"><label for="consWitness">Свидетель / законный представитель</label><input class="form-input" id="consWitness" type="text" data-bind="consent.witness" placeholder="Орлов П. И., супруг"></div>
+      <div class="field span-12"><label for="consRefusal">Причина отказа (заполняется при отказе)</label><textarea class="form-textarea" id="consRefusal" data-bind="consent.refusalReason" placeholder="Укажите причину отказа, разъяснённые последствия и подпись пациента"></textarea></div>
+    </div>
+
+    <label class="check-row" style="margin-top:12px">
+      <input type="checkbox" data-bind="consent.infoExplained">
+      <span>Пациенту в доступной форме разъяснены цели, характер, риски, альтернативы и последствия вмешательства, вопросы пациента обсуждены.</span>
+    </label>
+    <label class="check-row">
+      <input type="checkbox" data-bind="consent.capacity">
+      <span>Пациент находится в ясном сознании и способен осознанно выразить свою волю; признаки состояния, препятствующего волеизъявлению, отсутствуют.</span>
+    </label>
+    <label class="check-row">
+      <input type="checkbox" data-bind="consent.consentGiven">
+      <span>Согласие оформлено добровольно, без принуждения; экземпляр документа вручён пациенту.</span>
+    </label>
+
+    <div class="signature-line"><span>Врач</span><span class="line"></span><span>пациент</span><span class="line"></span><span>свидетель</span></div>
+  </div>
+</section>

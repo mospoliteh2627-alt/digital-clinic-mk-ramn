@@ -1,0 +1,102 @@
+<section class="teacher-grid">
+  <div>
+    <article class="form-card" style="margin-bottom:16px">
+      <header class="form-card-head">
+        <div>
+          <h3>Клинический кейс и заложенные ошибки</h3>
+          <p class="form-card-sub">Эталон преподавателя. Студенту кейс доступен без раскрытия перечня ошибок.</p>
+        </div>
+        <div class="form-card-tools">
+          <button type="button" class="btn btn-sm btn-outline" id="teacherChooseCase">Выбрать кейс</button>
+        </div>
+      </header>
+      <div class="form-card-body">
+        <div id="teacherCaseArea">
+          <p class="muted">Кейс не выбран. Выберите клинический кейс — в него заложены логические ошибки, которые студент должен выявить и устранить.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="form-card">
+      <header class="form-card-head">
+        <div>
+          <h3>Контрольный лист по формам</h3>
+          <p class="form-card-sub">Полнота заполнения разделов и число выявленных нарушений.</p>
+        </div>
+        <div class="form-card-tools">
+          <button type="button" class="btn btn-sm btn-primary" id="teacherCheckBtn">Проверить работу</button>
+        </div>
+      </header>
+      <div class="form-card-body">
+        <div id="teacherChecklist">
+          <table class="checklist-table">
+            <thead><tr><th>Форма / раздел</th><th>Полнота</th><th>Нарушения</th><th>Статус</th></tr></thead>
+            <tbody>
+              <tr><td colspan="4" class="muted">Нажмите «Проверить работу», чтобы получить контрольный лист.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="teacher-actions">
+          <button type="button" class="btn btn-outline btn-sm" id="teacherReportBtn">⭳ Скачать отчёт о практике</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="teacherOpenInstruction">📘 Инструкция по заполнению</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="teacherResetBtn">Сбросить результаты проверки</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="form-card" style="margin-top:16px">
+      <header class="form-card-head">
+        <div>
+          <h3>Методика оценивания</h3>
+          <p class="form-card-sub">Критерии, применяемые автоматической проверкой.</p>
+        </div>
+      </header>
+      <div class="form-card-body">
+        <table class="checklist-table">
+          <thead><tr><th>Категория</th><th>Вес</th><th>Примеры</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-critical">Критическая</span></td><td>−0,7</td><td>Несовпадение группы крови/Rh/Kell, выполнение отменённого препарата, разбалансировка коек, трансфузия без проб и согласия, дата выписки раньше поступления</td></tr>
+            <tr><td><span class="badge badge-major">Существенная</span></td><td>−0,4</td><td>Неверный код МКБ, превышение порционника, отсутствие подписи медсестры, дата операции раньше госпитализации, критический пульс без реакции</td></tr>
+            <tr><td><span class="badge badge-minor">Недочёт</span></td><td>−0,15</td><td>Незаполненные второстепенные поля, неполнота раздела менее 60 %, форматные неточности</td></tr>
+          </tbody>
+        </table>
+        <p class="form-note" style="margin-top:12px;margin-bottom:0">Оценка рассчитывается от 5,00 с понижением за каждое нарушение, но не ниже 2,00. Итог: 4,50–5,00 — «отлично»; 3,50–4,49 — «хорошо»; 2,50–3,49 — «удовлетворительно»; ниже 2,50 — «неудовлетворительно».</p>
+      </div>
+    </article>
+  </div>
+
+  <aside>
+    <div class="score-panel" id="teacherScore">
+      <p class="eyebrow" style="margin-bottom:6px">Итоговая оценка</p>
+      <div class="score-big"><span id="teacherScoreValue">—</span><small> / 5,00</small></div>
+      <p class="score-caption" id="teacherGrade">Проверка не выполнялась</p>
+      <div class="score-breakdown">
+        <div><span>Критических</span><strong id="teacherCritical">0</strong></div>
+        <div><span>Существенных</span><strong id="teacherMajor">0</strong></div>
+        <div><span>Недочётов</span><strong id="teacherMinor">0</strong></div>
+      </div>
+      <p class="muted small" id="teacherCheckedAt" style="margin-top:12px;margin-bottom:0">Дата проверки: —</p>
+    </div>
+
+    <div class="form-card" style="margin-top:16px">
+      <header class="form-card-head"><div><h3>Заложенные ошибки</h3><p class="form-card-sub">Статус после последней проверки</p></div></header>
+      <div class="form-card-body">
+        <ul class="planted-list" id="teacherPlanted">
+          <li><span class="planted-state">•</span><span class="muted">Выберите кейс и выполните проверку.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="form-card" style="margin-top:16px">
+      <header class="form-card-head"><div><h3>Сводка по отделениям</h3></div></header>
+      <div class="form-card-body">
+        <div class="summary-strip" style="margin:0">
+          <div class="summary-item"><span>Приёмное</span><strong data-summary="teacherReception">0 %</strong></div>
+          <div class="summary-item"><span>Лечебное</span><strong data-summary="teacherTreatment">0 %</strong></div>
+          <div class="summary-item"><span>Учёт и питание</span><strong data-summary="teacherDepartment">0 %</strong></div>
+          <div class="summary-item"><span>ЦСО</span><strong data-summary="teacherCso">0 %</strong></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</section>

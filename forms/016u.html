@@ -1,0 +1,83 @@
+<section class="form-card" id="form016u" data-form-card="016u">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">016/у</span>Сводная ведомость учёта движения пациентов и коечного фонда</h3>
+      <p class="form-card-sub">Учётная форма № 016/у, утверждена приказом МЗ РФ от 05.08.2022 № 530н. Формируется за отчётный период на основании листов 007/у.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="sum016-add">+ Профиль коек</button>
+      <button type="button" class="btn btn-sm btn-outline" data-action="sum016-pull">⇄ Из 007/у</button>
+      <button type="button" class="btn btn-sm btn-primary" data-action="sum016-recalc">Σ Пересчитать</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-6"><label for="s016Dept">Наименование структурного подразделения</label><input class="form-input" id="s016Dept" type="text" data-bind="summary016.department" placeholder="Хирургическое отделение № 2"></div>
+      <div class="field span-3"><label for="s016Period">Отчётный период</label><input class="form-input" id="s016Period" type="text" data-bind="summary016.period" placeholder="Октябрь 2026"></div>
+      <div class="field span-3"><label for="s016Org">Медицинская организация</label><input class="form-input" id="s016Org" type="text" data-bind="doc.organization"></div>
+    </div>
+    <p class="form-note">Ведомость обобщает движение пациентов и использование коечного фонда за месяц (полугодие, год). Кнопка «Из 007/у» переносит профиль, число коек, остатки и движение из последнего заполненного листа 007/у — проверьте период и койко-дни вручную.</p>
+
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Сводная ведомость движения пациентов и коечного фонда">
+      <table class="data-table" id="table016" style="min-width:2360px">
+        <thead>
+          <tr>
+            <th rowspan="2" style="min-width:180px">Наименование профиля коек</th>
+            <th colspan="2">Коечный фонд</th>
+            <th rowspan="2">Состояло<br>на начало<br>периода</th>
+            <th colspan="5">Поступило пациентов</th>
+            <th colspan="2">Переведено</th>
+            <th colspan="4">Выписано пациентов</th>
+            <th colspan="3">Умерло</th>
+            <th rowspan="2">Состояло<br>на конец<br>периода</th>
+            <th colspan="3">Проведено койко-дней</th>
+            <th colspan="2">Свободных мест</th>
+            <th rowspan="2" class="row-actions">—</th>
+          </tr>
+          <tr>
+            <th class="col-sm">Число<br>коек</th>
+            <th class="col-sm">Среднемесячных<br>коек</th>
+            <th class="col-sm">Всего</th>
+            <th class="col-sm">Из дневного<br>стационара</th>
+            <th class="col-sm">Сельских<br>жителей</th>
+            <th class="col-sm">Дети<br>0–17 лет</th>
+            <th class="col-sm">Старше<br>трудоспособного</th>
+            <th class="col-sm">Из других<br>отделений</th>
+            <th class="col-sm">В другие<br>отделения</th>
+            <th class="col-sm">Всего</th>
+            <th class="col-sm">Старше<br>трудоспособного</th>
+            <th class="col-sm">В дневной<br>стационар</th>
+            <th class="col-sm">В стационары</th>
+            <th class="col-sm">Всего</th>
+            <th class="col-sm">Дети<br>0–17 лет</th>
+            <th class="col-sm">Старше<br>трудоспособного</th>
+            <th class="col-sm">Всего</th>
+            <th class="col-sm">На закрытых<br>койках</th>
+            <th class="col-sm">По уходу<br>за пациентом</th>
+            <th class="col-sm">Мужских</th>
+            <th class="col-sm">Женских</th>
+          </tr>
+        </thead>
+        <tbody data-render="summary016"><tr><td colspan="25" class="muted">Нет строк. Добавьте профиль коек или перенесите данные из 007/у.</td></tr></tbody>
+        <tfoot data-render="summary016Totals"><tr><td colspan="25" class="muted">Итоги появятся после заполнения.</td></tr></tfoot>
+      </table>
+    </div>
+
+    <div class="summary-strip" style="margin-top:12px">
+      <div class="summary-item"><span>Состоит на конец периода</span><strong data-summary="s016End">0</strong></div>
+      <div class="summary-item"><span>Проведено койко-дней</span><strong data-summary="s016BedDays">0</strong></div>
+      <div class="summary-item" data-summary-box="s016Balance"><span>Баланс движения</span><strong data-summary="s016Balance">—</strong></div>
+      <div class="summary-item"><span>Свободных мест</span><strong data-summary="s016Free">0</strong></div>
+    </div>
+
+    <div class="table-toolbar">
+      <div class="table-toolbar-left">
+        <button type="button" class="btn btn-sm btn-outline" data-action="sum016-add">+ Добавить профиль</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-action="sum016-clear">Очистить</button>
+      </div>
+      <div class="table-legend"><span>Строк: <strong data-counter="s016Rows">0</strong></span></div>
+    </div>
+
+    <div class="signature-line"><span>Заведующий отделением</span><span class="line"></span><span>старшая медицинская сестра</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

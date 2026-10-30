@@ -1,0 +1,48 @@
+<section class="form-card" data-form-card="003-preop">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Предоперационный осмотр анестезиолога-реаниматолога и предоперационный эпикриз</h3>
+      <p class="form-card-sub">Внутренние бланки медицинской карты. Оформляются перед оперативным вмешательством.</p>
+    </div>
+    <div class="form-card-tools"><span class="badge badge-soft">Предоперационный этап</span></div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-section">
+      <h4>Предоперационный осмотр анестезиолога-реаниматолога</h4>
+      <div class="form-grid">
+        <div class="field span-3"><label for="paDate">Дата осмотра</label><input class="form-input" id="paDate" type="date" data-bind="treatment.preop.anesthDate" data-rule="date"></div>
+        <div class="field span-2"><label for="paTime">Время</label><input class="form-input" id="paTime" type="time" data-bind="treatment.preop.anesthTime"></div>
+        <div class="field span-4"><label for="paDoctor">Врач-анестезиолог</label><input class="form-input" id="paDoctor" type="text" data-bind="treatment.preop.anesthDoctor"></div>
+        <div class="field span-3"><label for="paAsa">Класс ASA</label>
+          <select class="form-select" id="paAsa" data-bind="treatment.preop.anesthASA"><option value="">—</option><option>I класс</option><option>II класс</option><option>III класс</option><option>IV класс</option><option>V класс</option></select>
+        </div>
+        <div class="field span-12"><label for="paComplaints">Жалобы на момент осмотра</label><textarea class="form-textarea" id="paComplaints" data-bind="treatment.preop.anesthComplaints"></textarea></div>
+        <div class="field span-12"><label for="paAnamnesis">Анамнез, сопутствующая патология</label><textarea class="form-textarea" id="paAnamnesis" data-bind="treatment.preop.anesthAnamnesis"></textarea></div>
+        <div class="field span-6"><label for="paAllergy">Аллергоанамнез</label><textarea class="form-textarea" id="paAllergy" data-bind="treatment.preop.anesthAllergy"></textarea></div>
+        <div class="field span-3"><label for="paMallampati">Оценка по Маллампати</label>
+          <select class="form-select" id="paMallampati" data-bind="treatment.preop.anesthMallampati"><option value="">—</option><option>I степень</option><option>II степень</option><option>III степень</option><option>IV степень</option></select>
+        </div>
+        <div class="field span-3"><label for="paRisk">Степень риска</label><input class="form-input" id="paRisk" type="text" data-bind="treatment.preop.anesthRisk" placeholder="Умеренный риск, 1,2 %"></div>
+        <div class="field span-12"><label for="paAirway">Оценка дыхательных путей</label><textarea class="form-textarea" id="paAirway" data-bind="treatment.preop.anesthAirway"></textarea></div>
+        <div class="field span-8"><label for="paPlan">План анестезиологического пособия</label><textarea class="form-textarea" id="paPlan" data-bind="treatment.preop.anesthPlan"></textarea></div>
+        <div class="field span-4"><label for="paPremed">Премедикация</label><textarea class="form-textarea" id="paPremed" data-bind="treatment.preop.anesthPremed"></textarea></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Предоперационный эпикриз</h4>
+      <div class="form-grid">
+        <div class="field span-3"><label for="peDate">Дата эпикриза</label><input class="form-input" id="peDate" type="date" data-bind="treatment.preop.epicrisisDate"></div>
+        <div class="field span-9"><label for="peDiagnosis">Диагноз и код МКБ</label><input class="form-input" id="peDiagnosis" type="text" data-bind="treatment.preop.epicrisisDiagnosis"></div>
+        <div class="field span-12"><label for="peIndication">Показания к операции</label><textarea class="form-textarea" id="peIndication" data-bind="treatment.preop.epicrisisIndication"></textarea></div>
+        <div class="field span-6"><label for="peExam">Результаты обследования</label><textarea class="form-textarea" id="peExam" data-bind="treatment.preop.epicrisisExam"></textarea></div>
+        <div class="field span-6"><label for="peAnalyses">Лабораторные данные, группа крови</label><textarea class="form-textarea" id="peAnalyses" data-bind="treatment.preop.epicrisisAnalyses"></textarea></div>
+        <div class="field span-6"><label for="peRisk">Оценка операционно-анестезиологического риска</label><textarea class="form-textarea" id="peRisk" data-bind="treatment.preop.epicrisisRisk"></textarea></div>
+        <div class="field span-6"><label for="pePlan">Планируемый объём операции</label><textarea class="form-textarea" id="pePlan" data-bind="treatment.preop.epicrisisPlan"></textarea></div>
+        <div class="field span-6"><label for="peDoctor">Подпись врача</label><input class="form-input" id="peDoctor" type="text" data-bind="treatment.preop.epicrisisDoctor"></div>
+      </div>
+    </div>
+
+    <div class="signature-line"><span>Анестезиолог-реаниматолог / лечащий врач</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

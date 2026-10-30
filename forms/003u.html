@@ -1,0 +1,470 @@
+<section class="form-card" id="form003u" data-form-card="003u">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Медицинская карта пациента, получающего медицинскую помощь в стационарных условиях</h3>
+      <p class="form-card-sub">Учётная форма № 003/у. Медицинская сестра приёмного отделения заполняет титульный лист до строки «Переведён в отделение».</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="sync-from-journal">⇄ Заполнить из 001/у</button>
+      <button type="button" class="btn btn-sm btn-ghost" data-action="focus-form" data-target="form066u">Перейти к 066/у ↓</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <p class="form-note">Номер карты должен совпадать с номером в журнале 001/у. Диагнозы кодируются по МКБ-10. Группа крови, резус и Kell-антиген переносятся в лист трансфузии без изменений.</p>
+
+    <div class="form-section">
+      <h4>Паспортная часть и госпитализация</h4>
+      <div class="form-grid">
+        <div class="field span-2">
+          <label for="c003No">№ медицинской карты <span class="req">*</span></label>
+          <input class="form-input" id="c003No" type="text" data-bind="card003.cardNo" data-rule="required" placeholder="1245/26">
+        </div>
+        <div class="field span-6">
+          <label for="c003Fio">Фамилия, имя, отчество пациента <span class="req">*</span></label>
+          <input class="form-input" id="c003Fio" type="text" data-bind="card003.fio" data-rule="required|fio" data-mask="fio" placeholder="Петров Иван Сергеевич">
+        </div>
+        <div class="field span-2">
+          <label for="c003Birth">Дата рождения <span class="req">*</span></label>
+          <input class="form-input" id="c003Birth" type="date" data-bind="card003.birth" data-rule="required|date">
+        </div>
+        <div class="field span-2">
+          <label for="c003Sex">Пол</label>
+          <select class="form-select" id="c003Sex" data-bind="card003.sex">
+            <option value="">—</option>
+            <option>Мужской</option>
+            <option>Женский</option>
+          </select>
+        </div>
+
+        <div class="field span-3">
+          <label for="c003AdmType">Поступил</label>
+          <select class="form-select" id="c003AdmType" data-bind="card003.admissionType">
+            <option value="">—</option>
+            <option>Поступил в стационар</option>
+            <option>Поступил в дневной стационар</option>
+          </select>
+        </div>
+        <div class="field span-2">
+          <label for="c003AdmDate">Дата поступления <span class="req">*</span></label>
+          <input class="form-input" id="c003AdmDate" type="date" data-bind="card003.admissionDate" data-rule="required|date">
+        </div>
+        <div class="field span-2">
+          <label for="c003AdmTime">Время поступления</label>
+          <input class="form-input" id="c003AdmTime" type="time" data-bind="card003.admissionTime">
+        </div>
+        <div class="field span-2">
+          <label for="c003Hours">Поступил через, часов</label>
+          <input class="form-input" id="c003Hours" type="number" min="0" data-bind="card003.hoursAfter" data-rule="number" data-min="0" data-max="720">
+        </div>
+        <div class="field span-3">
+          <label for="c003Referral">Направлен в стационар</label>
+          <select class="form-select" id="c003Referral" data-bind="card003.referral">
+            <option value="">—</option>
+            <option>Поликлиникой</option>
+            <option>Выездной бригадой скорой медицинской помощи</option>
+            <option>Полицией</option>
+            <option>Обратился самостоятельно</option>
+            <option>Другое</option>
+          </select>
+        </div>
+
+        <div class="field span-5">
+          <label for="c003RefOrg">Наименование направившей медицинской организации</label>
+          <input class="form-input" id="c003RefOrg" type="text" data-bind="card003.referralOrg" placeholder="ГБУЗ «Городская клиническая больница № 1»">
+        </div>
+        <div class="field span-2">
+          <label for="c003RefNo">Номер направления</label>
+          <input class="form-input" id="c003RefNo" type="text" data-bind="card003.referralNo">
+        </div>
+        <div class="field span-2">
+          <label for="c003RefDate">Дата направления</label>
+          <input class="form-input" id="c003RefDate" type="date" data-bind="card003.referralDate">
+        </div>
+        <div class="field span-3">
+          <label for="c003Order">Поступил в текущем году</label>
+          <select class="form-select" id="c003Order" data-bind="card003.admissionOrder">
+            <option value="">—</option>
+            <option>Первично</option>
+            <option>Повторно</option>
+          </select>
+        </div>
+        <div class="field span-3">
+          <label for="c003Care">Форма оказания медицинской помощи</label>
+          <select class="form-select" id="c003Care" data-bind="card003.careForm">
+            <option value="">—</option>
+            <option>Плановая</option>
+            <option>Экстренная</option>
+          </select>
+        </div>
+
+        <div class="field span-4">
+          <label for="c003Dept">Наименование отделения <span class="req">*</span></label>
+          <input class="form-input" id="c003Dept" type="text" data-bind="card003.department" data-rule="required" placeholder="Хирургическое отделение № 2">
+        </div>
+        <div class="field span-3">
+          <label for="c003Profile">Профиль коек</label>
+          <input class="form-input" id="c003Profile" type="text" data-bind="card003.profile" placeholder="Хирургические койки">
+        </div>
+        <div class="field span-2">
+          <label for="c003Ward">Палата №</label>
+          <input class="form-input" id="c003Ward" type="text" data-bind="card003.ward" placeholder="7">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Перевод, выписка, койко-дни</h4>
+      <div class="form-grid">
+        <div class="field span-4">
+          <label for="c003TrDept">Переведён в отделение</label>
+          <input class="form-input" id="c003TrDept" type="text" data-bind="card003.transferDept">
+        </div>
+        <div class="field span-3">
+          <label for="c003TrProfile">Профиль коек</label>
+          <input class="form-input" id="c003TrProfile" type="text" data-bind="card003.transferProfile">
+        </div>
+        <div class="field span-2">
+          <label for="c003TrWard">Палата №</label>
+          <input class="form-input" id="c003TrWard" type="text" data-bind="card003.transferWard">
+        </div>
+        <div class="field span-2">
+          <label for="c003TrDate">Дата перевода</label>
+          <input class="form-input" id="c003TrDate" type="date" data-bind="card003.transferDate">
+        </div>
+        <div class="field span-1">
+          <label for="c003TrTime">Время</label>
+          <input class="form-input" id="c003TrTime" type="time" data-bind="card003.transferTime">
+        </div>
+
+        <div class="field span-2">
+          <label for="c003DisDate">Выписан (дата)</label>
+          <input class="form-input" id="c003DisDate" type="date" data-bind="card003.dischargeDate">
+        </div>
+        <div class="field span-2">
+          <label for="c003DisTime">Время выписки</label>
+          <input class="form-input" id="c003DisTime" type="time" data-bind="card003.dischargeTime">
+        </div>
+        <div class="field span-3">
+          <label for="c003Days">Количество дней нахождения</label>
+          <input class="form-input" id="c003Days" type="number" min="0" data-bind="card003.days" data-rule="number" data-min="0" data-max="365">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Диагноз при направлении и предварительный диагноз</h4>
+      <div class="form-grid">
+        <div class="field span-7">
+          <label for="c003RefDiag">Диагноз при направлении</label>
+          <input class="form-input" id="c003RefDiag" type="text" data-bind="card003.referralDiag">
+        </div>
+        <div class="field span-2">
+          <label for="c003RefIcd">Код по МКБ</label>
+          <input class="form-input" id="c003RefIcd" type="text" data-bind="card003.referralIcd" data-rule="icd" data-mask="icd" placeholder="K35.8">
+        </div>
+        <div class="field span-2">
+          <label for="c003DiagDate">Дата установления</label>
+          <input class="form-input" id="c003DiagDate" type="date" data-bind="card003.diagDate">
+        </div>
+        <div class="field span-1">
+          <label for="c003DiagTime">Время</label>
+          <input class="form-input" id="c003DiagTime" type="time" data-bind="card003.diagTime">
+        </div>
+
+        <div class="field span-6">
+          <label for="c003PrelimMain">Основное заболевание <span class="req">*</span></label>
+          <input class="form-input" id="c003PrelimMain" type="text" data-bind="card003.prelimMain" data-rule="required" placeholder="Острый аппендицит">
+        </div>
+        <div class="field span-2">
+          <label for="c003PrelimIcd">Код по МКБ <span class="req">*</span></label>
+          <input class="form-input" id="c003PrelimIcd" type="text" data-bind="card003.prelimIcd" data-rule="required|icd" data-mask="icd" placeholder="K35.8">
+        </div>
+        <div class="field span-4">
+          <label for="c003PrelimComp">Осложнения основного заболевания</label>
+          <input class="form-input" id="c003PrelimComp" type="text" data-bind="card003.prelimComplication">
+        </div>
+        <div class="field span-2">
+          <label for="c003PrelimCompIcd">Код осложнения</label>
+          <input class="form-input" id="c003PrelimCompIcd" type="text" data-bind="card003.prelimCompIcd" data-rule="icd" data-mask="icd">
+        </div>
+        <div class="field span-4">
+          <label for="c003PrelimExt">Внешняя причина при травмах</label>
+          <input class="form-input" id="c003PrelimExt" type="text" data-bind="card003.prelimExternal">
+        </div>
+        <div class="field span-2">
+          <label for="c003PrelimExtIcd">Код внешней причины</label>
+          <input class="form-input" id="c003PrelimExtIcd" type="text" data-bind="card003.prelimExtIcd" data-rule="icd" data-mask="icd">
+        </div>
+        <div class="field span-6">
+          <label for="c003PrelimConc">Сопутствующие заболевания</label>
+          <input class="form-input" id="c003PrelimConc" type="text" data-bind="card003.prelimConcomitant">
+        </div>
+        <div class="field span-2">
+          <label for="c003PrelimConcIcd">Код сопутствующего</label>
+          <input class="form-input" id="c003PrelimConcIcd" type="text" data-bind="card003.prelimConcIcd" data-rule="icd" data-mask="icd">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Дополнительные сведения о заболевании</h4>
+      <div class="form-grid">
+        <div class="field span-2">
+          <label for="c003Tb">Туберкулёз в анамнезе</label>
+          <select class="form-select" id="c003Tb" data-bind="card003.historyTb"><option value="">—</option><option>Нет</option><option>Да</option></select>
+        </div>
+        <div class="field span-2">
+          <label for="c003Hiv">ВИЧ-инфекция</label>
+          <select class="form-select" id="c003Hiv" data-bind="card003.historyHiv"><option value="">—</option><option>Нет</option><option>Да</option></select>
+        </div>
+        <div class="field span-2">
+          <label for="c003Hep">Вирусные гепатиты</label>
+          <select class="form-select" id="c003Hep" data-bind="card003.historyHepatitis"><option value="">—</option><option>Нет</option><option>Да</option></select>
+        </div>
+        <div class="field span-2">
+          <label for="c003Syph">Сифилис</label>
+          <select class="form-select" id="c003Syph" data-bind="card003.historySyphilis"><option value="">—</option><option>Нет</option><option>Да</option></select>
+        </div>
+        <div class="field span-2">
+          <label for="c003Covid">COVID-19</label>
+          <select class="form-select" id="c003Covid" data-bind="card003.historyCovid"><option value="">—</option><option>Нет</option><option>Да</option></select>
+        </div>
+        <div class="field span-2">
+          <label for="c003Ped">Осмотр на педикулёз, чесотку</label>
+          <select class="form-select" id="c003Ped" data-bind="card003.pediculosis"><option value="">—</option><option>Нет</option><option>Да</option></select>
+        </div>
+        <div class="field span-12">
+          <label for="c003PedRes">Результат осмотра</label>
+          <input class="form-input" id="c003PedRes" type="text" data-bind="card003.pediculosisResult">
+        </div>
+        <div class="field span-12">
+          <label for="c003Allergy">Аллергические реакции на лекарственные препараты, пищевая аллергия, иные виды непереносимости</label>
+          <textarea class="form-textarea" id="c003Allergy" data-bind="card003.allergy" placeholder="Укажите тип и вид аллергической реакции или «не выявлено»"></textarea>
+        </div>
+        <div class="field span-12">
+          <label for="c003TransHist">Трансфузии (переливания) донорской крови и (или) её компонентов: год, осложнения, реакции</label>
+          <textarea class="form-textarea" id="c003TransHist" data-bind="card003.transfusionHistory"></textarea>
+        </div>
+        <div class="field span-3">
+          <label for="c003Blood">Группа крови <span class="req">*</span></label>
+          <input class="form-input" id="c003Blood" type="text" data-bind="card003.bloodGroup" data-rule="required|blood" data-mask="blood" placeholder="A(II)">
+        </div>
+        <div class="field span-3">
+          <label for="c003Rh">Резус-принадлежность <span class="req">*</span></label>
+          <select class="form-select" id="c003Rh" data-bind="card003.rhFactor" data-rule="required|rh">
+            <option value="">—</option>
+            <option>Rh+</option>
+            <option>Rh-</option>
+          </select>
+        </div>
+        <div class="field span-2">
+          <label for="c003Kell">Антиген K1 системы Kell</label>
+          <select class="form-select" id="c003Kell" data-bind="card003.kell" data-rule="kell">
+            <option value="">—</option>
+            <option>K+</option>
+            <option>K-</option>
+          </select>
+        </div>
+        <div class="field span-4">
+          <label for="c003BloodOther">Иные сведения групповой принадлежности крови</label>
+          <input class="form-input" id="c003BloodOther" type="text" data-bind="card003.bloodOther">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Клинический диагноз и оперативные вмешательства</h4>
+      <div class="form-grid">
+        <div class="field span-6">
+          <label for="c003ClinMain">Основное заболевание</label>
+          <input class="form-input" id="c003ClinMain" type="text" data-bind="card003.clinicalMain">
+        </div>
+        <div class="field span-2">
+          <label for="c003ClinIcd">Код по МКБ</label>
+          <input class="form-input" id="c003ClinIcd" type="text" data-bind="card003.clinicalIcd" data-rule="icd" data-mask="icd">
+        </div>
+        <div class="field span-2">
+          <label for="c003ClinDate">Дата установления</label>
+          <input class="form-input" id="c003ClinDate" type="date" data-bind="card003.clinicalDiagDate">
+        </div>
+        <div class="field span-2">
+          <label for="c003ClinTime">Время</label>
+          <input class="form-input" id="c003ClinTime" type="time" data-bind="card003.clinicalDiagTime">
+        </div>
+        <div class="field span-4">
+          <label for="c003ClinComp">Осложнения</label>
+          <input class="form-input" id="c003ClinComp" type="text" data-bind="card003.clinicalComplication">
+        </div>
+        <div class="field span-2">
+          <label for="c003ClinCompIcd">Код осложнения</label>
+          <input class="form-input" id="c003ClinCompIcd" type="text" data-bind="card003.clinicalCompIcd" data-rule="icd" data-mask="icd">
+        </div>
+        <div class="field span-4">
+          <label for="c003ClinExt">Внешняя причина</label>
+          <input class="form-input" id="c003ClinExt" type="text" data-bind="card003.clinicalExternal">
+        </div>
+        <div class="field span-2">
+          <label for="c003ClinExtIcd">Код внешней причины</label>
+          <input class="form-input" id="c003ClinExtIcd" type="text" data-bind="card003.clinicalExtIcd" data-rule="icd" data-mask="icd">
+        </div>
+        <div class="field span-6">
+          <label for="c003ClinConc">Сопутствующие заболевания</label>
+          <input class="form-input" id="c003ClinConc" type="text" data-bind="card003.clinicalConcomitant">
+        </div>
+        <div class="field span-2">
+          <label for="c003ClinConcIcd">Код сопутствующего</label>
+          <input class="form-input" id="c003ClinConcIcd" type="text" data-bind="card003.clinicalConcIcd" data-rule="icd" data-mask="icd">
+        </div>
+      </div>
+
+      <p class="form-note" style="margin-top:12px">Проведённые оперативные вмешательства (основные данные; подробный протокол — в разделе «Операция»).</p>
+      <div class="form-grid">
+        <div class="field span-2">
+          <label for="c003OpDate">Дата операции</label>
+          <input class="form-input" id="c003OpDate" type="date" data-bind="treatment.operation.opDate">
+        </div>
+        <div class="field span-5">
+          <label for="c003OpName">Наименование операции</label>
+          <input class="form-input" id="c003OpName" type="text" data-bind="treatment.operation.opName">
+        </div>
+        <div class="field span-2">
+          <label for="c003OpCode">Код по номенклатуре</label>
+          <input class="form-input" id="c003OpCode" type="text" data-bind="treatment.operation.opCode">
+        </div>
+        <div class="field span-3">
+          <label for="c003OpAnesth">Вид анестезиологического пособия</label>
+          <input class="form-input" id="c003OpAnesth" type="text" data-bind="treatment.anesthesia.anesthType">
+        </div>
+        <div class="field span-2">
+          <label for="c003OpBlood">Кровопотеря, мл</label>
+          <input class="form-input" id="c003OpBlood" type="number" min="0" data-bind="treatment.operation.opBloodLoss" data-rule="number" data-min="0" data-max="20000">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Исход госпитализации и трудоспособность</h4>
+      <div class="form-grid">
+        <div class="field span-3">
+          <label for="c003Outcome">Исход госпитализации</label>
+          <select class="form-select" id="c003Outcome" data-bind="card003.outcome">
+            <option value="">—</option>
+            <option>Выписан</option>
+            <option>Переведён в другую медицинскую организацию</option>
+            <option>Умер</option>
+          </select>
+        </div>
+        <div class="field span-4">
+          <label for="c003TransferOrg">Медицинская организация, куда переведён пациент</label>
+          <input class="form-input" id="c003TransferOrg" type="text" data-bind="card003.transferOrg">
+        </div>
+        <div class="field span-3">
+          <label for="c003Result">Результат госпитализации</label>
+          <select class="form-select" id="c003Result" data-bind="card003.result">
+            <option value="">—</option>
+            <option>Выздоровление</option>
+            <option>Улучшение</option>
+            <option>Без перемен</option>
+            <option>Ухудшение</option>
+            <option>Умер</option>
+          </select>
+        </div>
+        <div class="field span-2">
+          <label for="c003DeathDept">Умер в отделении</label>
+          <input class="form-input" id="c003DeathDept" type="text" data-bind="card003.deathDept">
+        </div>
+        <div class="field span-2">
+          <label for="c003DeathDate">Дата смерти</label>
+          <input class="form-input" id="c003DeathDate" type="date" data-bind="card003.deathDate">
+        </div>
+        <div class="field span-2">
+          <label for="c003DeathTime">Время смерти</label>
+          <input class="form-input" id="c003DeathTime" type="time" data-bind="card003.deathTime">
+        </div>
+        <div class="field span-3">
+          <label for="c003Pregnant">Умерла беременная</label>
+          <select class="form-select" id="c003Pregnant" data-bind="card003.deathPregnant">
+            <option value="">—</option>
+            <option>До 22 недель беременности</option>
+            <option>После 22 недель беременности</option>
+          </select>
+        </div>
+
+        <div class="field span-3">
+          <label for="c003SickNo">Листок нетрудоспособности №</label>
+          <input class="form-input" id="c003SickNo" type="text" data-bind="card003.sickLeaveNo">
+        </div>
+        <div class="field span-2">
+          <label for="c003SickDate">Дата выдачи</label>
+          <input class="form-input" id="c003SickDate" type="date" data-bind="card003.sickLeaveDate">
+        </div>
+        <div class="field span-2">
+          <label for="c003SickFrom">Освобождение с</label>
+          <input class="form-input" id="c003SickFrom" type="date" data-bind="card003.sickLeaveFrom">
+        </div>
+        <div class="field span-2">
+          <label for="c003SickTo">По</label>
+          <input class="form-input" id="c003SickTo" type="date" data-bind="card003.sickLeaveTo">
+        </div>
+        <div class="field span-3">
+          <label for="c003Return">Приступить к работе с</label>
+          <input class="form-input" id="c003Return" type="date" data-bind="card003.returnWork">
+        </div>
+        <div class="field span-3">
+          <label for="c003SickDup">Дубликат листка нетрудоспособности №</label>
+          <input class="form-input" id="c003SickDup" type="text" data-bind="card003.sickLeaveDuplicate">
+        </div>
+        <div class="field span-3">
+          <label for="c003SickDupDate">Дата дубликата</label>
+          <input class="form-input" id="c003SickDupDate" type="date" data-bind="card003.sickLeaveDuplicateDate">
+        </div>
+        <div class="field span-3">
+          <label for="c003SickCont">Продление листка нетрудоспособности №</label>
+          <input class="form-input" id="c003SickCont" type="text" data-bind="card003.sickLeaveContinued">
+        </div>
+        <div class="field span-2">
+          <label for="c003SickContFrom">Продление с</label>
+          <input class="form-input" id="c003SickContFrom" type="date" data-bind="card003.sickLeaveContinuedFrom">
+        </div>
+        <div class="field span-2">
+          <label for="c003SickContTo">По</label>
+          <input class="form-input" id="c003SickContTo" type="date" data-bind="card003.sickLeaveContinuedTo">
+        </div>
+        <div class="field span-3">
+          <label for="c003SickCare">Листок по уходу за больным членом семьи</label>
+          <input class="form-input" id="c003SickCare" type="text" data-bind="card003.sickLeaveCare">
+        </div>
+        <div class="field span-3">
+          <label for="c003Mse">Направление на МСЭ</label>
+          <input class="form-input" id="c003Mse" type="date" data-bind="card003.mseDate">
+        </div>
+        <div class="field span-4">
+          <label for="c003Informant">Лицо, которому может быть передана информация о состоянии здоровья</label>
+          <input class="form-input" id="c003Informant" type="text" data-bind="card003.informant">
+        </div>
+        <div class="field span-3">
+          <label for="c003InformantPhone">Контактный телефон</label>
+          <input class="form-input" id="c003InformantPhone" type="tel" data-bind="card003.informantPhone" data-rule="phone" data-mask="phone" placeholder="+7 (999) 123-45-67">
+        </div>
+        <div class="field span-3">
+          <label for="c003Doctor">Лечащий врач <span class="req">*</span></label>
+          <input class="form-input" id="c003Doctor" type="text" data-bind="card003.doctor" data-rule="required" placeholder="Иванов Игорь Иванович">
+        </div>
+        <div class="field span-3">
+          <label for="c003DoctorSpec">Специальность</label>
+          <input class="form-input" id="c003DoctorSpec" type="text" data-bind="card003.doctorSpecialty" placeholder="Врач-хирург">
+        </div>
+        <div class="field span-3">
+          <label for="c003DoctorSign">Подпись врача</label>
+          <input class="form-input" id="c003DoctorSign" type="text" data-bind="card003.doctorSign" placeholder="Иванов И. И.">
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-line">
+      <span>Медицинская сестра приёмного отделения</span>
+      <span class="line"></span>
+      <span>подпись / ФИО</span>
+    </div>
+  </div>
+</section>

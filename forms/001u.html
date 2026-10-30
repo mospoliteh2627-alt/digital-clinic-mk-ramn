@@ -1,0 +1,98 @@
+<section class="form-card" id="form001u" data-form-card="001u">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">001/у</span>Журнал учёта приёма пациентов и отказов в оказании медицинской помощи</h3>
+      <p class="form-card-sub">Учётная форма № 001/у, утверждена приказом МЗ РФ от 05.08.2022 № 530н. Заполняется медицинской сестрой приёмного отделения.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="journal-add">+ Добавить запись</button>
+      <button type="button" class="btn btn-sm btn-outline" data-action="journal-from-case">Загрузить кейс</button>
+      <button type="button" class="btn btn-sm btn-primary" data-action="sync-all">⇄ В 003/у и 066/у</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:16px">
+      <div class="field span-8">
+        <label for="j001Org">Наименование и адрес медицинской организации, ОГРН</label>
+        <input class="form-input" id="j001Org" type="text" data-bind="doc.organization" placeholder="ФГБПОУ «Медицинский колледж» (МК РАМН), г. Москва">
+      </div>
+      <div class="field span-4">
+        <label for="j001Ogrn">ОГРН (ОГРНИП)</label>
+        <input class="form-input" id="j001Ogrn" type="text" data-bind="doc.ogrn" data-rule="required" data-mask="number" inputmode="numeric" placeholder="1027700132195">
+      </div>
+      <div class="field span-3">
+        <label for="j001Started">Журнал начат</label>
+        <input class="form-input" id="j001Started" type="date" data-bind="doc.journalStarted">
+      </div>
+      <div class="field span-3">
+        <label for="j001Ended">Журнал окончен</label>
+        <input class="form-input" id="j001Ended" type="date" data-bind="doc.journalEnded">
+      </div>
+      <div class="field span-6">
+        <label for="j001Selected">Выбранная запись (для синхронизации и проверки)</label>
+        <select class="form-select" id="j001Selected" data-action="journal-select" data-render="journalSelect"></select>
+      </div>
+    </div>
+
+    <p class="form-note">Графы 1–23 соответствуют унифицированной форме. Таблица прокручивается по горизонтали. Выберите запись в списке выше — её данные перейдут в медицинскую карту 003/у и статистическую карту 066/у по кнопке «Синхронизировать».</p>
+
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Журнал учёта приёма пациентов, таблица 23 графы">
+      <table class="data-table" id="journal001Table" style="min-width:2900px">
+        <thead>
+          <tr>
+            <th class="col-num" rowspan="2">№<br>п/п</th>
+            <th class="col-date" rowspan="2">Дата<br>поступления</th>
+            <th class="col-time" rowspan="2">Время<br>поступления<br>(час. мин.)</th>
+            <th class="col-lg" rowspan="2">Фамилия, имя, отчество<br>(при наличии)</th>
+            <th class="col-date" rowspan="2">Дата рождения<br>(число, месяц, год)</th>
+            <th class="col-sm" rowspan="2">Пол<br>(мужской,<br>женский)</th>
+            <th class="col-md" rowspan="2">Серия и номер паспорта<br>или иного документа,<br>удостоверяющего личность</th>
+            <th class="col-sm" rowspan="2">Гражданство</th>
+            <th class="col-lg" rowspan="2">Регистрация по месту жительства</th>
+            <th class="col-lg" rowspan="2">Регистрация по месту пребывания,<br>телефон законного представителя</th>
+            <th class="col-md" rowspan="2">СНИЛС<br>(при наличии)</th>
+            <th class="col-md" rowspan="2">Полис ОМС<br>(при наличии)</th>
+            <th class="col-md" rowspan="2">Пациент доставлен (направлен) полицией,<br>выездной бригадой СМП, другой МО,<br>обратился самостоятельно</th>
+            <th class="col-sm" rowspan="2">Номер<br>медицинской<br>карты</th>
+            <th class="col-md" rowspan="2">Диагноз заболевания (состояния),<br>поставленный направившей МО,<br>выездной бригадой СМП (код по МКБ)</th>
+            <th class="col-md" rowspan="2">Причина и обстоятельства травмы,<br>отравления (код по МКБ)</th>
+            <th class="col-md" rowspan="2">Факт употребления алкоголя и ПАВ,<br>установление признаков опьянения,<br>дата, время, результаты исследований</th>
+            <th class="col-md" rowspan="2">Отделение медицинской организации,<br>в которое направлен пациент</th>
+            <th class="col-lg" rowspan="2">Исход госпитализации (выписан, переведён, умер),<br>дата и время исхода, наименование МО</th>
+            <th class="col-md" rowspan="2">Дата и время сообщения законному представителю,<br>иному лицу или направившей МО,<br>её исход</th>
+            <th class="col-md" rowspan="2">В случае отказа: причина отказа<br>(отказался пациент, отсутствие показаний,<br>помощь оказана в приёмном отделении,<br>направлен в другую МО, иная причина)</th>
+            <th class="col-md" rowspan="2">ФИО медицинского работника,<br>зафиксировавшего причину отказа</th>
+            <th class="col-md" rowspan="2">Дополнительные<br>сведения</th>
+          </tr>
+        </thead>
+        <tbody data-render="journal001">
+          <tr><td colspan="23" class="muted">Загрузка записей…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-toolbar">
+      <div class="table-toolbar-left">
+        <button type="button" class="btn btn-sm btn-outline" data-action="journal-add">+ Добавить запись</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-action="journal-clear">Очистить журнал</button>
+      </div>
+      <div class="table-legend">
+        <span><span class="legend-dot" style="background:#eef6fd;border:1px solid #b8cde0"></span>Заголовки граф</span>
+        <span>Всего записей: <strong data-counter="journalRows">0</strong></span>
+      </div>
+    </div>
+
+    <div class="summary-strip" style="margin-top:12px">
+      <div class="summary-item"><span>Выбранный пациент</span><strong data-summary="journalPatient" style="font-size:14px">—</strong></div>
+      <div class="summary-item"><span>Номер медкарты</span><strong data-summary="journalCard" style="font-size:14px">—</strong></div>
+      <div class="summary-item"><span>Отделение</span><strong data-summary="journalDept" style="font-size:14px">—</strong></div>
+      <div class="summary-item"><span>Исход</span><strong data-summary="journalOutcome" style="font-size:14px">—</strong></div>
+    </div>
+
+    <div class="signature-line">
+      <span>Медицинская сестра приёмного отделения</span>
+      <span class="line"></span>
+      <span>подпись / ФИО</span>
+    </div>
+  </div>
+</section>

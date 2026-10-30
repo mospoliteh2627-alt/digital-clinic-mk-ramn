@@ -1,0 +1,58 @@
+<section class="form-card" data-form-card="003-vypisnoy">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Выписной (переводной) эпикриз</h3>
+      <p class="form-card-sub">Заключительный диагноз по МКБ, результаты обследования и лечения, исход, рекомендации.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="discharge-autofill">⇄ Подставить данные кейса</button>
+      <span class="badge badge-soft">Заключительный документ</span>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-3"><label for="disDate">Дата выписки</label><input class="form-input" id="disDate" type="date" data-bind="treatment.discharge.date" data-rule="date"></div>
+      <div class="field span-3"><label for="disOutcome">Исход госпитализации</label>
+        <select class="form-select" id="disOutcome" data-bind="treatment.discharge.outcome"><option value="">—</option><option>Выздоровление</option><option>Улучшение</option><option>Без перемен</option><option>Ухудшение</option><option>Умер</option></select>
+      </div>
+      <div class="field span-3"><label for="disCondition">Состояние при выписке</label>
+        <select class="form-select" id="disCondition" data-bind="treatment.discharge.condition"><option value="">—</option><option>Удовлетворительное</option><option>Средней тяжести</option><option>Тяжёлое</option></select>
+      </div>
+      <div class="field span-3"><label for="disDiet">Диета</label><input class="form-input" id="disDiet" type="text" data-bind="treatment.discharge.diet"></div>
+    </div>
+
+    <div class="form-section">
+      <h4>Заключительный диагноз</h4>
+      <div class="form-grid">
+        <div class="field span-7"><label for="disMain">Основное заболевание</label><input class="form-input" id="disMain" type="text" data-bind="treatment.discharge.diagnosisMain"></div>
+        <div class="field span-2"><label for="disIcd">Код по МКБ</label><input class="form-input" id="disIcd" type="text" data-bind="treatment.discharge.diagnosisIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-7"><label for="disComp">Осложнения основного заболевания</label><input class="form-input" id="disComp" type="text" data-bind="treatment.discharge.complications"></div>
+        <div class="field span-2"><label for="disCompIcd">Код осложнения</label><input class="form-input" id="disCompIcd" type="text" data-bind="treatment.discharge.complicationIcd" data-rule="icd" data-mask="icd"></div>
+        <div class="field span-7"><label for="disConc">Сопутствующие заболевания</label><input class="form-input" id="disConc" type="text" data-bind="treatment.discharge.concomitant"></div>
+        <div class="field span-2"><label for="disConcIcd">Код сопутствующего</label><input class="form-input" id="disConcIcd" type="text" data-bind="treatment.discharge.concomitantIcd" data-rule="icd" data-mask="icd"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Результаты обследования и лечения</h4>
+      <div class="form-grid">
+        <div class="field span-12"><label for="disExam">Результаты обследования</label><textarea class="form-textarea" id="disExam" data-bind="treatment.discharge.examResults" style="min-height:100px"></textarea></div>
+        <div class="field span-12"><label for="disTreatment">Проведённое лечение</label><textarea class="form-textarea" id="disTreatment" data-bind="treatment.discharge.treatmentDone" style="min-height:100px"></textarea></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Рекомендации и трудоспособность</h4>
+      <div class="form-grid">
+        <div class="field span-8"><label for="disRec">Рекомендации</label><textarea class="form-textarea" id="disRec" data-bind="treatment.discharge.recommendations" style="min-height:100px"></textarea></div>
+        <div class="field span-4"><label for="disMode">Режим</label><textarea class="form-textarea" id="disMode" data-bind="treatment.discharge.mode"></textarea></div>
+        <div class="field span-6"><label for="disMeds">Лекарственные препараты при выписке</label><textarea class="form-textarea" id="disMeds" data-bind="treatment.discharge.medications"></textarea></div>
+        <div class="field span-6"><label for="disWork">Трудоспособность, листок нетрудоспособности</label><textarea class="form-textarea" id="disWork" data-bind="treatment.discharge.workAbility"></textarea></div>
+        <div class="field span-6"><label for="disDoctor">Лечащий врач</label><input class="form-input" id="disDoctor" type="text" data-bind="treatment.discharge.doctor"></div>
+        <div class="field span-6"><label for="disSign">Подпись врача</label><input class="form-input" id="disSign" type="text" data-bind="card003.doctorSign"></div>
+      </div>
+    </div>
+
+    <div class="signature-line"><span>Заведующий отделением</span><span class="line"></span><span>лечащий врач</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

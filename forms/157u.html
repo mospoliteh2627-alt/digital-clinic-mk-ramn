@@ -1,0 +1,51 @@
+<section class="form-card" id="form157u" data-form-card="157u">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">157/у</span>Журнал регистрации исследований в кабинете эндоскопии</h3>
+      <p class="form-card-sub">Форма № 157/у-96, утверждена приказом Минздравмедпрома России от 31.05.1996 № 222. Ведётся в отделе, отделении, кабинете эндоскопии.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="endo-add">+ Исследование</button>
+      <button type="button" class="btn btn-sm btn-outline" data-action="endo-from-card">⇄ Из 003/у</button>
+      <button type="button" class="btn btn-sm btn-ghost" data-action="endo-clear">Очистить</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-3"><label for="endoStart">Журнал начат</label><input class="form-input" id="endoStart" type="date" data-bind="endoscopy.started"></div>
+      <div class="field span-3"><label for="endoEnd">Журнал окончен</label><input class="form-input" id="endoEnd" type="date" data-bind="endoscopy.ended"></div>
+      <div class="field span-6"><label for="endoDept">Отделение / кабинет</label><input class="form-input" id="endoDept" type="text" data-bind="endoscopy.department" placeholder="Кабинет эндоскопии"></div>
+    </div>
+    <p class="form-note">Регистрируются все выполненные эндоскопические исследования: дата, пациент, кем направлен, клинический диагноз, метод, заключение и особые отметки. Кнопка «Из 003/у» переносит паспортные данные текущего пациента.</p>
+
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Журнал эндоскопических исследований">
+      <table class="data-table" id="table157" style="min-width:1540px">
+        <thead><tr>
+          <th class="col-num">№<br>п/п</th>
+          <th class="col-date">Дата<br>исследования</th>
+          <th class="col-lg">Фамилия, имя,<br>отчество исследуемого</th>
+          <th class="col-sm">Год<br>рождения</th>
+          <th class="col-lg">Домашний адрес</th>
+          <th class="col-lg">Кем направлен:<br>учреждение, отделение,<br>врач, № истории болезни</th>
+          <th class="col-md">Клинический<br>диагноз</th>
+          <th class="col-md">Метод<br>исследования</th>
+          <th class="col-lg">Заключение</th>
+          <th class="col-md">Особые<br>отметки</th>
+          <th class="row-actions">—</th>
+        </tr></thead>
+        <tbody data-render="endoscopy"><tr><td colspan="11" class="muted">Записей нет. Добавьте исследование.</td></tr></tbody>
+        <tfoot data-render="endoscopyTotals"><tr><td colspan="11" class="muted">Итоги появятся после заполнения.</td></tr></tfoot>
+      </table>
+    </div>
+
+    <div class="table-toolbar">
+      <div class="table-toolbar-left">
+        <button type="button" class="btn btn-sm btn-outline" data-action="endo-add">+ Добавить исследование</button>
+        <button type="button" class="btn btn-sm btn-outline" data-action="endo-from-card">⇄ Заполнить из 003/у</button>
+      </div>
+      <div class="table-legend"><span>Исследований: <strong data-counter="endoRows">0</strong></span></div>
+    </div>
+
+    <div class="signature-line"><span>Врач-эндоскопист</span><span class="line"></span><span>медицинская сестра</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

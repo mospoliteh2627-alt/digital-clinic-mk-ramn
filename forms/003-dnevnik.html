@@ -1,0 +1,40 @@
+<section class="form-card" id="formDiary" data-form-card="003-dnevnik">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Дневник наблюдения за пациентом</h3>
+      <p class="form-card-sub">Внутренний бланк медицинской карты. Ежедневные записи лечащего врача и палатной медицинской сестры о состоянии, жалобах, объективном статусе и выполненных назначениях.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="diary-add">+ Запись</button>
+      <button type="button" class="btn btn-sm btn-outline" data-action="diary-from-exam">⇄ Из первичного осмотра</button>
+      <button type="button" class="btn btn-sm btn-ghost" data-action="diary-clear">Очистить</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <p class="form-note">Запись ведётся ежедневно и при изменении состояния. В ней отражают динамику жалоб, температуру, гемодинамику, данные осмотра, результаты исследований, назначения и их выполнение. Подписывают врач и медицинская сестра.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Дневник наблюдения">
+      <table class="data-table" id="tableDiary" style="min-width:1700px">
+        <thead><tr>
+          <th class="col-date">Дата</th>
+          <th class="col-time">Время</th>
+          <th class="col-lg">Жалобы и динамика</th>
+          <th class="col-md">Состояние,<br>температура, АД, ЧСС</th>
+          <th class="col-lg">Объективный статус</th>
+          <th class="col-lg">Назначения и выполненные<br>мероприятия</th>
+          <th class="col-md">Врач</th>
+          <th class="col-md">Медицинская<br>сестра</th>
+          <th class="row-actions">—</th>
+        </tr></thead>
+        <tbody data-render="diary"><tr><td colspan="9" class="muted">Записей нет. Добавьте первую запись дневника.</td></tr></tbody>
+      </table>
+    </div>
+    <div class="table-toolbar">
+      <div class="table-toolbar-left">
+        <button type="button" class="btn btn-sm btn-outline" data-action="diary-add">+ Добавить запись</button>
+        <button type="button" class="btn btn-sm btn-outline" data-action="diary-from-exam">⇄ Заполнить из осмотра</button>
+      </div>
+      <div class="table-legend"><span>Записей: <strong data-counter="diaryRows">0</strong></span></div>
+    </div>
+    <div class="signature-line"><span>Лечащий врач</span><span class="line"></span><span>палатная медицинская сестра</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

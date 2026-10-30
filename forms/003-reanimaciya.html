@@ -1,0 +1,65 @@
+<section class="form-card" data-form-card="003-reanimaciya">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Карта реанимации и интенсивной терапии</h3>
+      <p class="form-card-sub">Почасовой гидробаланс, введённые растворы парентерально и внутрь, диурез и потери.</p>
+    </div>
+    <div class="form-card-tools"><span class="badge badge-soft">ОРИТ</span></div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-3"><label for="icuDate">Дата поступления в ОРИТ</label><input class="form-input" id="icuDate" type="date" data-bind="treatment.icu.admissionDate" data-rule="date"></div>
+      <div class="field span-2"><label for="icuTime">Время</label><input class="form-input" id="icuTime" type="time" data-bind="treatment.icu.admissionTime"></div>
+      <div class="field span-7"><label for="icuDiagnosis">Диагноз при поступлении</label><input class="form-input" id="icuDiagnosis" type="text" data-bind="treatment.icu.diagnosis"></div>
+      <div class="field span-12"><label for="icuCondition">Состояние, динамика</label><input class="form-input" id="icuCondition" type="text" data-bind="treatment.icu.condition"></div>
+      <div class="field span-6"><label for="icuMonitoring">Мониторинг</label><input class="form-input" id="icuMonitoring" type="text" data-bind="treatment.icu.monitoring"></div>
+      <div class="field span-3"><label for="icuVentMode">Режим ИВЛ</label><input class="form-input" id="icuVentMode" type="text" data-bind="treatment.icu.ventilatorMode"></div>
+      <div class="field span-3"><label for="icuVentParams">Параметры ИВЛ</label><input class="form-input" id="icuVentParams" type="text" data-bind="treatment.icu.ventilatorParams"></div>
+      <div class="field span-9"><label for="icuCatheter">Катетеры, дренажи</label><input class="form-input" id="icuCatheter" type="text" data-bind="treatment.icu.catheter"></div>
+      <div class="field span-3"><label for="icuDiuresis">Диурез почасовой, мл</label><input class="form-input" id="icuDiuresis" type="number" data-bind="treatment.icu.diuresisHourly" data-rule="number" data-min="0" data-max="2000"></div>
+    </div>
+
+    <div class="form-section">
+      <h4>Почасовой гидробаланс</h4>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Почасовой гидробаланс">
+        <table class="data-table" id="tableIcu" style="min-width:1120px">
+          <thead><tr>
+            <th class="col-time">Час</th>
+            <th class="col-lg">Парентерально: раствор</th>
+            <th class="col-sm">Объём, мл</th>
+            <th class="col-lg">Внутрь</th>
+            <th class="col-sm">Объём, мл</th>
+            <th class="col-sm">Диурез, мл</th>
+            <th class="col-sm">Потери, мл</th>
+            <th class="col-sm">Баланс, мл</th>
+            <th class="row-actions">—</th>
+          </tr></thead>
+          <tbody data-render="icu"><tr><td colspan="9" class="muted">Нет записей.</td></tr></tbody>
+          <tfoot data-render="icuTotals"><tr><td colspan="9" class="muted">Итоги появятся после заполнения.</td></tr></tfoot>
+        </table>
+      </div>
+      <div class="table-toolbar">
+        <div class="table-toolbar-left">
+          <button type="button" class="btn btn-sm btn-outline" data-action="icu-add">+ Час</button>
+          <button type="button" class="btn btn-sm btn-primary" data-action="icu-recalc">Σ Пересчитать баланс</button>
+        </div>
+        <div class="table-legend"><span>Записей: <strong data-counter="icuRows">0</strong></span></div>
+      </div>
+    </div>
+
+    <div class="summary-strip" style="margin-top:12px">
+      <div class="summary-item"><span>Введено всего, мл</span><strong data-summary="icuIn">0</strong></div>
+      <div class="summary-item"><span>Выведено всего, мл</span><strong data-summary="icuOut">0</strong></div>
+      <div class="summary-item" data-summary-box="icuBalance"><span>Суточный баланс, мл</span><strong data-summary="icuBalance">0</strong></div>
+    </div>
+
+    <div class="form-grid" style="margin-top:12px">
+      <div class="field span-4"><label for="icuTotalIn">Итог введено, мл</label><input class="form-input" id="icuTotalIn" type="number" data-bind="treatment.icu.totalIn" data-rule="number" data-min="0" data-max="30000"></div>
+      <div class="field span-4"><label for="icuTotalOut">Итог выведено, мл</label><input class="form-input" id="icuTotalOut" type="number" data-bind="treatment.icu.totalOut" data-rule="number" data-min="0" data-max="30000"></div>
+      <div class="field span-4"><label for="icuTotalBal">Итоговый баланс, мл</label><input class="form-input" id="icuTotalBal" type="text" data-bind="treatment.icu.totalBalance"></div>
+      <div class="field span-6"><label for="icuDoctor">Врач-реаниматолог</label><input class="form-input" id="icuDoctor" type="text" data-bind="treatment.icu.doctor"></div>
+    </div>
+
+    <div class="signature-line"><span>Врач-реаниматолог</span><span class="line"></span><span>Медицинская сестра</span></div>
+  </div>
+</section>

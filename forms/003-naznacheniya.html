@@ -1,0 +1,55 @@
+<section class="form-card" data-form-card="003-naznacheniya">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Лист назначений и их выполнение</h3>
+      <p class="form-card-sub">Лекарственные препараты, лечебное питание, режим, отметки медицинской сестры о выполнении (дата, время, подпись).</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="rx-add">+ Назначение</button>
+      <span class="badge badge-soft" data-computed="rxSummary">0 назначений</span>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <p class="form-note is-warn">Отменённое врачом назначение не выполняется: отметка медицинской сестры о введении отменённого препарата расценивается как критическая ошибка. Каждая отметка о выполнении заверяется подписью.</p>
+
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Лист назначений">
+      <table class="data-table" id="tableRx" style="min-width:1380px">
+        <thead><tr>
+          <th class="col-date">Дата назначения</th>
+          <th class="col-md">Лекарственный препарат</th>
+          <th class="col-sm">Дозировка</th>
+          <th class="col-md">Способ введения</th>
+          <th class="col-sm">Кратность</th>
+          <th class="col-sm">Лечебное питание</th>
+          <th class="col-sm">Режим</th>
+          <th class="col-sm">Статус</th>
+          <th class="col-date">Дата выполнения</th>
+          <th class="col-time">Время</th>
+          <th class="col-md">Подпись медсестры</th>
+          <th class="col-sm">Выполнено</th>
+          <th class="row-actions">—</th>
+        </tr></thead>
+        <tbody data-render="prescriptions"><tr><td colspan="13" class="muted">Нет назначений.</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="table-toolbar">
+      <div class="table-toolbar-left">
+        <button type="button" class="btn btn-sm btn-outline" data-action="rx-add">+ Добавить назначение</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-action="rx-clear">Очистить лист</button>
+      </div>
+      <div class="table-legend">
+        <span>Всего: <strong data-counter="rxRows">0</strong></span>
+        <span>Выполнено: <strong data-counter="rxDone">0</strong></span>
+        <span>Отменено: <strong data-counter="rxCancelled">0</strong></span>
+      </div>
+    </div>
+
+    <div class="form-grid" style="margin-top:16px">
+      <div class="field span-6"><label for="rxNurse">Медицинская сестра</label><input class="form-input" id="rxNurse" type="text" data-bind="treatment.prescriptions.nurse"></div>
+      <div class="field span-6"><label for="rxDoctor">Лечащий врач</label><input class="form-input" id="rxDoctor" type="text" data-bind="treatment.prescriptions.doctor"></div>
+    </div>
+
+    <div class="signature-line"><span>Старшая медицинская сестра отделения</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

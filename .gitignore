@@ -1,0 +1,5 @@
+.server.log
+.server.pid
+.DS_Store
+*.log
+*.tmp

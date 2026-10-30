@@ -1,0 +1,78 @@
+<section class="form-card" data-form-card="004u">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">004/у</span>Лист показателей жизненно важных функций (температурный лист)</h3>
+      <p class="form-card-sub">Учётная форма № 004/у. Ежедневная регистрация пульса, артериального давления и температуры тела утром и вечером.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="temp-fill-week">Заполнить 7 дней</button>
+      <span class="badge badge-soft">График строится автоматически</span>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-2"><label for="t004Card">№ карты</label><input class="form-input" id="t004Card" type="text" data-bind="treatment.temp.cardNo"></div>
+      <div class="field span-2"><label for="t004Ward">№ палаты</label><input class="form-input" id="t004Ward" type="text" data-bind="treatment.temp.ward"></div>
+      <div class="field span-8"><label for="t004Fio">Фамилия, имя, отчество больного</label><input class="form-input" id="t004Fio" type="text" data-bind="treatment.temp.fio"></div>
+    </div>
+
+    <p class="form-note">Критические значения подсвечиваются: температура ≥ 39 °C или ≤ 35 °C, пульс &gt; 120 или &lt; 50, систолическое АД &gt; 180 или &lt; 90 мм рт. ст. Для критических значений обязательна запись о врачебном осмотре.</p>
+
+    <div class="temp-layout">
+      <div>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Температурный лист, таблица показателей">
+          <table class="data-table temp-table" id="table004">
+            <thead>
+              <tr>
+                <th class="param-col" rowspan="2">Показатель</th>
+                <th colspan="7">Дни наблюдения</th>
+              </tr>
+              <tr data-render="tempHead">
+                <th class="pair-col">Д1</th><th class="pair-col">Д2</th><th class="pair-col">Д3</th><th class="pair-col">Д4</th><th class="pair-col">Д5</th><th class="pair-col">Д6</th><th class="pair-col">Д7</th>
+              </tr>
+            </thead>
+            <tbody data-render="tempBody">
+              <tr><td colspan="8" class="muted">Загрузка температурного листа…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-toolbar">
+          <div class="table-toolbar-left">
+            <button type="button" class="btn btn-sm btn-outline" data-action="temp-add-day">+ День наблюдения</button>
+            <button type="button" class="btn btn-sm btn-ghost" data-action="temp-clear">Очистить</button>
+          </div>
+          <div class="table-legend"><span>Дней: <strong data-counter="tempDays">0</strong></span></div>
+        </div>
+      </div>
+
+      <aside class="temp-chart-card" aria-label="График температурной кривой">
+        <h4>Температурная кривая</h4>
+        <p class="muted small">Температура, пульс и артериальное давление по дням</p>
+        <div class="chart-canvas-wrap">
+          <canvas id="tempChart" role="img" aria-label="График температуры, пульса и артериального давления по дням наблюдения"></canvas>
+          <div class="chart-empty" id="tempChartEmpty" hidden>Заполните показатели в таблице — график построится автоматически.</div>
+        </div>
+        <div class="chart-legend">
+          <span style="--c:#0b63b4">Температура утро</span>
+          <span style="--c:#55b8f2">Температура вечер</span>
+          <span style="--c:#c62828">Пульс утро</span>
+          <span style="--c:#1b7a4b">АД систолическое</span>
+          <span style="--c:#7b5cc7">АД диастолическое</span>
+        </div>
+        <p class="field-hint" id="tempChartStats">Нет данных</p>
+      </aside>
+    </div>
+
+    <div class="form-section" style="margin-top:16px">
+      <h4>Отметка о критических значениях и реакции</h4>
+      <div class="form-grid">
+        <div class="field span-12">
+          <label for="t004Critical">Запись о врачебном осмотре, принятых мерах и динамике</label>
+          <textarea class="form-textarea" id="t004Critical" data-bind="treatment.temp.criticalNote" placeholder="Например: 31.10.2026 в 20:10 температура 39,4 °C, осмотрен дежурным врачом, введён парацетамол 1000 мг в/в, через 40 минут 37,8 °C. Назначен контроль температуры каждые 2 часа."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="signature-line"><span>Палатная медицинская сестра</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

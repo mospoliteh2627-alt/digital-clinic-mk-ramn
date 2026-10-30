@@ -1,0 +1,69 @@
+<section class="form-card" data-form-card="003-anesteziya">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Протокол анестезиологического пособия и карта анестезии</h3>
+      <p class="form-card-sub">Внутренний бланк медицинской карты. Параметры ИВЛ, газов, ингаляционных анестетиков и мониторинг.</p>
+    </div>
+    <div class="form-card-tools"><span class="badge badge-soft">Анестезия</span></div>
+  </header>
+  <div class="form-card-body">
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field span-5"><label for="anType">Вид анестезиологического пособия</label><input class="form-input" id="anType" type="text" data-bind="treatment.anesthesia.anesthType" placeholder="Общая анестезия с интубацией трахеи"></div>
+      <div class="field span-2"><label for="anStart">Начало</label><input class="form-input" id="anStart" type="time" data-bind="treatment.anesthesia.anesthStart"></div>
+      <div class="field span-2"><label for="anEnd">Окончание</label><input class="form-input" id="anEnd" type="time" data-bind="treatment.anesthesia.anesthEnd"></div>
+      <div class="field span-3"><label for="anDoctor">Анестезиолог</label><input class="form-input" id="anDoctor" type="text" data-bind="treatment.anesthesia.anesthDoctor"></div>
+    </div>
+
+    <div class="form-section">
+      <h4>Премедикация, индукция, поддержание</h4>
+      <div class="form-grid">
+        <div class="field span-4"><label for="anPremed">Премедикация</label><textarea class="form-textarea" id="anPremed" data-bind="treatment.anesthesia.anesthPremed"></textarea></div>
+        <div class="field span-4"><label for="anInduction">Индукция</label><textarea class="form-textarea" id="anInduction" data-bind="treatment.anesthesia.anesthInduction"></textarea></div>
+        <div class="field span-4"><label for="anMaintenance">Поддержание анестезии</label><textarea class="form-textarea" id="anMaintenance" data-bind="treatment.anesthesia.anesthMaintenance"></textarea></div>
+        <div class="field span-6"><label for="anRelaxant">Миорелаксанты</label><input class="form-input" id="anRelaxant" type="text" data-bind="treatment.anesthesia.anesthRelaxant"></div>
+        <div class="field span-6"><label for="anAwakening">Пробуждение</label><input class="form-input" id="anAwakening" type="text" data-bind="treatment.anesthesia.anesthAwakening"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Параметры ИВЛ и газового состава</h4>
+      <div class="form-grid">
+        <div class="field span-4"><label for="anVent">Аппарат ИВЛ</label><input class="form-input" id="anVent" type="text" data-bind="treatment.anesthesia.anesthVentilator"></div>
+        <div class="field span-2"><label for="anRr">ЧД, в минуту</label><input class="form-input" id="anRr" type="number" data-bind="treatment.anesthesia.anesthRespRate" data-rule="number" data-min="4" data-max="60"></div>
+        <div class="field span-2"><label for="anTv">ДО, мл</label><input class="form-input" id="anTv" type="number" data-bind="treatment.anesthesia.tidalVolume" data-rule="number" data-min="50" data-max="1500"></div>
+        <div class="field span-2"><label for="anMv">МОД, л/мин</label><input class="form-input" id="anMv" type="number" step="0.1" data-bind="treatment.anesthesia.minuteVolume" data-rule="number" data-min="1" data-max="40"></div>
+        <div class="field span-2"><label for="anPeep">PEEP, см вод. ст.</label><input class="form-input" id="anPeep" type="number" data-bind="treatment.anesthesia.peep" data-rule="number" data-min="0" data-max="25"></div>
+        <div class="field span-2"><label for="anFio2">FiO₂</label><input class="form-input" id="anFio2" type="number" step="0.01" data-bind="treatment.anesthesia.fio2" data-rule="number" data-min="0.21" data-max="1"></div>
+        <div class="field span-2"><label for="anFlow">Поток свежего газа, л/мин</label><input class="form-input" id="anFlow" type="number" step="0.1" data-bind="treatment.anesthesia.anesthGasFreshFlow" data-rule="number" data-min="0.3" data-max="15"></div>
+        <div class="field span-2"><label for="anO2">O₂, л/мин</label><input class="form-input" id="anO2" type="number" step="0.1" data-bind="treatment.anesthesia.anesthO2" data-rule="number" data-min="0" data-max="15"></div>
+        <div class="field span-2"><label for="anN2o">N₂O, л/мин</label><input class="form-input" id="anN2o" type="number" step="0.1" data-bind="treatment.anesthesia.anesthN2O" data-rule="number" data-min="0" data-max="10"></div>
+        <div class="field span-2"><label for="anSevo">Севофлуран, об. %</label><input class="form-input" id="anSevo" type="number" step="0.1" data-bind="treatment.anesthesia.anesthSevoflurane" data-rule="number" data-min="0" data-max="8"></div>
+        <div class="field span-2"><label for="anProp">Пропофол, мг</label><input class="form-input" id="anProp" type="number" data-bind="treatment.anesthesia.anesthPropofol" data-rule="number" data-min="0" data-max="2000"></div>
+        <div class="field span-2"><label for="anFent">Фентанил, мг</label><input class="form-input" id="anFent" type="number" step="0.01" data-bind="treatment.anesthesia.anesthFentanyl" data-rule="number" data-min="0" data-max="5"></div>
+        <div class="field span-2"><label for="anMorph">Морфин, мг</label><input class="form-input" id="anMorph" type="number" step="0.1" data-bind="treatment.anesthesia.anesthMorphine" data-rule="number" data-min="0" data-max="100"></div>
+        <div class="field span-2"><label for="anBlood">Кровопотеря, мл</label><input class="form-input" id="anBlood" type="number" data-bind="treatment.anesthesia.anesthBloodLoss" data-rule="number" data-min="0" data-max="20000"></div>
+        <div class="field span-2"><label for="anUrine">Диурез, мл</label><input class="form-input" id="anUrine" type="number" data-bind="treatment.anesthesia.anesthUrine" data-rule="number" data-min="0" data-max="10000"></div>
+        <div class="field span-8"><label for="anCompl">Осложнения анестезии</label><input class="form-input" id="anCompl" type="text" data-bind="treatment.anesthesia.anesthComplications"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>Мониторинг в ходе анестезии</h4>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Карта анестезии, мониторинг">
+        <table class="data-table" id="tableAnesthesia" style="min-width:760px">
+          <thead><tr>
+            <th class="col-time">Время</th><th class="col-sm">АД, мм рт. ст.</th><th class="col-sm">ЧСС, уд/мин</th>
+            <th class="col-sm">SpO₂, %</th><th class="col-sm">EtCO₂, мм рт. ст.</th><th class="col-sm">Т°, °C</th><th class="row-actions">—</th>
+          </tr></thead>
+          <tbody data-render="anesthesiaMonitor"><tr><td colspan="7" class="muted">Нет точек мониторинга.</td></tr></tbody>
+        </table>
+      </div>
+      <div class="table-toolbar">
+        <div class="table-toolbar-left"><button type="button" class="btn btn-sm btn-outline" data-action="monitor-add">+ Точка мониторинга</button></div>
+        <div class="table-legend"><span>Точек: <strong data-counter="monitorRows">0</strong></span></div>
+      </div>
+    </div>
+
+    <div class="signature-line"><span>Анестезиолог-реаниматолог</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>

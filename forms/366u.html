@@ -1,0 +1,80 @@
+<section class="form-card" id="form366u" data-form-card="366u">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">366/у</span>Журнал учёта качества предстерилизационной очистки</h3>
+      <p class="form-card-sub">Учётная форма № 366/у. Заполняется медицинской сестрой ЦСО или процедурного кабинета по результатам выборочного химического контроля.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="cso-add">+ Строка контроля</button>
+      <button type="button" class="btn btn-sm btn-primary" data-action="cso-recalc">Σ Пересчитать</button>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <p class="form-note">Азопирамовая проба выявляет остатки крови (фиолетовое окрашивание), фенолфталеиновая — остатки моющих средств (розовое окрашивание). Контролю подлежит не менее 1 % изделий каждого наименования за смену, но не менее 3–5 единиц. Число загрязнённых изделий не может превышать число проверенных.</p>
+
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Журнал предстерилизационной очистки">
+      <table class="data-table" id="table366" style="min-width:1120px">
+        <thead>
+          <tr>
+            <th class="col-date">Дата</th>
+            <th class="col-md">Способ обработки</th>
+            <th class="col-md">Применяемое средство</th>
+            <th class="col-lg">Наименование изделия</th>
+            <th class="col-sm">Количество<br>изделий, шт.</th>
+            <th class="col-sm">Из них загрязнённых<br>кровью</th>
+            <th class="col-sm">Из них загрязнённых<br>моющими средствами</th>
+            <th class="col-md">Фамилия, имя, отчество<br>проводившего контроль</th>
+            <th class="row-actions">—</th>
+          </tr>
+        </thead>
+        <tbody data-render="cso">
+          <tr><td colspan="9" class="muted">Загрузка строк…</td></tr>
+        </tbody>
+        <tfoot data-render="csoTotals">
+          <tr><td colspan="9" class="muted">Итоги появятся после заполнения.</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="summary-strip" style="margin-top:12px">
+      <div class="summary-item"><span>Проверено изделий</span><strong data-summary="csoQty">0</strong></div>
+      <div class="summary-item"><span>Загрязнено кровью</span><strong data-summary="csoBlood">0</strong></div>
+      <div class="summary-item"><span>Загрязнено моющими средствами</span><strong data-summary="csoDetergent">0</strong></div>
+      <div class="summary-item" data-summary-box="csoQuality"><span>Качество очистки</span><strong data-summary="csoQuality">—</strong></div>
+    </div>
+
+    <div class="table-toolbar">
+      <div class="table-toolbar-left">
+        <button type="button" class="btn btn-sm btn-outline" data-action="cso-add">+ Добавить строку</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-action="cso-clear">Очистить</button>
+      </div>
+      <div class="table-legend"><span>Строк: <strong data-counter="csoRows">0</strong></span></div>
+    </div>
+
+    <div class="form-grid" style="margin-top:16px">
+      <div class="field span-4">
+        <label for="csoMethodNote">Метод контроля в смене</label>
+        <select class="form-select" id="csoMethodNote" data-bind="cso.controlMethod">
+          <option value="">—</option>
+          <option>Азопирамовая проба</option>
+          <option>Фенолфталеиновая проба</option>
+          <option>Азопирамовая и фенолфталеиновая пробы</option>
+        </select>
+      </div>
+      <div class="field span-4">
+        <label for="csoShift">Смена</label>
+        <input class="form-input" id="csoShift" type="text" data-bind="cso.shift" placeholder="Дневная, 08:00–14:00">
+      </div>
+      <div class="field span-4">
+        <label for="csoSenior">Старшая медицинская сестра ЦСО</label>
+        <input class="form-input" id="csoSenior" type="text" data-bind="cso.seniorNurse">
+      </div>
+    </div>
+
+    <div class="signature-line">
+      <span>Медицинская сестра ЦСО</span>
+      <span class="line"></span>
+      <span>подпись / ФИО</span>
+    </div>
+  </div>
+</section>

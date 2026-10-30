@@ -1,0 +1,44 @@
+<section class="form-card" data-form-card="003-luchevaya">
+  <header class="form-card-head">
+    <div>
+      <h3><span class="form-code">003/у</span>Лист учёта лучевой нагрузки</h3>
+      <p class="form-card-sub">Дозы в милизивертах при рентгенологических исследованиях и компьютерной томографии.</p>
+    </div>
+    <div class="form-card-tools">
+      <button type="button" class="btn btn-sm btn-outline" data-action="rad-add">+ Исследование</button>
+      <span class="badge badge-soft">Контроль доз</span>
+    </div>
+  </header>
+  <div class="form-card-body">
+    <p class="form-note">Дозы вносятся по протоколам исследований. Суммарная доза за госпитализацию контролируется: превышение 100 мЗв требует обоснования в выписном эпикризе.</p>
+
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Лист лучевой нагрузки">
+      <table class="data-table" id="tableRad" style="min-width:820px">
+        <thead><tr>
+          <th class="col-date">Дата</th>
+          <th class="col-lg">Исследование</th>
+          <th class="col-md">Область исследования</th>
+          <th class="col-sm">Доза, мЗв</th>
+          <th class="row-actions">—</th>
+        </tr></thead>
+        <tbody data-render="radiation"><tr><td colspan="5" class="muted">Нет исследований.</td></tr></tbody>
+        <tfoot data-render="radiationTotals"><tr><td colspan="5" class="muted">Итог появится после заполнения.</td></tr></tfoot>
+      </table>
+    </div>
+
+    <div class="table-toolbar">
+      <div class="table-toolbar-left">
+        <button type="button" class="btn btn-sm btn-outline" data-action="rad-add">+ Добавить исследование</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-action="rad-clear">Очистить</button>
+      </div>
+      <div class="table-legend"><span>Исследований: <strong data-counter="radRows">0</strong></span></div>
+    </div>
+
+    <div class="form-grid" style="margin-top:16px">
+      <div class="field span-3"><label for="radTotal">Суммарная доза, мЗв</label><input class="form-input" id="radTotal" type="text" data-bind="treatment.radiation.totalDose" readonly></div>
+      <div class="field span-5"><label for="radDoctor">Врач</label><input class="form-input" id="radDoctor" type="text" data-bind="treatment.radiation.doctor"></div>
+    </div>
+
+    <div class="signature-line"><span>Врач-рентгенолог</span><span class="line"></span><span>подпись / ФИО</span></div>
+  </div>
+</section>
