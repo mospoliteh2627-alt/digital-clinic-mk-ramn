@@ -1,0 +1,3337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Учебный автономный тренажёр по интеграции медицинской информационной системы и лабораторной информационной системы.">
+<title>МИС–ЛИС: цифровая лаборатория медицинских информационных систем</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d6f9e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 3h6'/%3E%3Cpath d='M10 3v6.4L4.9 18a2 2 0 0 0 1.8 3h10.6a2 2 0 0 0 1.8-3L14 9.4V3'/%3E%3Cpath d='M7.5 15h9'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f3f7fb;
+  --bg-deep:#e9f1f8;
+  --surface:#ffffff;
+  --surface-2:#f8fbfe;
+  --line:#dbe6ef;
+  --line-strong:#c8d8e5;
+  --ink:#18324a;
+  --muted:#63788b;
+  --muted-2:#8497a8;
+  --primary:#0d6f9e;
+  --primary-dark:#095475;
+  --primary-soft:#e8f4fb;
+  --teal:#0d8b86;
+  --teal-soft:#e7f7f5;
+  --green:#187a59;
+  --green-soft:#e8f6ef;
+  --amber:#a65b08;
+  --amber-soft:#fff4df;
+  --red:#b42318;
+  --red-soft:#feeceb;
+  --violet:#6552b8;
+  --violet-soft:#efedfb;
+  --shadow-sm:0 1px 2px rgba(21,52,76,.06),0 3px 10px rgba(21,52,76,.04);
+  --shadow:0 8px 28px rgba(21,52,76,.09);
+  --shadow-lg:0 22px 70px rgba(21,52,76,.2);
+  --radius:16px;
+  --radius-sm:11px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;background:
+    radial-gradient(circle at 8% 4%,rgba(42,148,190,.10),transparent 28rem),
+    radial-gradient(circle at 95% 12%,rgba(13,139,134,.07),transparent 26rem),
+    var(--bg);
+  color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+body.modal-open{overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.55}
+a{color:var(--primary);text-decoration:none}
+h1,h2,h3,h4,p{margin:0}
+code,.mono{font-family:var(--mono)}
+svg.icon{width:18px;height:18px;flex:0 0 auto;vertical-align:middle}
+.is-hidden{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+::selection{background:#cfe8f6;color:var(--ink)}
+:focus-visible{outline:3px solid rgba(13,111,158,.32);outline-offset:2px}
+
+/* ---------- Starter ---------- */
+.start-screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:34px 22px;position:relative;overflow:hidden;
+}
+.start-screen::before,.start-screen::after{
+  content:"";position:absolute;border-radius:50%;pointer-events:none;
+}
+.start-screen::before{width:620px;height:620px;background:radial-gradient(circle,rgba(34,136,178,.14),transparent 68%);left:-250px;top:-260px}
+.start-screen::after{width:480px;height:480px;background:radial-gradient(circle,rgba(13,139,134,.10),transparent 70%);right:-200px;bottom:-230px}
+.start-shell{width:min(1160px,100%);position:relative;z-index:1}
+.start-brand{display:flex;align-items:center;gap:13px;margin-bottom:28px}
+.brand-mark{
+  width:48px;height:48px;border-radius:15px;display:grid;place-items:center;flex:0 0 auto;
+  background:linear-gradient(145deg,var(--primary),#0a8d9a);color:#fff;
+  box-shadow:0 8px 22px rgba(13,111,158,.25);
+}
+.brand-mark svg{width:27px;height:27px}
+.brand-mark.small{width:40px;height:40px;border-radius:12px}
+.brand-mark.small svg{width:23px;height:23px}
+.brand-copy strong{display:block;letter-spacing:.01em;font-size:16px;line-height:1.2}
+.brand-copy span{display:block;font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:.04em;text-transform:uppercase}
+.start-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(370px,.78fr);gap:48px;align-items:center}
+.start-copy .eyebrow{color:var(--primary);font-weight:750;letter-spacing:.13em;text-transform:uppercase;font-size:11.5px;display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.start-copy .eyebrow::before{content:"";width:25px;height:2px;background:var(--primary);border-radius:3px}
+.start-copy h1{font-size:clamp(34px,4.2vw,58px);line-height:1.07;letter-spacing:-.035em;font-weight:780;max-width:720px}
+.start-copy h1 span{color:var(--primary)}
+.start-lead{font-size:17px;line-height:1.65;color:var(--muted);max-width:660px;margin-top:20px}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:30px;max-width:690px}
+.feature{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.64);border:1px solid rgba(200,216,229,.8);border-radius:14px;padding:14px 15px;backdrop-filter:blur(5px)}
+.feature-icon{width:36px;height:36px;border-radius:10px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;flex:0 0 auto}
+.feature-icon.green{background:var(--green-soft);color:var(--green)}
+.feature-icon.amber{background:var(--amber-soft);color:var(--amber)}
+.feature-icon.violet{background:var(--violet-soft);color:var(--violet)}
+.feature strong{display:block;font-size:13.5px;margin-bottom:2px}
+.feature span{display:block;font-size:12px;color:var(--muted);line-height:1.45}
+.start-note{display:flex;gap:9px;align-items:center;color:var(--muted);font-size:12px;margin-top:24px}
+.start-card{
+  background:rgba(255,255,255,.94);border:1px solid rgba(211,225,236,.95);border-radius:24px;
+  box-shadow:0 24px 70px rgba(24,50,74,.13);padding:30px;backdrop-filter:blur(10px);
+}
+.start-card .card-kicker{display:inline-flex;align-items:center;gap:7px;color:var(--teal);background:var(--teal-soft);border-radius:999px;padding:6px 10px;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.08em}
+.start-card h2{font-size:25px;letter-spacing:-.025em;margin:15px 0 6px}
+.start-card > p{color:var(--muted);font-size:13.5px;line-height:1.55;margin-bottom:22px}
+.field{margin-bottom:16px}
+.field label,.field-label{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12.5px;font-weight:700;margin-bottom:7px;color:#294860}
+.field .req{color:var(--red);font-size:12px}
+.field input,.field select,.field textarea,.search-input{
+  width:100%;border:1px solid var(--line-strong);background:#fff;border-radius:10px;padding:11px 12px;
+  transition:border-color .15s,box-shadow .15s;min-height:43px;
+}
+.field textarea{min-height:92px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus,.search-input:focus{border-color:#5da8cb;box-shadow:0 0 0 3px rgba(13,111,158,.11);outline:none}
+.field input.is-invalid,.field select.is-invalid{border-color:#e06d64;background:#fffafa}
+.field .hint{font-size:11.5px;color:var(--muted-2);margin-top:5px;line-height:1.4}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;
+  border-radius:10px;padding:10px 15px;font-weight:700;font-size:13.5px;line-height:1.25;
+  transition:transform .12s,box-shadow .15s,background .15s,border-color .15s;white-space:nowrap;
+}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn:active:not(:disabled){transform:translateY(0)}
+.btn svg{width:17px;height:17px}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(13,111,158,.20)}
+.btn-primary:hover:not(:disabled){background:var(--primary-dark);box-shadow:0 6px 18px rgba(13,111,158,.26)}
+.btn-secondary{background:#fff;border-color:var(--line-strong);color:#294860;box-shadow:var(--shadow-sm)}
+.btn-secondary:hover:not(:disabled){background:var(--surface-2);border-color:#abc4d6}
+.btn-soft{background:var(--primary-soft);color:var(--primary-dark);border-color:#cfe6f2}
+.btn-soft:hover:not(:disabled){background:#dbedf8}
+.btn-teal{background:var(--teal);color:#fff;box-shadow:0 4px 12px rgba(13,139,134,.2)}
+.btn-teal:hover:not(:disabled){background:#087570}
+.btn-danger{background:var(--red);color:#fff;box-shadow:0 4px 12px rgba(180,35,24,.16)}
+.btn-danger:hover:not(:disabled){background:#941d14}
+.btn-danger-soft{background:var(--red-soft);color:var(--red);border-color:#f6cfcb}
+.btn-warning-soft{background:var(--amber-soft);color:var(--amber);border-color:#f1ddb9}
+.btn-ghost{background:transparent;color:var(--muted);border-color:transparent}
+.btn-ghost:hover:not(:disabled){background:var(--primary-soft);color:var(--primary-dark)}
+.btn-lg{padding:13px 20px;font-size:15px;border-radius:12px}
+.btn-sm{padding:7px 10px;font-size:12px;border-radius:8px}
+.btn-block{width:100%}
+.btn .icon{flex:0 0 auto}
+.start-submit{margin-top:5px}
+.start-secure{display:flex;align-items:center;gap:7px;justify-content:center;color:var(--muted-2);font-size:11.5px;margin-top:13px}
+.form-alert{border-radius:11px;padding:11px 13px;display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.45;margin:15px 0}
+.form-alert svg{width:17px;height:17px;margin-top:1px}
+.form-alert strong{display:block;font-size:12.5px;margin-bottom:1px}
+.form-alert .alert-detail{color:inherit;opacity:.88}
+.alert-error{background:var(--red-soft);border:1px solid #f7cdc9;color:#8f2118}
+.alert-warning{background:var(--amber-soft);border:1px solid #f3dfb9;color:#83500d}
+.alert-info{background:var(--primary-soft);border:1px solid #cfe6f2;color:#155b7d}
+.alert-success{background:var(--green-soft);border:1px solid #c6e9d8;color:#126547}
+.start-footer{color:var(--muted-2);font-size:11.5px;margin-top:26px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* ---------- Application shell ---------- */
+.app{min-height:100vh}
+.topbar{
+  position:sticky;top:0;z-index:40;min-height:72px;display:flex;align-items:center;gap:22px;
+  padding:0 26px;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(24,50,74,.035);
+}
+.topbar .brand{display:flex;align-items:center;gap:11px;min-width:240px}
+.topbar .brand-copy strong{font-size:14px}
+.topbar .brand-copy span{font-size:10.5px}
+.system-nav{display:flex;align-items:center;gap:4px;padding:4px;background:var(--bg-deep);border-radius:12px;overflow:auto;scrollbar-width:none}
+.system-nav::-webkit-scrollbar{display:none}
+.nav-btn{
+  border:0;background:transparent;color:#547086;border-radius:9px;padding:8px 13px;display:flex;gap:7px;
+  align-items:center;font-size:12.5px;font-weight:700;white-space:nowrap;transition:background .15s,color .15s,box-shadow .15s;
+}
+.nav-btn svg{width:16px;height:16px}
+.nav-btn:hover{color:var(--primary);background:rgba(255,255,255,.6)}
+.nav-btn.is-active{color:var(--primary-dark);background:#fff;box-shadow:0 2px 8px rgba(24,50,74,.10)}
+.nav-count{background:#e6eef5;color:#557084;border-radius:999px;font-size:10.5px;padding:1px 6px;min-width:19px;text-align:center}
+.nav-btn.is-active .nav-count{background:var(--primary-soft);color:var(--primary-dark)}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.student-pill{display:flex;align-items:center;gap:9px;padding:7px 10px 7px 7px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;max-width:260px}
+.student-avatar{width:32px;height:32px;border-radius:9px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;flex:0 0 auto}
+.student-avatar svg{width:17px;height:17px}
+.student-pill strong{display:block;font-size:12px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:185px}
+.student-pill span{display:block;font-size:10.5px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:185px}
+.mobile-scenarios{display:none}
+.workspace{display:grid;grid-template-columns:318px minmax(0,1fr);gap:22px;width:min(1560px,100%);margin:0 auto;padding:22px 26px 42px;align-items:start}
+.sidebar{position:sticky;top:94px;max-height:calc(100vh - 112px);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden;z-index:26}
+.score-card{padding:17px 17px 15px;background:linear-gradient(140deg,#f7fbfe,#eef6fb);border-bottom:1px solid var(--line)}
+.score-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:3px}
+.score-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:750}
+.score-value{font-size:27px;font-weight:800;letter-spacing:-.04em;color:var(--primary-dark);line-height:1.1}
+.score-value small{font-size:12px;font-weight:650;color:var(--muted);letter-spacing:0}
+.score-meta{font-size:11.5px;color:var(--muted);margin-top:2px;display:flex;justify-content:space-between;gap:8px}
+.progress-track{height:7px;background:#dfeaf3;border-radius:999px;overflow:hidden;margin-top:11px}
+.progress-fill{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--primary),var(--teal));transition:width .45s ease}
+.sidebar-head{padding:15px 17px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sidebar-head h2{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}
+.sidebar-head span{font-size:11px;color:var(--muted-2)}
+.scenario-list{padding:0 9px 11px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#c6d8e5 transparent;flex:1;min-height:0}
+.scenario-item{
+  width:100%;border:1px solid transparent;background:transparent;border-radius:11px;padding:9px 8px;
+  display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:9px;align-items:start;text-align:left;
+  transition:background .15s,border-color .15s;margin-bottom:2px;
+}
+.scenario-item:hover{background:var(--surface-2);border-color:var(--line)}
+.scenario-item.is-done{background:#f7fcfa}
+.scenario-item.is-current{background:var(--primary-soft);border-color:#d3e8f3}
+.scenario-index{width:26px;height:26px;border-radius:8px;background:#edf3f8;color:#60788b;display:grid;place-items:center;font-size:11px;font-weight:800;border:1px solid #e4edf4}
+.scenario-item.is-done .scenario-index{background:var(--green);color:#fff;border-color:var(--green)}
+.scenario-item.is-current:not(.is-done) .scenario-index{background:var(--primary);color:#fff;border-color:var(--primary)}
+.scenario-main{min-width:0}
+.scenario-title{display:block;font-size:12px;font-weight:700;line-height:1.35;color:#24435b}
+.scenario-sub{display:block;font-size:10.5px;color:var(--muted-2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scenario-points{font-size:10.5px;font-weight:800;color:var(--primary);background:#eef7fc;border-radius:999px;padding:2px 7px;margin-top:1px;white-space:nowrap}
+.scenario-item.is-done .scenario-points{background:var(--green-soft);color:var(--green)}
+.scenario-points.zero{color:var(--violet);background:var(--violet-soft)}
+.sidebar-footer{border-top:1px solid var(--line);padding:10px;display:flex;align-items:center;justify-content:space-between;gap:5px;background:#fbfdff}
+.sidebar-footer .btn{font-size:11.5px;padding:6px 8px}
+.sidebar-scrim{display:none}
+
+/* ---------- Main panes ---------- */
+.main-pane{min-width:0;animation:pane-in .28s ease}
+@keyframes pane-in{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin:2px 0 18px;flex-wrap:wrap}
+.page-eyebrow{display:flex;align-items:center;gap:7px;color:var(--primary);font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;margin-bottom:5px}
+.page-eyebrow svg{width:14px;height:14px}
+.page-head h1{font-size:27px;line-height:1.18;letter-spacing:-.028em;font-weight:780}
+.page-sub{color:var(--muted);font-size:13px;margin-top:5px;max-width:700px;line-height:1.5}
+.page-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.section-stack{display:flex;flex-direction:column;gap:17px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 17px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.card-head h2,.card-head h3{font-size:14px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.card-head h2 svg,.card-head h3 svg{width:17px;height:17px;color:var(--primary)}
+.card-head p{font-size:11.5px;color:var(--muted);margin-top:2px}
+.card-body{padding:17px}
+.card-body.tight{padding:0}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
+.section-title h2,.section-title h3{font-size:16px;letter-spacing:-.015em;display:flex;align-items:center;gap:8px}
+.section-title h2 svg,.section-title h3 svg{width:18px;height:18px;color:var(--primary)}
+.section-title .count-chip{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-size:11px;font-weight:800}
+.stats-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-bottom:17px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:12px 14px;display:flex;gap:11px;align-items:center;box-shadow:var(--shadow-sm);min-width:0}
+.stat-icon{width:34px;height:34px;border-radius:10px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;flex:0 0 auto}
+.stat-icon.green{background:var(--green-soft);color:var(--green)}
+.stat-icon.amber{background:var(--amber-soft);color:var(--amber)}
+.stat-icon.teal{background:var(--teal-soft);color:var(--teal)}
+.stat-icon.violet{background:var(--violet-soft);color:var(--violet)}
+.stat-icon svg{width:17px;height:17px}
+.stat strong{display:block;font-size:18px;line-height:1.15;letter-spacing:-.02em}
+.stat span{display:block;font-size:10.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.two-col{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:17px;align-items:start}
+.mis-layout{display:grid;grid-template-columns:minmax(310px,.82fr) minmax(0,1.18fr);gap:17px;align-items:start}
+.stack{display:flex;flex-direction:column;gap:17px}
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.search-form{display:flex;gap:8px;align-items:center}
+.search-wrap{position:relative;flex:1;min-width:0}
+.search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted-2);pointer-events:none}
+.search-input{padding-left:34px}
+.search-wrap .search-input{min-height:40px;font-size:12.5px;border-radius:9px}
+.patient-list{display:flex;flex-direction:column}
+.patient-row{
+  width:100%;background:transparent;border:0;border-bottom:1px solid #edf3f7;padding:11px 15px;
+  display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;
+  transition:background .13s;position:relative;
+}
+.patient-row:last-child{border-bottom:0}
+.patient-row:hover{background:var(--surface-2)}
+.patient-row.is-selected{background:var(--primary-soft)}
+.patient-row.is-selected::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--primary)}
+.patient-avatar{width:32px;height:32px;border-radius:9px;background:#edf3f8;color:#557286;display:grid;place-items:center;font-size:11px;font-weight:800}
+.patient-row.is-selected .patient-avatar{background:#fff;color:var(--primary)}
+.patient-row strong{display:block;font-size:12.5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.patient-row span{display:block;font-size:10.5px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.patient-row .row-id{font-family:var(--mono);font-size:10px;color:var(--muted-2);margin-top:2px}
+.list-empty{padding:32px 20px;text-align:center;color:var(--muted)}
+.list-empty .empty-icon{width:48px;height:48px;border-radius:14px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;margin:0 auto 10px}
+.list-empty .empty-icon svg{width:23px;height:23px}
+.list-empty strong{display:block;font-size:13px;color:#36546b;margin-bottom:3px}
+.list-empty span{font-size:11.5px;line-height:1.45;display:block;max-width:310px;margin:0 auto}
+.detail-card{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-sm);overflow:hidden}
+.detail-hero{padding:18px 19px;background:linear-gradient(135deg,#f9fcff,#f2f8fc);border-bottom:1px solid var(--line);display:flex;gap:13px;align-items:flex-start}
+.detail-avatar{width:47px;height:47px;border-radius:13px;background:#fff;border:1px solid #d7e7f1;color:var(--primary);display:grid;place-items:center;flex:0 0 auto;font-size:15px;font-weight:800}
+.detail-hero-main{min-width:0;flex:1}
+.detail-hero h2{font-size:20px;letter-spacing:-.025em;line-height:1.25}
+.detail-hero .meta-line{display:flex;flex-wrap:wrap;gap:6px 13px;color:var(--muted);font-size:11.5px;margin-top:5px}
+.meta-line .dot{width:3px;height:3px;border-radius:50%;background:#a5b9c8;display:inline-block;margin-right:8px;vertical-align:middle}
+.id-chip{font-family:var(--mono);font-size:10.5px;background:#fff;border:1px solid #d9e7f0;border-radius:6px;padding:2px 6px;color:#416079}
+.detail-body{padding:17px 19px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}
+.info-cell{background:var(--surface-2);border:1px solid #ebf2f7;border-radius:10px;padding:9px 11px;min-width:0}
+.info-cell label,.info-cell span.label{display:block;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-2);margin-bottom:2px}
+.info-cell strong,.info-cell .value{display:block;font-size:12.5px;overflow-wrap:anywhere}
+.subsection{margin-top:16px;padding-top:15px;border-top:1px solid #edf3f7}
+.subsection:first-child{margin-top:0;padding-top:0;border-top:0}
+.subsection-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.subsection-head h3{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:800;display:flex;align-items:center;gap:6px}
+.subsection-head h3 svg{width:14px;height:14px}
+.compact-list{display:flex;flex-direction:column;gap:7px}
+.compact-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px;background:var(--surface-2);border:1px solid #edf3f7;border-radius:9px;min-width:0}
+.compact-main{min-width:0}
+.compact-main strong{display:block;font-size:11.5px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.compact-main span{display:block;font-size:10px;color:var(--muted);margin-top:1px;font-family:var(--mono)}
+.compact-side{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.result-block{border:1px solid #d7e9e1;background:linear-gradient(145deg,#fbfefc,#f2faf6);border-radius:11px;padding:12px 13px;margin-top:8px}
+.result-block .result-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.result-block .result-head strong{font-size:12px;display:flex;align-items:center;gap:6px}
+.result-block .result-head strong svg{width:15px;height:15px;color:var(--green)}
+.result-values{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.result-value{background:#fff;border:1px solid #dceee5;border-radius:8px;padding:7px 9px}
+.result-value span{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted-2);font-weight:750}
+.result-value strong{display:block;font-size:13px;color:#135f46;margin-top:1px}
+.ref-note{font-size:10px;color:var(--muted);margin-top:2px}
+.empty-panel{padding:42px 24px;text-align:center;color:var(--muted);border:1px dashed #cdddea;border-radius:var(--radius);background:rgba(255,255,255,.65)}
+.empty-panel .empty-icon{width:54px;height:54px;border-radius:16px;background:#fff;border:1px solid var(--line);color:var(--primary);display:grid;place-items:center;margin:0 auto 12px;box-shadow:var(--shadow-sm)}
+.empty-panel .empty-icon svg{width:25px;height:25px}
+.empty-panel h3{font-size:15px;color:#2c4b62;margin-bottom:4px}
+.empty-panel p{font-size:12px;line-height:1.55;max-width:420px;margin:0 auto}
+.callout{border:1px solid #d6e8f3;background:linear-gradient(135deg,#f4faff,#eef7fd);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;font-size:12px;line-height:1.5;color:#28566f;margin-bottom:14px}
+.callout svg{width:18px;height:18px;color:var(--primary);margin-top:1px;flex:0 0 auto}
+.callout strong{display:block;margin-bottom:1px;color:#1b4962}
+.callout.warning{border-color:#f1dfbd;background:linear-gradient(135deg,#fffaf1,#fff6e6);color:#785216}
+.callout.warning svg{color:var(--amber)}
+.callout.danger{border-color:#f6d0cc;background:linear-gradient(135deg,#fff8f7,#feeceb);color:#86231b}
+.callout.danger svg{color:var(--red)}
+.callout.success{border-color:#c9e8d9;background:linear-gradient(135deg,#f6fdf9,#eaf8f1);color:#195e47}
+.callout.success svg{color:var(--green)}
+.badge{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:750;line-height:1.35;white-space:nowrap;border:1px solid transparent}
+.badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.8}
+.badge-blue{color:#11638c;background:#e9f4fb;border-color:#d4e9f4}
+.badge-cyan{color:#076e78;background:#e7f7f6;border-color:#ccefed}
+.badge-green{color:#136b4e;background:#e9f7ef;border-color:#caebd9}
+.badge-amber{color:#8b5006;background:#fff4df;border-color:#f4e0bb}
+.badge-red{color:#a02218;background:#feeceb;border-color:#f7d0cc}
+.badge-violet{color:#5747a1;background:#f0edfc;border-color:#e0daf9}
+.badge-gray{color:#5f7384;background:#eef3f7;border-color:#e0e9f0}
+.badge-lg{font-size:11px;padding:4px 10px}
+.badge-lg::before{width:6px;height:6px}
+.priority-cito{color:#9b3411;background:#fff0e8;border-color:#f9d7c5}
+.priority-routine{color:#546c7e;background:#eef4f8;border-color:#e0eaf1}
+
+/* ---------- LIS ---------- */
+.lis-layout{display:grid;grid-template-columns:minmax(310px,.76fr) minmax(0,1.24fr);gap:17px;align-items:start}
+.referral-card{width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px;display:flex;flex-direction:column;gap:7px;transition:border-color .15s,box-shadow .15s,transform .15s;margin-bottom:8px}
+.referral-card:hover{border-color:#aac9db;box-shadow:0 4px 14px rgba(21,52,76,.07);transform:translateY(-1px)}
+.referral-card.is-selected{border-color:#88bfd8;background:linear-gradient(135deg,#fbfdff,#f2f9fd);box-shadow:0 0 0 2px rgba(13,111,158,.08)}
+.referral-card-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.referral-card h4{font-size:12px;line-height:1.35;font-weight:750}
+.referral-card .ref-id{font-family:var(--mono);font-size:9.5px;color:var(--muted-2);margin-top:2px}
+.referral-card .patient-line{font-size:11px;color:var(--muted)}
+.referral-card-foot{display:flex;justify-content:space-between;align-items:center;gap:7px;flex-wrap:wrap}
+.referral-card-foot .date{font-size:9.5px;color:var(--muted-2)}
+.lis-empty{padding:16px;border:1px dashed #d6e4ee;border-radius:11px;color:var(--muted);text-align:center;font-size:11.5px;background:var(--surface-2)}
+.workflow-steps{display:flex;align-items:center;gap:0;margin:2px 0 15px;flex-wrap:wrap}
+.wf-step{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted-2);font-weight:650}
+.wf-step .dot{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:#eef3f7;color:#708494;font-size:9px;border:1px solid #e1eaf1}
+.wf-step.is-done{color:var(--green)}
+.wf-step.is-done .dot{background:var(--green);border-color:var(--green);color:#fff}
+.wf-step.is-active{color:var(--primary);font-weight:800}
+.wf-step.is-active .dot{background:var(--primary);border-color:var(--primary);color:#fff}
+.wf-line{width:18px;height:1px;background:#d7e3ec;margin:0 5px}
+.sample-box{background:linear-gradient(135deg,#fbfdff,#f4f9fc);border:1px solid #dce9f1;border-radius:11px;padding:12px 13px;margin-bottom:13px}
+.sample-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:9px}
+.sample-top strong{font-size:12px;display:flex;align-items:center;gap:6px}
+.sample-top strong svg{width:15px;height:15px;color:var(--teal)}
+.barcode{background:#fff;border:1px solid #e1ebf2;border-radius:8px;padding:8px 9px 5px;text-align:center;overflow:hidden}
+.barcode svg{display:block;width:100%;height:44px}
+.barcode span{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:#3e5b6f;margin-top:2px}
+.action-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.result-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.panel-title{font-size:13px;font-weight:750;display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.panel-title svg{width:16px;height:16px;color:var(--primary)}
+.text-muted{color:var(--muted)}
+.small{font-size:11.5px}
+.tiny{font-size:10.5px}
+.mono-id{font-family:var(--mono);font-size:10.5px;color:#436176;background:#f2f7fa;border:1px solid #e4edf3;border-radius:5px;padding:1px 5px;overflow-wrap:anywhere}
+.divider{height:1px;background:var(--line);margin:14px 0}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- Journal ---------- */
+.journal-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:17px}
+.j-sum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;box-shadow:var(--shadow-sm)}
+.j-sum span{display:flex;align-items:center;gap:6px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:750}
+.j-sum span svg{width:14px;height:14px}
+.j-sum strong{display:block;font-size:20px;line-height:1.2;margin-top:2px;letter-spacing:-.02em}
+.outbox-list{display:flex;flex-direction:column;gap:9px}
+.outbox-item{border:1px solid #e1ebf2;border-radius:10px;padding:11px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(135deg,#fbfdff,#f8fbfd);flex-wrap:wrap}
+.outbox-main{min-width:0}
+.outbox-main strong{font-size:12px;display:block}
+.outbox-main .meta{display:flex;gap:6px 10px;flex-wrap:wrap;align-items:center;font-size:10px;color:var(--muted);margin-top:3px}
+.outbox-main .meta code{font-size:9.5px;color:#536d80}
+.journal-massage-list{display:flex;flex-direction:column;gap:11px}
+.message-card{border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}
+.message-card.is-error{border-color:#f2cbc7}
+.message-card.is-ready{border-color:#efd8ad}
+.message-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px 14px;background:#fbfdff;border-bottom:1px solid #edf3f7;flex-wrap:wrap}
+.message-head.is-error{background:#fff8f7}
+.message-head.is-ready{background:#fffbf2}
+.message-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}
+.message-title code{font-size:11px;font-weight:700;color:#24495f}
+.message-title .msg-type{font-size:10px;color:var(--muted)}
+.message-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 14px;padding:11px 14px;font-size:11px}
+.message-meta label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted-2);font-weight:750;margin-bottom:1px}
+.message-meta strong,.message-meta span.value{font-weight:600;font-size:11px;overflow-wrap:anywhere}
+.message-log{padding:0 14px 12px}
+.log-box{background:#f8fafc;border:1px solid #e8eff4;border-radius:8px;padding:8px 10px}
+.log-box.is-error{background:#fff8f7;border-color:#f5d6d2}
+.log-box h4{font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.log-box h4 svg{width:13px;height:13px}
+.log-line{font-family:var(--mono);font-size:10px;line-height:1.55;color:#4f687a;display:flex;gap:7px;align-items:flex-start}
+.log-line + .log-line{margin-top:2px}
+.log-line time{color:#8fa2b0;flex:0 0 auto}
+.log-line.is-error{color:var(--red)}
+.log-line.is-success{color:var(--green)}
+.message-actions{display:flex;align-items:center;gap:8px;justify-content:flex-end;padding:0 14px 13px;flex-wrap:wrap}
+.message-actions .btn{font-size:11.5px;padding:7px 10px}
+.idempotency-note{display:flex;align-items:flex-start;gap:8px;font-size:10.5px;color:var(--muted);line-height:1.5;padding:10px 12px;border:1px dashed #d5e4ee;border-radius:9px;background:#fbfdff;margin-top:11px}
+.idempotency-note svg{width:15px;height:15px;color:var(--teal);flex:0 0 auto;margin-top:1px}
+
+/* ---------- Results ---------- */
+.final-banner{display:flex;align-items:center;gap:16px;justify-content:space-between;border:1px solid #c8e8d8;background:linear-gradient(135deg,#f4fcf8,#eaf8f1);border-radius:var(--radius);padding:16px 18px;margin-bottom:17px;flex-wrap:wrap;box-shadow:var(--shadow-sm)}
+.final-banner-main{display:flex;gap:12px;align-items:center;min-width:0}
+.final-banner-icon{width:42px;height:42px;border-radius:12px;background:var(--green);color:#fff;display:grid;place-items:center;flex:0 0 auto;box-shadow:0 4px 12px rgba(24,122,89,.2)}
+.final-banner-icon svg{width:21px;height:21px}
+.final-banner h2{font-size:16px;letter-spacing:-.015em}
+.final-banner p{font-size:11.5px;color:#3f6e5a;margin-top:2px}
+.results-hero{display:grid;grid-template-columns:minmax(250px,.78fr) minmax(0,1.22fr);gap:17px;margin-bottom:17px}
+.score-panel{background:linear-gradient(145deg,#0e678f,#0b7f8b);color:#fff;border-radius:var(--radius);padding:21px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 12px 32px rgba(10,85,117,.2);position:relative;overflow:hidden}
+.score-panel::after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;border:32px solid rgba(255,255,255,.055);right:-78px;bottom:-92px}
+.score-panel .score-caption{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;opacity:.78;display:flex;align-items:center;gap:6px;position:relative;z-index:1}
+.score-panel .score-caption svg{width:14px;height:14px}
+.big-score{display:flex;align-items:baseline;gap:5px;margin:7px 0 2px;position:relative;z-index:1}
+.big-score strong{font-size:58px;line-height:1;letter-spacing:-.06em;font-weight:800}
+.big-score span{font-size:16px;opacity:.72;font-weight:650}
+.score-panel .score-sub{font-size:11.5px;opacity:.8;position:relative;z-index:1}
+.score-panel .progress-track{background:rgba(255,255,255,.18);margin-top:14px;position:relative;z-index:1}
+.score-panel .progress-fill{background:linear-gradient(90deg,#f4c95d,#9fe6c8)}
+.score-note-small{display:flex;justify-content:space-between;gap:10px;font-size:10px;opacity:.75;margin-top:7px;position:relative;z-index:1}
+.results-side{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+.results-side h2{font-size:18px;letter-spacing:-.02em;margin-bottom:4px}
+.results-side p{font-size:11.5px;color:var(--muted);line-height:1.55}
+.grade-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.report-download{display:flex;flex-direction:column;gap:8px}
+.report-download .btn-primary{box-shadow:0 8px 20px rgba(13,111,158,.2)}
+.report-hint{font-size:10.5px;color:var(--muted);display:flex;align-items:center;gap:6px;justify-content:center}
+.report-hint svg{width:13px;height:13px}
+.results-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);gap:17px;align-items:start}
+.scenario-table{width:100%;border-collapse:collapse}
+.scenario-table th,.scenario-table td{text-align:left;padding:10px 13px;border-bottom:1px solid #edf3f7;vertical-align:middle;font-size:11.5px}
+.scenario-table th{font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-2);font-weight:800;background:#fbfdff;position:sticky;top:0}
+.scenario-table tr:last-child td{border-bottom:0}
+.scenario-table .table-num{width:32px;color:var(--muted-2);font-weight:700}
+.scenario-table .table-points{text-align:right;white-space:nowrap;font-weight:750;font-variant-numeric:tabular-nums}
+.scenario-table .status-cell{white-space:nowrap;text-align:right}
+.scenario-name{font-weight:650;font-size:11.5px}
+.scenario-note{font-size:9.5px;color:var(--muted);margin-top:1px}
+.error-list{display:flex;flex-direction:column;gap:7px;max-height:390px;overflow:auto;padding-right:2px}
+.error-entry{border:1px solid #f3d7d3;border-left:3px solid #d56a61;background:#fffafa;border-radius:8px;padding:8px 10px}
+.error-entry .e-meta{font-size:9.5px;color:#a3625b;display:flex;justify-content:space-between;gap:8px;margin-bottom:2px;flex-wrap:wrap}
+.error-entry p{font-size:11px;color:#7e3028;line-height:1.45}
+.empty-errors{border:1px solid #cfe8da;background:#f7fdfa;border-radius:10px;padding:16px;text-align:center;color:#316c53;font-size:11.5px}
+.empty-errors svg{width:24px;height:24px;color:var(--green);display:block;margin:0 auto 5px}
+.report-preview{font-family:var(--mono);font-size:10.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word;background:#f8fafc;border:1px solid var(--line);border-radius:9px;padding:12px;max-height:44vh;overflow:auto;color:#324d62}
+
+/* ---------- Modal / toast ---------- */
+.modal-root{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:22px}
+.modal-backdrop{position:absolute;inset:0;background:rgba(16,39,57,.48);backdrop-filter:blur(4px);animation:fade-in .15s ease}
+.modal{
+  position:relative;z-index:1;width:min(620px,100%);max-height:calc(100vh - 44px);overflow:auto;
+  background:#fff;border:1px solid rgba(207,222,233,.9);border-radius:18px;box-shadow:var(--shadow-lg);
+  animation:modal-in .2s ease;
+}
+.modal.modal-lg{width:min(820px,100%)}
+.modal.modal-sm{width:min(470px,100%)}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+@keyframes modal-in{from{opacity:0;transform:translateY(9px) scale(.99)}to{opacity:1;transform:none}}
+.modal-header{padding:19px 21px 15px;display:flex;gap:12px;align-items:flex-start;border-bottom:1px solid #edf3f7;position:sticky;top:0;background:#fff;z-index:2}
+.modal-icon{width:38px;height:38px;border-radius:11px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;flex:0 0 auto}
+.modal-icon svg{width:19px;height:19px}
+.modal-heading{min-width:0;flex:1}
+.modal-heading h2{font-size:18px;letter-spacing:-.02em;line-height:1.25}
+.modal-heading p{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.45}
+.modal-close{width:31px;height:31px;border:0;background:#f3f7fa;color:#647c8e;border-radius:8px;display:grid;place-items:center;flex:0 0 auto}
+.modal-close:hover{background:#e9f0f5;color:#29495e}
+.modal-close svg{width:16px;height:16px}
+.modal-body{padding:19px 21px 21px}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:19px;padding-top:15px;border-top:1px solid #edf3f7}
+.modal-actions .btn-primary{min-width:132px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.form-section-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted-2);margin:17px 0 8px;display:flex;align-items:center;gap:7px}
+.form-section-label::after{content:"";height:1px;background:#edf3f7;flex:1}
+.modal-subcard{background:var(--surface-2);border:1px solid #e8f0f5;border-radius:10px;padding:12px 13px;margin-bottom:14px;font-size:11.5px;color:var(--muted);line-height:1.5}
+.modal-subcard strong{color:#29495e}
+.scenario-detail-meta{display:flex;gap:7px;flex-wrap:wrap;margin:3px 0 14px}
+.scenario-detail p{font-size:13px;color:#36556b;line-height:1.65;margin-bottom:12px}
+.scenario-criteria{display:flex;flex-direction:column;gap:7px;margin:13px 0 0}
+.criteria-line{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:#3c5b70;line-height:1.5}
+.criteria-line svg{width:15px;height:15px;color:var(--green);flex:0 0 auto;margin-top:1px}
+.criteria-line.is-pending svg{color:var(--muted-2)}
+.scenario-detail .task-note{border:1px solid #e5eef5;background:#f8fbfd;border-radius:9px;padding:10px 12px;font-size:11.5px;color:var(--muted);line-height:1.55;margin-top:14px}
+.toast-root{position:fixed;right:20px;bottom:20px;z-index:130;display:flex;flex-direction:column;gap:9px;max-width:min(380px,calc(100vw - 32px));pointer-events:none}
+.toast{display:flex;align-items:flex-start;gap:9px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:11px;padding:11px 12px;box-shadow:0 10px 30px rgba(17,43,63,.16);font-size:12px;line-height:1.45;color:#2f4f66;animation:toast-in .22s ease;pointer-events:auto}
+.toast svg{width:17px;height:17px;flex:0 0 auto;margin-top:1px;color:var(--primary)}
+.toast strong{display:block;font-size:11.5px;color:#18394f;margin-bottom:1px}
+.toast-success{border-left-color:var(--green)}
+.toast-success svg{color:var(--green)}
+.toast-error{border-left-color:var(--red)}
+.toast-error svg{color:var(--red)}
+.toast-warning{border-left-color:var(--amber)}
+.toast-warning svg{color:var(--amber)}
+.toast-info{border-left-color:var(--primary)}
+@keyframes toast-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.toast.is-leaving{animation:toast-out .18s ease forwards}
+@keyframes toast-out{to{opacity:0;transform:translateX(10px)}}
+.barcode-generating{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--muted)}
+.spinner{width:16px;height:16px;border:2px solid #d4e4ee;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1250px){
+  .workspace{grid-template-columns:292px minmax(0,1fr);gap:17px;padding-left:19px;padding-right:19px}
+  .topbar{padding-left:19px;padding-right:19px;gap:14px}
+  .topbar .brand{min-width:205px}
+  .stats-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .journal-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .message-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:1060px){
+  .start-grid{grid-template-columns:1fr;gap:35px}
+  .start-copy h1{max-width:850px}
+  .start-card{max-width:600px;width:100%}
+  .start-screen{align-items:flex-start;padding-top:30px}
+  .mis-layout,.lis-layout,.results-grid,.two-col{grid-template-columns:1fr}
+  .results-hero{grid-template-columns:1fr}
+  .score-panel{min-height:200px}
+  .topbar{flex-wrap:wrap;padding-top:10px;padding-bottom:10px;min-height:64px}
+  .topbar .brand{min-width:0;flex:1}
+  .system-nav{order:3;width:100%;justify-content:flex-start}
+  .student-pill{max-width:220px}
+}
+@media(max-width:1060px) and (min-width:901px){
+  .sidebar{top:126px;max-height:calc(100vh - 144px)}
+}
+@media(max-width:900px){
+  .workspace{display:block;padding:16px}
+  .sidebar{
+    position:fixed;left:16px;top:16px;bottom:16px;width:min(318px,calc(100vw - 32px));max-height:none;
+    transform:translateX(calc(-100% - 30px));transition:transform .22s ease;z-index:70;box-shadow:var(--shadow-lg);
+  }
+  .sidebar.is-open{transform:none}
+  .sidebar-scrim{display:block;position:fixed;inset:0;background:rgba(15,38,56,.42);backdrop-filter:blur(2px);z-index:65;opacity:0;pointer-events:none;transition:opacity .2s}
+  .sidebar-scrim.is-open{opacity:1;pointer-events:auto}
+  .mobile-scenarios{display:inline-flex}
+  .main-pane{min-height:70vh}
+  .topbar .brand-copy span{display:none}
+  .student-pill{max-width:190px}
+  .page-head h1{font-size:23px}
+  .toast-root{right:12px;bottom:12px}
+}
+@media(max-width:640px){
+  .start-screen{padding:18px 14px}
+  .start-card{padding:22px;border-radius:18px}
+  .start-copy h1{font-size:33px}
+  .start-lead{font-size:14px}
+  .feature-grid{grid-template-columns:1fr}
+  .feature{padding:11px 12px}
+  .start-footer{font-size:10px}
+  .topbar{padding:9px 13px;gap:9px}
+  .brand-mark.small{width:35px;height:35px;border-radius:10px}
+  .topbar .brand-copy strong{font-size:12px}
+  .student-pill{padding:5px;max-width:170px}
+  .student-pill .student-avatar{display:none}
+  .student-pill strong{font-size:10.5px;max-width:150px}
+  .student-pill span{font-size:9.5px;max-width:150px}
+  .mobile-scenarios{font-size:11px;padding:7px 9px}
+  .nav-btn{padding:7px 9px;font-size:11px;gap:5px}
+  .nav-count{display:none}
+  .workspace{padding:12px}
+  .stats-row,.journal-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .stat{padding:9px 10px;gap:8px}
+  .stat-icon{width:29px;height:29px;border-radius:8px}
+  .stat strong{font-size:15px}
+  .stat span{font-size:9.5px}
+  .card-body{padding:13px}
+  .card-head{padding:13px}
+  .page-head{gap:12px}
+  .page-head h1{font-size:21px}
+  .page-sub{font-size:12px}
+  .page-actions{width:100%}
+  .page-actions .btn{flex:1}
+  .detail-hero{padding:14px}
+  .detail-body{padding:14px}
+  .info-grid,.form-row,.form-grid,.result-form-grid{grid-template-columns:1fr}
+  .result-values{grid-template-columns:1fr}
+  .message-meta{grid-template-columns:1fr 1fr;padding:10px 12px}
+  .message-head{padding:11px 12px}
+  .message-log{padding:0 12px 10px}
+  .message-actions{padding:0 12px 12px}
+  .modal-root{padding:9px;align-items:flex-end}
+  .modal{max-height:calc(100vh - 18px);border-radius:15px}
+  .modal-header{padding:15px}
+  .modal-body{padding:15px}
+  .modal-actions .btn{flex:1}
+  .toast-root{left:10px;right:10px;bottom:10px;max-width:none}
+  .toast{width:100%}
+  .big-score strong{font-size:48px}
+  .score-panel{padding:17px}
+  .results-side{padding:15px}
+    .scenario-table th,.scenario-table td{padding:9px 8px}
+  .outbox-item{align-items:flex-start}
+  .outbox-item .btn{width:100%}
+  .final-banner{padding:13px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+/* ---------- Прогресс и подсветка баллов ---------- */
+.score-card{position:relative}
+.score-value{display:flex;align-items:baseline;gap:5px;position:relative}
+.score-value.is-bump{animation:score-bump .6s ease}
+@keyframes score-bump{0%{transform:scale(1)}30%{transform:scale(1.16);color:var(--green)}100%{transform:scale(1)}}
+.score-card.is-flash{animation:score-flash .9s ease}
+@keyframes score-flash{0%{box-shadow:0 0 0 0 rgba(24,122,89,.4)}40%{box-shadow:0 0 0 7px rgba(24,122,89,.14)}100%{box-shadow:0 0 0 0 rgba(24,122,89,0)}}
+.score-delta{font-size:12px;font-weight:800;line-height:1;padding:3px 8px;border-radius:999px;color:#fff;background:var(--green);box-shadow:var(--shadow-sm);white-space:nowrap}
+.score-delta.down{background:var(--red)}
+.score-delta.pop{animation:delta-pop 1.05s ease forwards}
+@keyframes delta-pop{0%{opacity:0;transform:translateY(7px) scale(.7)}22%{opacity:1;transform:translateY(0) scale(1.06)}60%{opacity:1}100%{opacity:0;transform:translateY(-11px) scale(.92)}}
+.progress-track.striped .progress-fill{background-image:linear-gradient(45deg,rgba(255,255,255,.28) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.28) 50%,rgba(255,255,255,.28) 75%,transparent 75%,transparent);background-size:16px 16px;animation:stripes 1s linear infinite}
+@keyframes stripes{to{background-position:16px 0}}
+.scenario-track{display:block;height:5px;border-radius:999px;background:#e6eef5;overflow:hidden;margin-top:6px}
+.scenario-track-fill{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--primary),var(--teal));transition:width .45s ease}
+.scenario-item.is-done .scenario-track-fill{background:linear-gradient(90deg,var(--green),#34c3a0)}
+.scenario-item.is-current:not(.is-done) .scenario-track-fill{width:14%!important;background:linear-gradient(90deg,var(--primary),var(--teal));animation:track-pulse 1.4s ease infinite}
+@keyframes track-pulse{0%,100%{opacity:.5}50%{opacity:1}}
+.brand-discipline{display:block;font-size:11px;color:var(--primary-dark);font-weight:650;margin-top:2px}
+.sitemap-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sitemap-item{display:flex;gap:11px;align-items:flex-start;text-align:left;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:12px 13px;transition:background .15s,border-color .15s,transform .12s;cursor:pointer}
+.sitemap-item:hover{background:var(--primary-soft);border-color:#cfe6f2;transform:translateY(-1px)}
+.sitemap-item .si-icon{width:34px;height:34px;border-radius:9px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;flex:0 0 auto}
+.sitemap-item .si-icon svg{width:17px;height:17px}
+.sitemap-item strong{display:block;font-size:13px;color:#24435b}
+.sitemap-item span span{display:block;font-size:11px;color:var(--muted);line-height:1.4;margin-top:2px}
+@media(max-width:560px){.sitemap-grid{grid-template-columns:1fr}}
+
+/* ---------- Глобальный индикатор прогресса ---------- */
+.top-progress{position:fixed;top:0;left:0;right:0;height:4px;background:rgba(13,111,158,.14);z-index:60}
+.top-progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--teal),var(--green));transition:width .45s ease}
+.step-indicator{display:flex;gap:3px;margin-top:11px}
+.step-seg{flex:1;height:8px;border-radius:3px;background:#e3ecf3;transition:background .3s}
+.step-seg.done{background:linear-gradient(90deg,var(--green),#34c3a0)}
+.step-seg.current{background:linear-gradient(90deg,var(--primary),var(--teal));animation:track-pulse 1.2s ease infinite}
+
+/* ---------- Правовое соответствие (152-ФЗ, 436-ФЗ, 149-ФЗ) ---------- */
+.age-badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;background:#fff;border:1.5px solid var(--ink);color:var(--ink);font-size:11px;font-weight:800;letter-spacing:.02em;flex:0 0 auto}
+.age-badge-sm{width:22px;height:22px;font-size:10px;border-radius:6px;background:var(--surface-2)}
+.consent{margin:0 0 16px;padding:11px 12px;background:var(--primary-soft);border:1px solid #d3e8f3;border-radius:11px}
+.consent-note{font-size:11px;color:var(--muted);margin-top:7px;padding-left:25px}
+.consent-label{display:flex;gap:9px;align-items:flex-start;font-size:12px;line-height:1.5;color:var(--muted);cursor:pointer}
+.consent-label input[type="checkbox"]{width:16px;height:16px;margin-top:2px;flex:0 0 auto;accent-color:var(--primary);cursor:pointer}
+.consent-label a{color:var(--primary-dark);font-weight:650;text-decoration:underline;text-underline-offset:2px}
+.consent-label a:hover{color:var(--primary)}
+.consent-label.is-invalid{color:var(--red)}
+.consent-label.is-invalid a{color:var(--red)}
+.consent-label.is-invalid input{outline:2px solid rgba(180,35,24,.45);outline-offset:1px}
+.consent-label.consent-flash{animation:consent-flash 1s ease}
+@keyframes consent-flash{0%,100%{box-shadow:0 0 0 0 rgba(180,35,24,0)}40%{box-shadow:0 0 0 6px rgba(180,35,24,.28)}}
+.footer-legal{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;align-items:center;color:var(--muted-2);font-size:11px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.footer-legal a{color:var(--muted);font-weight:650;text-decoration:underline;text-underline-offset:2px}
+.footer-legal a:hover{color:var(--primary-dark)}
+.owner-value{color:var(--muted);font-weight:600}
+.sidebar-legal{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 10px;color:var(--muted-2);font-size:11px;background:#fbfdff}
+.sidebar-legal a{color:var(--muted);font-weight:650;text-decoration:underline;text-underline-offset:2px}
+.sidebar-legal a:hover{color:var(--primary-dark)}
+.cookie-notice{position:fixed;left:18px;right:18px;bottom:18px;z-index:80;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line-strong);border-radius:14px;box-shadow:var(--shadow-lg);padding:13px 16px;max-width:660px;margin:0 auto}
+.cookie-notice .cookie-icon{color:var(--primary);flex:0 0 auto;display:flex}
+.cookie-notice .cookie-icon svg{width:20px;height:20px}
+.cookie-text{font-size:12.5px;line-height:1.5;color:var(--muted);flex:1 1 auto}
+.cookie-text a{color:var(--primary-dark);font-weight:650;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:640px){.cookie-notice{flex-direction:column;align-items:stretch;left:12px;right:12px;bottom:12px}.cookie-notice .btn{width:100%}}
+</style>
+</head>
+<body>
+<noscript>
+  <div style="background:#b42318;color:#fff;padding:14px 18px;font:14px/1.5 -apple-system,'Segoe UI',Roboto,Arial,sans-serif;text-align:center">
+    ⚠️ JavaScript выключен или заблокирован. Тренажёр работает только с включённым JavaScript.<br>Откройте файл в обычном браузере (Safari/Chrome/Edge) двойным кликом, а не в предпросмотре/PDF, и включите JavaScript.
+  </div>
+</noscript>
+<div id="startScreen" class="start-screen">
+  <div class="start-shell">
+    <div class="start-brand">
+      <div class="brand-mark" data-icon="logo" aria-hidden="true"></div>
+      <div class="brand-copy">
+        <strong>МИС–ЛИС: цифровая лаборатория</strong>
+        <span>Учебный тренажёр · медицинские информационные системы</span>
+        <span class="brand-discipline">Дисциплина «Информатика» · ФГБПОУ «Медицинский колледж» (МК РАМН)</span>
+      </div>
+    </div>
+    <div class="start-grid">
+      <section class="start-copy" aria-labelledby="startTitle">
+        <div class="eyebrow">EdTech · цифровое здравоохранение</div>
+        <h1 id="startTitle">От карточки пациента до <span>доставленного результата</span></h1>
+        <p class="start-lead">Пройдите полный цикл лабораторной диагностики в связке МИС и ЛИС: регистрация пациента, направление, образец, результаты и обмен сообщениями. Все действия выполняются в автономной учебной среде.</p>
+        <div class="feature-grid">
+          <div class="feature">
+            <div class="feature-icon" data-icon="userPlus" aria-hidden="true"></div>
+            <div><strong>10 практических сценариев</strong><span>От создания карты до сложной интеграционной ошибки.</span></div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon green" data-icon="send" aria-hidden="true"></div>
+            <div><strong>Единый журнал обмена</strong><span>ID сообщений, статусы доставки и журнал ошибок.</span></div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon amber" data-icon="shield" aria-hidden="true"></div>
+            <div><strong>Идемпотентность</strong><span>Повторная отправка не создаёт дубликаты сообщений.</span></div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon violet" data-icon="download" aria-hidden="true"></div>
+            <div><strong>Отчёт для Moodle</strong><span>Итоговый TXT-файл с баллами и логом ошибок.</span></div>
+          </div>
+        </div>
+        <div class="start-note"><span data-icon="lock" aria-hidden="true"></span> Данные обрабатываются локально в браузере и не передаются на внешние серверы.</div>
+      </section>
+      <section class="start-card" aria-labelledby="startFormTitle">
+        <div class="card-kicker"><span data-icon="clipboard" aria-hidden="true"></span> Рабочее место студента</div>
+        <h2 id="startFormTitle">Начать занятие</h2>
+        <p>Заполните данные для формирования итогового отчёта. Оба поля обязательны.</p>
+        <form id="start-form" novalidate>
+          <div class="field">
+            <label for="start-name">ФИО студента <span class="req">*</span></label>
+            <input id="start-name" name="studentName" type="text" autocomplete="name" placeholder="Например: Иванова Мария Сергеевна" maxlength="120">
+          </div>
+          <div class="field">
+            <label for="start-group">Номер группы <span class="req">*</span></label>
+            <input id="start-group" name="studentGroup" type="text" autocomplete="organization" placeholder="Например: МИС-21-1" maxlength="40">
+          </div>
+          <div class="consent">
+            <label class="consent-label">
+              <input id="start-consent" name="consent" type="checkbox" required>
+              <span><span class="req">*</span> Я даю <a href="#" data-action="open-consent">согласие на обработку персональных данных</a> (152-ФЗ) и принимаю условия <a href="#" data-action="open-privacy">политики конфиденциальности</a>.</span>
+            </label>
+            <div class="consent-note">Чтобы начать занятие, поставьте галочку выше.</div>
+          </div>
+          <div id="start-error" class="form-alert alert-error is-hidden" role="alert"></div>
+          <button class="btn btn-primary btn-lg btn-block start-submit" type="submit">
+            <span data-icon="play" aria-hidden="true"></span> Начать занятие
+          </button>
+          <div class="start-secure"><span data-icon="lock" aria-hidden="true"></span> Автономная работа · без подключения к интернету</div>
+        </form>
+      </section>
+    </div>
+    <footer class="start-footer">
+      <span class="age-badge" title="Возрастная маркировка" aria-label="Возрастное ограничение 12+">12+</span>
+      <span>МИС–ЛИС · учебная симуляция для Moodle · синтетические данные</span>
+      <span>100 баллов · 10 сценариев · один автономный HTML-файл</span>
+    </footer>
+    <div class="footer-legal">
+      <span>Владелец сайта: <span class="owner-value">ФГБПОУ «Медицинский колледж» (МК РАМН)</span></span>
+      <span>Контакты: <span class="owner-value">glebe.ru@yandex.ru, +7 999 354-07-70</span></span>
+      <a href="#" data-action="open-privacy">Политика конфиденциальности</a>
+      <a href="#" data-action="open-consent">Согласие на обработку ПДн</a>
+      <a href="#" data-action="open-sitemap">Карта сайта</a>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="app is-hidden">
+  <div class="top-progress" aria-hidden="true"><div id="topProgressFill" class="top-progress-fill" style="width:0%"></div></div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark small" data-icon="logo" aria-hidden="true"></div>
+      <div class="brand-copy" title="Дисциплина «Информатика» · ФГБПОУ «Медицинский колледж» (МК РАМН)">
+        <strong>МИС–ЛИС</strong>
+        <span>Цифровая лаборатория</span>
+        <span class="brand-discipline">Информатика · МК РАМН</span>
+      </div>
+    </div>
+    <nav id="systemNav" class="system-nav" aria-label="Переключение систем"></nav>
+    <div class="topbar-right">
+      <button class="btn btn-secondary btn-sm mobile-scenarios" type="button" data-action="toggle-sidebar">
+        <span data-icon="list" aria-hidden="true"></span> Задания
+      </button>
+      <div class="student-pill" title="Текущий студент">
+        <div class="student-avatar" data-icon="user" aria-hidden="true"></div>
+        <div><strong id="studentName">—</strong><span id="studentGroup">—</span></div>
+      </div>
+    </div>
+  </header>
+  <div id="sidebarScrim" class="sidebar-scrim" data-action="close-sidebar"></div>
+  <main class="workspace">
+    <aside id="scenarioSidebar" class="sidebar" aria-label="Карта заданий">
+      <div class="score-card" id="scoreCard">
+        <div class="score-top">
+          <span class="score-label">Текущий балл</span>
+          <span class="badge badge-blue" id="completedBadge">0 / 10</span>
+        </div>
+        <div class="score-value"><span id="scoreValue">0</span><small>/ 100</small><span id="scoreDelta" class="score-delta is-hidden" aria-hidden="true"></span></div>
+        <div class="score-meta"><span>Выполнено сценариев</span><span id="completedCount">0 из 10</span></div>
+        <div class="progress-track striped" aria-hidden="true"><div id="scoreProgress" class="progress-fill" style="width:0%"></div></div>
+        <div class="step-indicator" id="stepIndicator" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" aria-label="Прогресс по сценариям"></div>
+      </div>
+      <div class="sidebar-head">
+        <h2>Карта заданий</h2>
+        <span id="scenarioHint">нажмите для описания</span>
+      </div>
+      <div id="scenarioList" class="scenario-list"></div>
+      <div class="sidebar-footer">
+        <button class="btn btn-ghost" type="button" data-action="open-help"><span data-icon="help" aria-hidden="true"></span> Как работать</button>
+        <button class="btn btn-ghost" type="button" data-action="reset-session"><span data-icon="rotate" aria-hidden="true"></span> Сброс</button>
+      </div>
+      <div class="sidebar-legal">
+        <span class="age-badge age-badge-sm" title="Возрастная маркировка" aria-label="Возрастное ограничение 12+">12+</span>
+        <a href="#" data-action="open-privacy">Политика</a>
+        <a href="#" data-action="open-sitemap">Карта сайта</a>
+      </div>
+    </aside>
+    <section id="mainPane" class="main-pane" aria-live="polite"></section>
+  </main>
+</div>
+
+<div id="modalRoot" class="modal-root is-hidden" aria-live="assertive"></div>
+<div id="toastRoot" class="toast-root" role="status" aria-live="polite" aria-atomic="false"></div>
+
+<div id="cookieNotice" class="cookie-notice is-hidden" role="dialog" aria-label="Уведомление об использовании cookie">
+  <div class="cookie-icon" data-icon="info" aria-hidden="true"></div>
+  <div class="cookie-text">Для корректной работы тренажёр использует локальное хранилище браузера (cookie). Продолжая, вы соглашаетесь с <a href="#" data-action="open-privacy">политикой конфиденциальности</a>.</div>
+  <button class="btn btn-primary btn-sm" type="button" data-action="accept-cookies">Принять</button>
+</div>
+
+<script>
+(() => {
+'use strict';
+
+/* =========================================================
+   MИС–ЛИС · автономный учебный тренажёр
+   Vanilla JS, локальные массивы, без внешних зависимостей.
+   ========================================================= */
+
+const ICONS = {
+  logo:'<path d="M9 3h6"/><path d="M10 3v6.4L4.9 18a2 2 0 0 0 1.8 3h10.6a2 2 0 0 0 1.8-3L14 9.4V3"/><path d="M7.5 15h9"/><path d="M12 12.5v5M9.5 15h5"/>',
+  user:'<path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/>',
+  userPlus:'<path d="M15 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/>',
+  userCheck:'<path d="M15 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="m16 11 2 2 4-4"/>',
+  send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  route:'<circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h5a4 4 0 0 0 4-4V9"/><path d="m6 5 1.5-1.5M6 5l1.5 1.5"/>',
+  shield:'<path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1 1 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/>',
+  shieldCheck:'<path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1 1 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
+  upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/>',
+  lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  clipboard:'<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M8 12h8M8 16h5"/>',
+  play:'<polygon points="6 3 20 12 6 21 6 3"/>',
+  list:'<path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/>',
+  help:'<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4"/><path d="M12 18h.01"/>',
+  rotate:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
+  refresh:'<path d="M21 12a9 9 0 0 0-15.5-6.2L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 15.5 6.2L21 16"/><path d="M21 21v-5h-5"/>',
+  flask:'<path d="M9 3h6"/><path d="M10 3v6.4L4.9 18a2 2 0 0 0 1.8 3h10.6a2 2 0 0 0 1.8-3L14 9.4V3"/><path d="M7.5 15h9"/>',
+  testTube:'<path d="M14.5 2v17.5a4.5 4.5 0 0 1-9 0V2"/><path d="M5.5 2h9"/><path d="M5.5 14h9"/>',
+  barcode:'<path d="M4 5v14M7 5v14M10 5v8M13 5v14M16 5v8M19 5v14M22 5v14" stroke-width="1.2"/>',
+  journal:'<path d="M4 4a2 2 0 0 1 2-2h13v20H6a2 2 0 0 1-2-2Z"/><path d="M8 2v20"/><path d="M12 7h4M12 11h4"/>',
+  chart:'<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  check:'<path d="m20 6-11 11-5-5"/>',
+  checkCircle:'<circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.4 2.4 4.8-5"/>',
+  alert:'<path d="M10.3 3.7 2.2 18a2 2 0 0 0 1.7 3h16.2a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/>',
+  triangleAlert:'<path d="M10.3 3.7 2.2 18a2 2 0 0 0 1.7 3h16.2a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+  x:'<path d="M18 6 6 18M6 6l12 12"/>',
+  arrowRight:'<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
+  arrowLeftRight:'<path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/>',
+  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
+  building:'<path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01M11 21v-4h2v4"/>',
+  fileText:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/>',
+  fileDownload:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M12 18v-5"/><path d="m9.5 15.5 2.5 2.5 2.5-2.5"/>',
+  copy:'<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  chevronRight:'<path d="m9 18 6-6-6-6"/>',
+  chevronDown:'<path d="m6 9 6 6 6-6"/>',
+  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+  trash:'<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/>',
+  link:'<path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/>',
+  database:'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  activity:'<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+  sliders:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/>',
+  email:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
+  cpu:'<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/>'
+};
+
+function ico(name, size = 18, cls = '') {
+  const path = ICONS[name] || ICONS.info;
+  return `<svg class="icon ${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${path}</svg>`;
+}
+
+function hydrateIcons(root = document) {
+  root.querySelectorAll('[data-icon]').forEach((el) => {
+    const size = Number(el.dataset.iconSize) || 18;
+    el.innerHTML = ico(el.dataset.icon, size);
+  });
+}
+
+const TESTS = {
+  cbc: { name:'Клинический анализ крови', short:'ОАК' },
+  biochem: { name:'Биохимический анализ крови', short:'Биохимия' },
+  coag: { name:'Коагулограмма', short:'Коагулограмма' },
+  urine: { name:'Общий анализ мочи', short:'ОАМ' }
+};
+const PRIORITIES = { routine:'Плановый', cito:'Cito (Срочно)' };
+const MATERIALS = {
+  edta:'Кровь с ЭДТА',
+  citrate:'Кровь с цитратом',
+  serum:'Сыворотка крови',
+  plasma:'Плазма крови',
+  urine:'Моча'
+};
+const REFERENCE = { hgb:[130,175], rbc:[3.9,5.5] };
+
+const SCENARIOS = [
+  {
+    id:1, title:'Регистрация условного пациента', short:'Создать карту Иванова П.', points:15,
+    description:'В МИС создайте карточку синтетического пациента: Иванов Пётр, 1985 год рождения, мужской пол. Система проверит заполнение всех обязательных полей.',
+    criteria:['Карта создана в МИС','Фамилия — Иванов, имя — Пётр','Год рождения — 1985, пол — мужской'],
+    tip:'Откройте раздел «МИС» и нажмите «Создать карточку».'
+  },
+  {
+    id:2, title:'Поиск пациента и дубликат', short:'Найти ID и проверить дубликат', points:5,
+    description:'Найдите созданную карту Иванова по её ID в поиске МИС. Затем попробуйте повторно создать точно такого же пациента. Система должна выдать предупреждение «Обнаружен дубликат карты».',
+    criteria:['Поиск выполнен именно по ID карты','Попытка повторной регистрации выполнена','Получено предупреждение о дубликате'],
+    tip:'ID карты показан в карточке пациента. Введите его в поле поиска.'
+  },
+  {
+    id:3, title:'Формирование направления', short:'ОАК + приоритет Cito', points:15,
+    description:'В карте Петра Иванова нажмите «Создать направление», выберите исследование «Клинический анализ крови» и приоритет «Cito (Срочно)». ID направления сформируется автоматически.',
+    criteria:['Направление создано для Иванова П.','Исследование — клинический анализ крови','Приоритет — Cito (Срочно)'],
+    tip:'Кнопка создания направления находится в карточке выбранного пациента.'
+  },
+  {
+    id:4, title:'Передача направления в ЛИС', short:'МИС → ЛИС через журнал', points:10,
+    description:'В «Журнале обмена» нажмите «Инициировать отправку» у нужного направления. Оно должно уйти из МИС, появиться в ЛИС в блоке «Новые направления», а его статус — стать «Передано».',
+    criteria:['Сообщение о направлении создано в журнале','Направление получено в блоке «Новые направления» ЛИС','Статус направления — «Передано»'],
+    tip:'Журнал обмена доступен в верхнем переключателе систем.'
+  },
+  {
+    id:5, title:'Регистрация образца в ЛИС', short:'Кровь с ЭДТА + штрихкод', points:15,
+    description:'В ЛИС откройте пришедшее направление, нажмите «Зарегистрировать образец», выберите тип материала «Кровь с ЭДТА» и нажмите «Сгенерировать штрихкод». Статус направления должен измениться на «Принят в работу».',
+    criteria:['Образец зарегистрирован в ЛИС','Материал — кровь с ЭДТА','Штрихкод сгенерирован, статус — «Принят в работу»'],
+    tip:'Откройте ЛИС и карточку направления в блоке «Новые направления».'
+  },
+  {
+    id:6, title:'Симуляция брака биоматериала', short:'Гемолиз и повторный забор', points:5,
+    description:'Запустите симуляцию «Гемолиз образца», выберите причину отклонения «Нарушение правил транспортировки». Направление должно вернуться в статус «Требуется повторный забор». Для продолжения работы зарегистрируйте повторный образец.',
+    criteria:['Зафиксирован дефект «Гемолиз образца»','Причина — нарушение правил транспортировки','Статус — «Требуется повторный забор»'],
+    tip:'В карточке образца в ЛИС доступна кнопка «Симулировать брак».'
+  },
+  {
+    id:7, title:'Внесение демонстрационных результатов', short:'HGB 140 и RBC 4,5', points:15,
+    description:'После повторной регистрации образца откройте форму результатов и внесите показатели: гемоглобин — 140 г/л, эритроциты — 4,5 млн/мкл. Значения должны укладываться в референс. Нажмите «Подтвердить».',
+    criteria:['Оба показателя внесены и входят в референс','Гемоглобин — 140 г/л','Эритроциты — 4,5 млн/мкл','Результат подтверждён'],
+    tip:'Референс гемоглобина: 130–175 г/л, эритроцитов: 3,9–5,5 млн/мкл.'
+  },
+  {
+    id:8, title:'Передача результатов в МИС', short:'ЛИС → МИС, бланк в карте', points:10,
+    description:'В ЛИС нажмите «Отправить результаты в МИС». Система проверит связи ID направления, пациента и результата. В журнале интеграции статус должен стать «Доставлено», а в карте Иванова появиться заполненный бланк.',
+    criteria:['Результат успешно доставлен в МИС','В журнале статус — «Доставлено»','В карте пациента отображается бланк'],
+    tip:'Перед отправкой проверьте, что результат подтверждён.'
+  },
+  {
+    id:9, title:'Исправление интеграционной ошибки', short:'Ошибка формата → UTF-8', points:10,
+    description:'При первой передаче тренажёр смоделирует сбой «Ошибка формата сообщения при передаче». Откройте «Журнал обмена», прочитайте лог, нажмите «Перекодировать UTF-8» и отправьте сообщение повторно. Новое сообщение не должно создаваться.',
+    criteria:['Ошибка найдена и изучена в журнале','Выполнено перекодирование в UTF-8','Повторная отправка успешна','Сообщение не задублировано'],
+    tip:'После перекодирования кнопка повторной отправки появится в журнале.'
+  },
+  {
+    id:10, title:'Итоговый комплексный процесс', short:'Самостоятельно: Сидоров А.В.', points:0, final:true,
+    description:'Самостоятельно проведите нового пациента Сидорова А.В. по полной цепочке: карта в МИС → клиническое направление → передача в ЛИС → регистрация образца → результат → доставка результата в МИС. Это обязательный зачётный этап без пошаговых подсказок интерфейса; баллы за него не начисляются, итоговый максимум остаётся 100.',
+    criteria:['Создан отдельный пациент Сидоров','Создано и передано клиническое направление','Зарегистрирован образец и подтверждён результат','Результат доставлен в карту пациента в МИС'],
+    tip:'Используйте те же возможности систем, что и в предыдущих сценариях.'
+  }
+];
+
+const STATUS_META = {
+  created:{ label:'Создано в МИС', cls:'blue' },
+  sent:{ label:'Передано', cls:'cyan' },
+  accepted:{ label:'Принят в работу', cls:'green' },
+  rejected:{ label:'Требуется повторный забор', cls:'red' },
+  result_ready:{ label:'Результат готов', cls:'amber' },
+  delivered:{ label:'Результат доставлен', cls:'green' },
+  error:{ label:'Ошибка', cls:'red' },
+  ready:{ label:'Готово к повтору', cls:'amber' },
+  confirmed:{ label:'Подтверждён', cls:'amber' },
+  voided:{ label:'Аннулирован', cls:'gray' },
+  cancelled:{ label:'Отменено', cls:'gray' },
+  sample_received:{ label:'Образец получен', cls:'green' }
+};
+
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+function escapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+function normalize(value) {
+  return String(value == null ? '' : value).trim().toLowerCase().replace(/ё/g,'е');
+}
+function nowISO() { return new Date().toISOString(); }
+function padNumber(value, size) { return String(value).padStart(size,'0'); }
+function formatDateTime(value) {
+  if (!value) return '—';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return '—';
+  return new Intl.DateTimeFormat('ru-RU',{ day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit' }).format(d);
+}
+function formatDate(value) {
+  if (!value) return '—';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return '—';
+  return new Intl.DateTimeFormat('ru-RU',{ day:'2-digit',month:'2-digit',year:'numeric' }).format(d);
+}
+function formatTime(value) {
+  if (!value) return '—';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return '—';
+  return new Intl.DateTimeFormat('ru-RU',{ hour:'2-digit',minute:'2-digit',second:'2-digit' }).format(d);
+}
+function formatDuration(ms) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  return `${m} мин ${s} с`;
+}
+function getScenario(id) { return SCENARIOS.find((s) => s.id === Number(id)); }
+function getPatientName(patient) {
+  if (!patient) return 'Неизвестный пациент';
+  return [patient.lastName, patient.firstName, patient.middleName].filter(Boolean).join(' ');
+}
+function getShortName(patient) {
+  if (!patient) return '—';
+  const initials = [patient.firstName, patient.middleName].filter(Boolean).map((v) => v.charAt(0).toUpperCase() + '.').join(' ');
+  return `${patient.lastName || ''} ${initials}`.trim();
+}
+function getReferralTest(referral) { return TESTS[referral?.testType]?.name || 'Исследование'; }
+function getPriorityLabel(priority) { return PRIORITIES[priority] || 'Не указан'; }
+function getMaterialLabel(material) { return MATERIALS[material] || 'Не указан'; }
+function getStatusBadge(status, customLabel = '') {
+  const meta = STATUS_META[status] || { label: customLabel || status || '—', cls:'gray' };
+  return `<span class="badge badge-${meta.cls}">${escapeHtml(customLabel || meta.label)}</span>`;
+}
+function getPriorityBadge(priority) {
+  if (priority === 'cito') return '<span class="badge priority-cito">Cito · срочно</span>';
+  return '<span class="badge priority-routine">Плановый</span>';
+}
+function isIvanov(patient) {
+  return Boolean(patient && normalize(patient.lastName) === 'иванов' && normalize(patient.firstName) === 'петр' && Number(patient.birthYear) === 1985 && patient.sex === 'male');
+}
+function isSidorov(patient) {
+  return Boolean(patient && normalize(patient.lastName) === 'сидоров');
+}
+function findPatient(id) { return state.patients.find((p) => p.id === id); }
+function findReferral(id) { return state.referrals.find((r) => r.id === id); }
+function findSample(id) { return state.samples.find((s) => s.id === id); }
+function findResult(id) { return state.results.find((r) => r.id === id); }
+function referralPatient(referral) { return referral ? findPatient(referral.patientId) : null; }
+function referralSamples(referral) { return state.samples.filter((s) => s.referralId === referral?.id); }
+function currentSample(referral) {
+  if (!referral || !referral.sampleId) return null;
+  return findSample(referral.sampleId);
+}
+function resultForReferral(referral) {
+  if (!referral) return null;
+  return state.results.filter((r) => r.referralId === referral.id).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))[0] || null;
+}
+function activeResultForReferral(referral) {
+  return state.results.filter((r) => r.referralId === referral?.id && r.status !== 'voided').sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))[0] || null;
+}
+function messageForResult(resultId) {
+  return state.messages.find((m) => m.kind === 'result' && m.relatedId === resultId && m.status !== 'cancelled');
+}
+function messageForReferral(referralId) {
+  return state.messages.find((m) => m.kind === 'referral' && m.relatedId === referralId && m.status !== 'cancelled');
+}
+function journalMessageCountForResult(resultId) {
+  return state.messages.filter((m) => m.kind === 'result' && m.relatedId === resultId).length;
+}
+function getScore() {
+  return SCENARIOS.reduce((sum, s) => sum + (state.completed[s.id] ? Number(s.points) : 0), 0);
+}
+function getCompletedCount() {
+  return SCENARIOS.filter((s) => state.completed[s.id]).length;
+}
+function getCompletedPointsCount() {
+  return SCENARIOS.filter((s) => state.completed[s.id] && s.points > 0).length;
+}
+function isAllComplete() {
+  return SCENARIOS.every((s) => state.completed[s.id]);
+}
+function formatSex(sex) { return sex === 'male' ? 'Мужской' : sex === 'female' ? 'Женский' : 'Не указан'; }
+
+function makeInitialState() {
+  return {
+    student:null,
+    startedAt:null,
+    patients:[],
+    referrals:[],
+    samples:[],
+    results:[],
+    messages:[],
+    counters:{ patient:0, referral:0, sample:0, result:0, message:0 },
+    completed:{},
+    errors:[],
+    flags:{
+      resultErrorSimulated:false,
+      searchIvanovById:false,
+      duplicateAttempted:false,
+      reencoded:false,
+      finalAwarded:false,
+      firstResultDelivered:false
+    },
+    ui:{
+      system:'mis',
+      selectedPatientId:null,
+      selectedLisId:null,
+      searchQuery:'',
+      searchDone:false,
+      journalFilter:'all',
+      sidebarOpen:false,
+      modalOpen:false
+    }
+  };
+}
+let state = makeInitialState();
+
+function recordError(scenarioId, message) {
+  const text = String(message || '').trim();
+  if (!text) return;
+  const last = state.errors[state.errors.length - 1];
+  if (last && last.scenarioId === scenarioId && last.message === text && (Date.now() - new Date(last.at).getTime()) < 1200) return;
+  state.errors.push({ at:nowISO(), scenarioId:Number(scenarioId) || 0, message:text });
+  if (state.errors.length > 120) state.errors.shift();
+}
+
+function awardScenario(id, options = {}) {
+  const scenario = getScenario(id);
+  if (!scenario || state.completed[id]) return false;
+  state.completed[id] = { at:nowISO(), points:scenario.points };
+  const pointsLabel = scenario.points > 0 ? `+${scenario.points} баллов` : 'зачёт';
+  if (!options.silent) {
+    showToast(`Сценарий ${id} выполнен · ${pointsLabel}`, 'success', 'Задание зачтено');
+  }
+  if (id === 10) {
+    state.flags.finalAwarded = true;
+    state.ui.system = 'results';
+    if (!options.silent) {
+      window.setTimeout(() => {
+        showToast('Итоговая ведомость сформирована. Скачайте отчёт для Moodle.', 'info', 'Итоговый процесс завершён', 6500);
+      }, 500);
+    }
+  }
+  return true;
+}
+
+/* ---------- Модальные окна и уведомления ---------- */
+let lastFocusedElement = null;
+
+function openModal({ title, subtitle = '', body, iconName = 'info', size = '' }) {
+  const root = $('#modalRoot');
+  lastFocusedElement = document.activeElement;
+  root.classList.remove('is-hidden');
+  state.ui.modalOpen = true;
+  document.body.classList.add('modal-open');
+  root.innerHTML = `
+    <div class="modal-backdrop"></div>
+    <section class="modal ${size === 'lg' ? 'modal-lg' : size === 'sm' ? 'modal-sm' : ''}" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalSubtitle">
+      <header class="modal-header">
+        <div class="modal-icon">${ico(iconName, 19)}</div>
+        <div class="modal-heading">
+          <h2 id="modalTitle">${escapeHtml(title)}</h2>
+          <p id="modalSubtitle">${escapeHtml(subtitle)}</p>
+        </div>
+        <button class="modal-close" type="button" data-action="close-modal" aria-label="Закрыть окно">${ico('x',16)}</button>
+      </header>
+      <div class="modal-body">${body}</div>
+    </section>`;
+  root.setAttribute('aria-hidden','false');
+  window.setTimeout(() => {
+    const focusTarget = root.querySelector('[autofocus]') || root.querySelector('input:not([type="hidden"]), select, textarea, button');
+    if (focusTarget) focusTarget.focus();
+  }, 30);
+}
+
+function closeModal() {
+  const root = $('#modalRoot');
+  if (!root || root.classList.contains('is-hidden')) return;
+  root.classList.add('is-hidden');
+  root.innerHTML = '';
+  root.setAttribute('aria-hidden','true');
+  state.ui.modalOpen = false;
+  document.body.classList.remove('modal-open');
+  if (lastFocusedElement && document.contains(lastFocusedElement)) {
+    try { lastFocusedElement.focus(); } catch (_) {}
+  }
+  lastFocusedElement = null;
+}
+
+function showFormAlert(type, title, text = '') {
+  const el = $('#form-alert');
+  if (!el) return;
+  const typeClass = type === 'error' ? 'alert-error' : type === 'warning' ? 'alert-warning' : type === 'success' ? 'alert-success' : 'alert-info';
+  const iconName = type === 'error' ? 'alert' : type === 'warning' ? 'triangleAlert' : type === 'success' ? 'checkCircle' : 'info';
+  el.className = `form-alert ${typeClass}`;
+  el.innerHTML = `${ico(iconName,17)}<div><strong>${escapeHtml(title)}</strong>${text ? `<div class="alert-detail">${escapeHtml(text)}</div>` : ''}</div>`;
+  el.scrollIntoView({ block:'nearest', behavior:'smooth' });
+}
+function hideFormAlert() {
+  const el = $('#form-alert');
+  if (el) { el.className = 'form-alert is-hidden'; el.innerHTML = ''; }
+}
+function markInvalid(ids) {
+  ids.forEach((id) => { const el = document.getElementById(id); if (el) el.classList.add('is-invalid'); });
+}
+function clearInvalid() {
+  $$('.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
+}
+
+function showToast(message, type = 'info', title = '', duration = 4200) {
+  const root = $('#toastRoot');
+  if (!root) return;
+  const activeToasts = Array.from(root.querySelectorAll('.toast:not(.is-leaving)'));
+  if (activeToasts.length >= 4) activeToasts.slice(0, activeToasts.length - 3).forEach((toast) => toast.remove());
+  const el = document.createElement('div');
+  const t = type === 'success' ? 'success' : type === 'error' ? 'error' : type === 'warning' ? 'warning' : 'info';
+  const iconName = t === 'success' ? 'checkCircle' : t === 'error' ? 'alert' : t === 'warning' ? 'triangleAlert' : 'info';
+  el.className = `toast toast-${t}`;
+  el.innerHTML = `${ico(iconName,17)}<div>${title ? `<strong>${escapeHtml(title)}</strong>` : ''}<span>${escapeHtml(message)}</span></div>`;
+  root.appendChild(el);
+  window.setTimeout(() => {
+    el.classList.add('is-leaving');
+    window.setTimeout(() => el.remove(), 200);
+  }, duration);
+}
+
+function navigate(system) {
+  if (!['mis','lis','journal','results'].includes(system)) return;
+  state.ui.system = system;
+  closeSidebar();
+  renderAll();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function toggleSidebar(force) {
+  const sidebar = $('#scenarioSidebar');
+  const scrim = $('#sidebarScrim');
+  const open = typeof force === 'boolean' ? force : !sidebar.classList.contains('is-open');
+  state.ui.sidebarOpen = open;
+  sidebar.classList.toggle('is-open', open);
+  scrim.classList.toggle('is-open', open);
+}
+function closeSidebar() {
+  const sidebar = $('#scenarioSidebar');
+  const scrim = $('#sidebarScrim');
+  sidebar.classList.remove('is-open');
+  scrim.classList.remove('is-open');
+  state.ui.sidebarOpen = false;
+}
+
+function barcodeSvg(value) {
+  const seed = String(value || 'BC').split('').reduce((a,c) => a + c.charCodeAt(0), 0);
+  let x = 10;
+  let bars = `<rect x="0" y="0" width="260" height="58" fill="#fff"/>`;
+  for (let i = 0; i < 58; i++) {
+    const width = ((seed + i * 7) % 4 === 0) ? 3 : 1;
+    const gap = ((seed + i * 3) % 5 === 0) ? 3 : 2;
+    bars += `<rect x="${x}" y="5" width="${width}" height="${i % 9 === 0 ? 39 : 34}" fill="#263f51"/>`;
+    x += width + gap;
+    if (x > 246) break;
+  }
+  return `<svg viewBox="0 0 260 58" role="img" aria-label="Штрихкод ${escapeHtml(value)}">${bars}</svg>`;
+}
+
+/* ---------- Генерация ID ---------- */
+function nextPatientId() {
+  state.counters.patient += 1;
+  return `P-${padNumber(state.counters.patient, 5)}`;
+}
+function nextReferralId() {
+  state.counters.referral += 1;
+  return `REF-${new Date().getFullYear()}-${padNumber(state.counters.referral, 4)}`;
+}
+function nextSampleId() {
+  state.counters.sample += 1;
+  return `SMP-${padNumber(state.counters.sample, 5)}`;
+}
+function nextBarcode() {
+  const d = new Date();
+  return `BC-${d.getFullYear()}${padNumber(d.getMonth()+1,2)}${padNumber(d.getDate(),2)}-${padNumber(state.counters.sample,4)}`;
+}
+function nextResultId() {
+  state.counters.result += 1;
+  return `RES-${new Date().getFullYear()}-${padNumber(state.counters.result, 4)}`;
+}
+function nextMessageId() {
+  state.counters.message += 1;
+  return `MSG-${padNumber(state.counters.message, 6)}`;
+}
+
+/* ---------- Оценка итогового сценария ---------- */
+function evaluateFinalScenario() {
+  if (state.completed[10]) return false;
+  const targetPatients = state.patients.filter(isSidorov);
+  for (const patient of targetPatients) {
+    const referrals = state.referrals.filter((r) => r.patientId === patient.id && r.testType === 'cbc');
+    for (const referral of referrals) {
+      const delivered = state.results.some((r) => r.referralId === referral.id && r.delivered && r.status === 'delivered');
+      const acceptedSample = state.samples.some((s) => s.referralId === referral.id && s.status === 'accepted' && s.material === 'edta');
+      if (delivered && acceptedSample) {
+        return awardScenario(10);
+      }
+    }
+  }
+  return false;
+}
+
+/* =========================================================
+   РЕНДЕРИНГ ИНТЕРФЕЙСА
+   ========================================================= */
+
+function renderAll() {
+  const studentName = $('#studentName');
+  const studentGroup = $('#studentGroup');
+  if (studentName) studentName.textContent = state.student?.name || '—';
+  if (studentGroup) studentGroup.textContent = state.student?.group ? `Группа ${state.student.group}` : '—';
+  renderTopbar();
+  renderSidebar();
+  renderMain();
+  hydrateIcons();
+}
+
+function renderTopbar() {
+  const nav = $('#systemNav');
+  if (!nav) return;
+  const lisActive = state.referrals.filter((r) => r.status !== 'created').length;
+  const items = [
+    { id:'mis', label:'МИС', icon:'building', count:state.patients.length, title:'Медицинская информационная система' },
+    { id:'lis', label:'ЛИС', icon:'flask', count:lisActive, title:'Лабораторная информационная система' },
+    { id:'journal', label:'Журнал обмена', icon:'arrowLeftRight', count:state.messages.length, title:'Журнал интеграции МИС ↔ ЛИС' },
+    { id:'results', label:'Итоги', icon:'chart', count:null, title:'Итоговая ведомость' }
+  ];
+  nav.innerHTML = items.map((item) => `
+    <button class="nav-btn ${state.ui.system === item.id ? 'is-active' : ''}" type="button"
+      data-action="navigate" data-system="${item.id}" title="${escapeHtml(item.title)}"
+      aria-current="${state.ui.system === item.id ? 'page' : 'false'}">
+      ${ico(item.icon,16)}<span>${escapeHtml(item.label)}</span>
+      ${item.count != null ? `<span class="nav-count">${item.count}</span>` : ''}
+    </button>`).join('');
+}
+
+let lastScore = null;
+let scoreDeltaTimer = null;
+
+function pulseScore(delta) {
+  const card = $('#scoreCard');
+  const value = $('#scoreValue');
+  const chip = $('#scoreDelta');
+  if (card) { card.classList.remove('is-flash'); void card.offsetWidth; card.classList.add('is-flash'); }
+  if (value) { value.classList.remove('is-bump'); void value.offsetWidth; value.classList.add('is-bump'); }
+  if (chip) {
+    chip.textContent = (delta >= 0 ? '+' : '') + delta;
+    chip.classList.toggle('down', delta < 0);
+    chip.classList.remove('is-hidden');
+    chip.classList.remove('pop'); void chip.offsetWidth; chip.classList.add('pop');
+    if (scoreDeltaTimer) clearTimeout(scoreDeltaTimer);
+    scoreDeltaTimer = window.setTimeout(() => { chip.classList.add('is-hidden'); chip.classList.remove('pop'); }, 1080);
+  }
+}
+
+function renderSidebar() {
+  const score = getScore();
+  const count = getCompletedCount();
+  const max = SCENARIOS.reduce((sum, s) => sum + s.points, 0);
+  if (lastScore !== null && score !== lastScore) pulseScore(score - lastScore);
+  lastScore = score;
+  $('#scoreValue').textContent = String(score);
+  $('#completedCount').textContent = `${count} из ${SCENARIOS.length}`;
+  $('#completedBadge').textContent = `${count} / ${SCENARIOS.length}`;
+  $('#scoreProgress').style.width = `${Math.min(100, (score / Math.max(1,max)) * 100)}%`;
+  const topFill = $('#topProgressFill');
+  if (topFill) topFill.style.width = `${Math.min(100, (score / Math.max(1,max)) * 100)}%`;
+  const next = SCENARIOS.find((s) => !state.completed[s.id]);
+  const stepInd = $('#stepIndicator');
+  if (stepInd) {
+    stepInd.setAttribute('aria-valuenow', String(count));
+    stepInd.innerHTML = SCENARIOS.map((s) => {
+      const sd = Boolean(state.completed[s.id]);
+      const sc = next && next.id === s.id;
+      return `<span class="step-seg ${sd ? 'done' : sc ? 'current' : ''}" title="Сценарий ${s.id}: ${sd ? 'выполнен' : sc ? 'текущий' : 'впереди'}"></span>`;
+    }).join('');
+  }
+  const list = $('#scenarioList');
+  list.innerHTML = SCENARIOS.map((s) => {
+    const done = Boolean(state.completed[s.id]);
+    const current = next && next.id === s.id;
+    const points = s.points > 0 ? `${s.points} б.` : 'зачёт';
+    const trackWidth = done ? 100 : (current ? 14 : 0);
+    return `
+      <button class="scenario-item ${done ? 'is-done' : ''} ${current ? 'is-current' : ''}" type="button"
+        data-action="open-scenario" data-scenario="${s.id}" aria-label="Сценарий ${s.id}: ${escapeHtml(s.title)}">
+        <span class="scenario-index">${done ? ico('check',14) : s.id}</span>
+        <span class="scenario-main">
+          <span class="scenario-title">${escapeHtml(s.title)}</span>
+          <span class="scenario-sub">${done ? 'Выполнено' : escapeHtml(s.short)}</span>
+          <span class="scenario-track"><span class="scenario-track-fill" style="width:${trackWidth}%"></span></span>
+        </span>
+        <span class="scenario-points ${s.points === 0 ? 'zero' : ''}">${points}</span>
+      </button>`;
+  }).join('');
+  hydrateIcons(list);
+}
+
+function renderMain() {
+  const pane = $('#mainPane');
+  if (!pane) return;
+  switch (state.ui.system) {
+    case 'lis': pane.innerHTML = renderLisPage(); break;
+    case 'journal': pane.innerHTML = renderJournalPage(); break;
+    case 'results': pane.innerHTML = renderResultsPage(); break;
+    default: pane.innerHTML = renderMisPage();
+  }
+  hydrateIcons(pane);
+}
+
+function pageHeader({ eyebrow, iconName, title, subtitle, actions = '' }) {
+  return `
+    <div class="page-head">
+      <div>
+        <div class="page-eyebrow">${ico(iconName,14)} ${escapeHtml(eyebrow)}</div>
+        <h1>${escapeHtml(title)}</h1>
+        <p class="page-sub">${subtitle}</p>
+      </div>
+      <div class="page-actions">${actions}</div>
+    </div>`;
+}
+
+/* ---------- МИС ---------- */
+function getSearchResults() {
+  const query = state.ui.searchQuery.trim();
+  if (!query) return state.patients.slice().sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const q = normalize(query);
+  return state.patients.filter((p) => {
+    const full = normalize([p.lastName, p.firstName, p.middleName].filter(Boolean).join(' '));
+    return normalize(p.id) === q || normalize(p.id).includes(q) || full.includes(q);
+  }).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+}
+
+function renderMisPage() {
+  const selected = findPatient(state.ui.selectedPatientId);
+  const results = getSearchResults();
+  const query = state.ui.searchQuery;
+  const referralsCount = state.referrals.length;
+  const deliveredCount = state.results.filter((r) => r.delivered && r.status === 'delivered').length;
+  const samplesCount = state.samples.filter((s) => s.status === 'accepted').length;
+  const actions = `<button class="btn btn-primary" type="button" data-action="open-patient-modal">${ico('userPlus',17)} Создать карточку</button>`;
+  const rows = results.map((p) => {
+    const initials = `${(p.lastName || '').charAt(0)}${(p.firstName || '').charAt(0)}`.toUpperCase();
+    const refs = state.referrals.filter((r) => r.patientId === p.id).length;
+    return `
+      <button class="patient-row ${selected?.id === p.id ? 'is-selected' : ''}" type="button" data-action="select-patient" data-id="${escapeHtml(p.id)}">
+        <span class="patient-avatar">${escapeHtml(initials || '?')}</span>
+        <span class="patient-main">
+          <strong>${escapeHtml(getPatientName(p))}</strong>
+          <span>${p.birthYear} г. р. · ${formatSex(p.sex)} · ${refs} напр.</span>
+          <span class="row-id">${escapeHtml(p.id)}</span>
+        </span>
+        ${ico('chevronRight',16)}
+      </button>`;
+  }).join('');
+  const emptySearch = `<div class="list-empty"><div class="empty-icon">${ico('search',23)}</div><strong>Карты не найдены</strong><span>${query ? `По запросу «${escapeHtml(query)}» ничего не найдено. Проверьте ID или ФИО пациента.` : 'В картотеке пока нет пациентов. Создайте первую карточку.'}</span></div>`;
+  return `
+    ${pageHeader({
+      eyebrow:'Медицинская информационная система', iconName:'building', title:'Картотека пациентов',
+      subtitle:'Создавайте синтетические карты, находите пациентов по ID и формируйте направления на лабораторные исследования.',
+      actions
+    })}
+    <div class="stats-row">
+      <div class="stat"><div class="stat-icon">${ico('user',17)}</div><div><strong>${state.patients.length}</strong><span>Карт пациентов</span></div></div>
+      <div class="stat"><div class="stat-icon teal">${ico('send',17)}</div><div><strong>${referralsCount}</strong><span>Направлений создано</span></div></div>
+      <div class="stat"><div class="stat-icon amber">${ico('testTube',17)}</div><div><strong>${samplesCount}</strong><span>Образцов принято</span></div></div>
+      <div class="stat"><div class="stat-icon green">${ico('checkCircle',17)}</div><div><strong>${deliveredCount}</strong><span>Результатов в МИС</span></div></div>
+    </div>
+    <div class="mis-layout">
+      <section class="card" aria-labelledby="patientListTitle">
+        <div class="card-head">
+          <div><h2 id="patientListTitle">${ico('database',17)} Пациенты</h2><p>Поиск по ID или ФИО</p></div>
+          <span class="badge badge-blue">${results.length} найдено</span>
+        </div>
+        <div class="card-body" style="padding-bottom:12px">
+          <form id="patient-search-form" class="search-form" novalidate>
+            <div class="search-wrap">
+              ${ico('search',16)}
+              <input class="search-input" id="patient-search" name="query" type="search" value="${escapeHtml(query)}" placeholder="Введите ID карты или ФИО" autocomplete="off" aria-label="Поиск пациента по ID или ФИО">
+            </div>
+            <button class="btn btn-secondary btn-sm" type="submit">Найти</button>
+            ${query ? `<button class="btn btn-ghost btn-sm" type="button" data-action="clear-search" title="Сбросить поиск">${ico('x',15)}</button>` : ''}
+          </form>
+          ${state.ui.searchDone && query ? `<div class="tiny text-muted" style="margin-top:7px">${ico('info',13)} Поиск: <strong>${escapeHtml(query)}</strong> · найдено: ${results.length}</div>` : ''}
+        </div>
+        <div class="patient-list">
+          ${results.length ? rows : emptySearch}
+        </div>
+      </section>
+      <div class="stack">
+        ${selected ? renderPatientDetail(selected) : renderMisEmpty()}
+      </div>
+    </div>`;
+}
+
+function renderMisEmpty() {
+  return `
+    <div class="empty-panel">
+      <div class="empty-icon">${ico('userCheck',25)}</div>
+      <h3>Выберите карту пациента</h3>
+      <p>Нажмите на пациента в списке слева или найдите карту по ID. В открывшейся карточке доступны создание направления и просмотр доставленных результатов.</p>
+      <div class="btn-row" style="justify-content:center;margin-top:14px">
+        <button class="btn btn-primary btn-sm" type="button" data-action="open-patient-modal">${ico('userPlus',15)} Создать карточку</button>
+      </div>
+    </div>`;
+}
+
+function renderPatientDetail(patient) {
+  const referrals = state.referrals.filter((r) => r.patientId === patient.id).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const deliveredResults = state.results.filter((r) => r.patientId === patient.id && r.delivered && r.status === 'delivered').sort((a,b) => new Date(b.deliveredAt || b.createdAt) - new Date(a.deliveredAt || a.createdAt));
+  const initials = `${(patient.lastName || '').charAt(0)}${(patient.firstName || '').charAt(0)}`.toUpperCase();
+  const referralItems = referrals.map((ref) => {
+    const sample = currentSample(ref);
+    return `
+      <div class="compact-item">
+        <div class="compact-main">
+          <strong>${escapeHtml(getReferralTest(ref))}</strong>
+          <span>${escapeHtml(ref.id)} · ${formatDateTime(ref.createdAt)}</span>
+        </div>
+        <div class="compact-side">
+          ${getPriorityBadge(ref.priority)}
+          ${getStatusBadge(ref.status)}
+          ${ref.status !== 'created' ? `<button class="btn btn-ghost btn-sm" type="button" data-action="open-lis-referral" data-id="${escapeHtml(ref.id)}" title="Открыть направление в ЛИС">${ico('arrowRight',14)}</button>` : ''}
+          ${sample?.barcode ? `<span class="tiny text-muted" title="Штрихкод образца">${ico('barcode',14)}</span>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+  const resultBlocks = deliveredResults.map((result) => {
+    const referral = findReferral(result.referralId);
+    const message = messageForResult(result.id);
+    return `
+      <div class="result-block">
+        <div class="result-head">
+          <strong>${ico('fileText',15)} Бланк результата · ${escapeHtml(referral?.id || result.referralId)}</strong>
+          <span class="badge badge-green">Доставлено</span>
+        </div>
+        <div class="result-values">
+          <div class="result-value"><span>Гемоглобин</span><strong>${escapeHtml(formatNumber(result.values.hgb))} г/л</strong><div class="ref-note">Референс 130–175 г/л</div></div>
+          <div class="result-value"><span>Эритроциты</span><strong>${escapeHtml(formatNumber(result.values.rbc))} млн/мкл</strong><div class="ref-note">Референс 3,9–5,5 млн/мкл</div></div>
+        </div>
+        <div class="tiny text-muted" style="margin-top:8px">Подтверждён: ${formatDateTime(result.confirmedAt)} · Доставлен: ${formatDateTime(result.deliveredAt)}${message ? ` · ${escapeHtml(message.id)}` : ''}</div>
+      </div>`;
+  }).join('');
+
+  return `
+    <section class="detail-card" aria-labelledby="patientDetailTitle">
+      <div class="detail-hero">
+        <div class="detail-avatar">${escapeHtml(initials || '?')}</div>
+        <div class="detail-hero-main">
+          <h2 id="patientDetailTitle">${escapeHtml(getPatientName(patient))}</h2>
+          <div class="meta-line">
+            <span class="id-chip">${escapeHtml(patient.id)}</span>
+            <span>${patient.birthYear} г. р.</span>
+            <span class="dot"></span>
+            <span>${formatSex(patient.sex)}</span>
+            <span class="dot"></span>
+            <span>Карта от ${formatDate(patient.createdAt)}</span>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" data-action="open-referral-modal" data-id="${escapeHtml(patient.id)}">${ico('plus',15)} Создать направление</button>
+      </div>
+      <div class="detail-body">
+        <div class="info-grid">
+          <div class="info-cell"><label>Фамилия</label><strong>${escapeHtml(patient.lastName)}</strong></div>
+          <div class="info-cell"><label>Имя</label><strong>${escapeHtml(patient.firstName)}</strong></div>
+          <div class="info-cell"><label>Год рождения</label><strong>${escapeHtml(patient.birthYear)}</strong></div>
+          <div class="info-cell"><label>Пол</label><strong>${formatSex(patient.sex)}</strong></div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-head">
+            <h3>${ico('send',14)} Направления</h3>
+            <span class="badge badge-gray">${referrals.length}</span>
+          </div>
+          ${referrals.length ? `<div class="compact-list">${referralItems}</div>` : `<div class="lis-empty">У пациента ещё нет направлений. Создайте первое лабораторное исследование.</div>`}
+        </div>
+        <div class="subsection">
+          <div class="subsection-head">
+            <h3>${ico('fileText',14)} Результаты из ЛИС</h3>
+            <span class="badge badge-gray">${deliveredResults.length}</span>
+          </div>
+          ${deliveredResults.length ? resultBlocks : `<div class="lis-empty">Заполненных бланков пока нет. Результат появится здесь после успешной доставки из ЛИС.</div>`}
+        </div>
+      </div>
+    </section>`;
+}
+
+/* ---------- ЛИС ---------- */
+function hasDeliveredResult(referral) {
+  return state.results.some((r) => r.referralId === referral.id && r.delivered && r.status === 'delivered');
+}
+
+function renderLisPage() {
+  const incoming = state.referrals.filter((r) => r.status === 'sent').sort((a,b) => new Date(b.sentAt || b.createdAt) - new Date(a.sentAt || a.createdAt));
+  const work = state.referrals.filter((r) => ['accepted','rejected','result_ready','delivered'].includes(r.status)).sort((a,b) => new Date(b.acceptedAt || b.createdAt) - new Date(a.acceptedAt || a.createdAt));
+  let selected = findReferral(state.ui.selectedLisId);
+  if (!selected || !(incoming.concat(work).some((r) => r.id === selected.id))) {
+    selected = incoming[0] || work[0] || null;
+    state.ui.selectedLisId = selected?.id || null;
+  }
+  const newCards = incoming.map((ref) => renderLisReferralCard(ref)).join('');
+  const workCards = work.map((ref) => renderLisReferralCard(ref)).join('');
+  const actions = `<button class="btn btn-secondary" type="button" data-action="navigate" data-system="mis">${ico('building',16)} Перейти в МИС</button>`;
+  return `
+    ${pageHeader({
+      eyebrow:'Лабораторная информационная система', iconName:'flask', title:'Лабораторный процесс',
+      subtitle:'Принимайте направления из МИС, регистрируйте биоматериал, фиксируйте брак и вносите результаты исследований.',
+      actions
+    })}
+    <div class="stats-row">
+      <div class="stat"><div class="stat-icon">${ico('send',17)}</div><div><strong>${incoming.length}</strong><span>Новых направлений</span></div></div>
+      <div class="stat"><div class="stat-icon amber">${ico('testTube',17)}</div><div><strong>${work.filter((r) => r.status === 'accepted').length}</strong><span>Образцов в работе</span></div></div>
+      <div class="stat"><div class="stat-icon teal">${ico('fileText',17)}</div><div><strong>${work.filter((r) => r.status === 'result_ready').length}</strong><span>Результатов готово</span></div></div>
+      <div class="stat"><div class="stat-icon green">${ico('checkCircle',17)}</div><div><strong>${work.filter((r) => r.status === 'delivered').length}</strong><span>Доставлено в МИС</span></div></div>
+    </div>
+    <div class="lis-layout">
+      <div class="stack">
+        <section class="card">
+          <div class="card-head">
+            <div><h3>${ico('send',17)} Новые направления</h3><p>Получены из МИС по каналу интеграции</p></div>
+            <span class="count-chip">${incoming.length}</span>
+          </div>
+          <div class="card-body" style="padding:11px">
+            ${incoming.length ? newCards : `<div class="lis-empty">Новых направлений нет. Передайте направление из журнала обмена МИС.</div>`}
+          </div>
+        </section>
+        <section class="card">
+          <div class="card-head">
+            <div><h3>${ico('testTube',17)} Образцы и исследования</h3><p>Зарегистрированные и завершённые направления</p></div>
+            <span class="count-chip">${work.length}</span>
+          </div>
+          <div class="card-body" style="padding:11px">
+            ${work.length ? workCards : `<div class="lis-empty">В работе пока нет образцов. Зарегистрируйте биоматериал во входящем направлении.</div>`}
+          </div>
+        </section>
+      </div>
+      ${selected ? renderLisDetail(selected) : `
+        <div class="empty-panel">
+          <div class="empty-icon">${ico('flask',25)}</div>
+          <h3>Выберите направление</h3>
+          <p>Откройте новое направление слева, чтобы зарегистрировать образец, или выберите исследование из блока «Образцы и исследования».</p>
+        </div>`}
+    </div>`;
+}
+
+function renderLisReferralCard(ref) {
+  const patient = referralPatient(ref);
+  const selected = state.ui.selectedLisId === ref.id;
+  const sample = currentSample(ref);
+  return `
+    <button class="referral-card ${selected ? 'is-selected' : ''}" type="button" data-action="open-lis-referral" data-id="${escapeHtml(ref.id)}">
+      <div class="referral-card-top">
+        <div>
+          <h4>${escapeHtml(getPatientName(patient))}</h4>
+          <div class="ref-id">${escapeHtml(ref.id)}</div>
+        </div>
+        ${getStatusBadge(ref.status)}
+      </div>
+      <div class="patient-line">${escapeHtml(getReferralTest(ref))}</div>
+      <div class="referral-card-foot">
+        <div class="toolbar">${getPriorityBadge(ref.priority)}${sample?.barcode ? `<span class="tiny text-muted">${ico('barcode',13)} ${escapeHtml(sample.barcode)}</span>` : ''}</div>
+        <span class="date">${formatDateTime(ref.sentAt || ref.createdAt)}</span>
+      </div>
+    </button>`;
+}
+
+function getWorkflow(referral) {
+  const sample = currentSample(referral);
+  const result = activeResultForReferral(referral);
+  const delivered = result?.delivered && result.status === 'delivered';
+  const sampleAccepted = sample?.status === 'accepted';
+  const steps = [
+    { label:'Получено', done:true },
+    { label:'Образец', done:Boolean(sampleAccepted || result || delivered), active: !sample || referral.status === 'rejected' || (!sampleAccepted && !result && !delivered) },
+    { label:'Результат', done:Boolean(result), active:sampleAccepted && !result },
+    { label:'Доставлено', done:Boolean(delivered), active:Boolean(result) && !delivered }
+  ];
+  return `<div class="workflow-steps" aria-label="Этапы лабораторного процесса">${steps.map((s,i) => `${i ? '<span class="wf-line"></span>' : ''}<span class="wf-step ${s.done ? 'is-done' : s.active ? 'is-active' : ''}"><span class="dot">${s.done ? ico('check',11) : i+1}</span>${s.label}</span>`).join('')}</div>`;
+}
+
+function renderLisDetail(referral) {
+  const patient = referralPatient(referral);
+  const sample = currentSample(referral);
+  const result = activeResultForReferral(referral);
+  const message = result ? messageForResult(result.id) : null;
+  const rejection = sample?.rejection;
+  const history = referralSamples(referral).sort((a,b) => new Date(b.collectedAt) - new Date(a.collectedAt));
+  const header = `
+    <div class="detail-hero">
+      <div class="detail-avatar">${ico('flask',21)}</div>
+      <div class="detail-hero-main">
+        <h2>${escapeHtml(getReferralTest(referral))}</h2>
+        <div class="meta-line">
+          <span class="id-chip">${escapeHtml(referral.id)}</span>
+          <span>${escapeHtml(getPatientName(patient))}</span>
+          <span class="dot"></span>
+          <span>${getPriorityLabel(referral.priority)}</span>
+        </div>
+      </div>
+      ${getStatusBadge(referral.status)}
+    </div>`;
+
+  let content = getWorkflow(referral);
+  content += `
+    <div class="info-grid">
+      <div class="info-cell"><label>Пациент</label><strong>${escapeHtml(getPatientName(patient))}</strong></div>
+      <div class="info-cell"><label>ID пациента</label><strong class="mono-id">${escapeHtml(patient?.id || '—')}</strong></div>
+      <div class="info-cell"><label>Получено из МИС</label><strong>${formatDateTime(referral.sentAt)}</strong></div>
+      <div class="info-cell"><label>Приоритет</label><strong>${getPriorityLabel(referral.priority)}</strong></div>
+    </div>`;
+
+  if (referral.status === 'sent') {
+    content += `<div class="callout">${ico('info')}<div><strong>Направление получено из МИС</strong>Зарегистрируйте образец биоматериала и сгенерируйте штрихкод, чтобы принять направление в работу.</div></div>`;
+  }
+  if (referral.status === 'rejected') {
+    content += `<div class="callout danger">${ico('alert')}<div><strong>Требуется повторный забор</strong>${escapeHtml(rejection ? `Зафиксирован дефект: ${rejection.defect}. Причина: ${rejection.reason}.` : 'Предыдущий образец забракован.')} Зарегистрируйте новый образец, чтобы продолжить исследование.</div></div>`;
+  }
+
+  if (sample) {
+    content += `
+      <div class="sample-box">
+        <div class="sample-top">
+          <div><strong>${ico('testTube',15)} Образец ${escapeHtml(sample.id)}</strong><div class="tiny text-muted" style="margin-top:2px">${escapeHtml(getMaterialLabel(sample.material))} · ${getStatusBadge(sample.status, sample.status === 'accepted' ? 'Принят' : 'Забракован')}</div></div>
+          <div class="tiny text-muted">${formatDateTime(sample.collectedAt)}</div>
+        </div>
+        <div class="barcode">
+          ${barcodeSvg(sample.barcode)}
+          <span>${escapeHtml(sample.barcode)}</span>
+        </div>
+        ${rejection ? `<div class="tiny" style="margin-top:8px;color:var(--red)">${ico('alert',13)} Гемолиз / причина: ${escapeHtml(rejection.reason)} · ${formatDateTime(rejection.at)}</div>` : ''}
+        ${history.length > 1 ? `<div class="tiny text-muted" style="margin-top:7px">Всего образцов по направлению: ${history.length}</div>` : ''}
+      </div>`;
+  }
+
+  if (result) {
+    content += `
+      <div class="result-block">
+        <div class="result-head">
+          <strong>${ico('fileText',15)} Результат ${escapeHtml(result.id)}</strong>
+          ${getStatusBadge(result.delivered ? 'delivered' : result.status === 'voided' ? 'voided' : 'confirmed', result.delivered ? 'Доставлено в МИС' : result.status === 'voided' ? 'Аннулирован' : 'Подтверждён')}
+        </div>
+        <div class="result-values">
+          <div class="result-value"><span>Гемоглобин</span><strong>${escapeHtml(formatNumber(result.values.hgb))} г/л</strong><div class="ref-note">130–175 г/л</div></div>
+          <div class="result-value"><span>Эритроциты</span><strong>${escapeHtml(formatNumber(result.values.rbc))} млн/мкл</strong><div class="ref-note">3,9–5,5 млн/мкл</div></div>
+        </div>
+        <div class="tiny text-muted" style="margin-top:8px">Подтверждён ${formatDateTime(result.confirmedAt)}${result.delivered ? ` · доставлен ${formatDateTime(result.deliveredAt)}` : ''}</div>
+      </div>`;
+  }
+
+  if (message) {
+    if (message.status === 'error' || message.status === 'ready') {
+      content += `
+        <div class="callout danger" style="margin-top:14px">
+          ${ico('alert')}
+          <div>
+            <strong>Ошибка формата сообщения при передаче</strong>
+            Сообщение <span class="mono-id">${escapeHtml(message.id)}</span> не доставлено в МИС. ${message.reencoded ? 'Кодировка исправлена — можно выполнить повторную отправку.' : 'Изучите журнал обмена и перекодируйте сообщение в UTF-8.'}
+            <div class="btn-row" style="margin-top:9px">
+              ${message.reencoded
+                ? `<button class="btn btn-primary btn-sm" type="button" data-action="retry-message" data-id="${escapeHtml(message.id)}">${ico('refresh',14)} Отправить повторно</button>`
+                : `<button class="btn btn-secondary btn-sm" type="button" data-action="navigate" data-system="journal">${ico('journal',14)} Перейти в журнал</button>`}
+            </div>
+          </div>
+        </div>`;
+    } else if (message.status === 'delivered') {
+      content += `<div class="callout success" style="margin-top:14px">${ico('checkCircle')}<div><strong>Результат доставлен в МИС</strong>Сообщение <span class="mono-id">${escapeHtml(message.id)}</span> · ${formatDateTime(message.deliveredAt || message.createdAt)}. В карте пациента сформирован бланк результата.</div></div>`;
+    }
+  }
+
+  const canRegister = referral.status === 'sent' || referral.status === 'rejected';
+  const canEnterResults = sample?.status === 'accepted' && !result && referral.status === 'accepted';
+  const canReject = sample?.status === 'accepted' && !result?.delivered && referral.status !== 'delivered';
+  const canSend = Boolean(result && !result.delivered && result.status === 'confirmed' && !message);
+
+  if (canRegister) {
+    content += `<div class="action-row"><button class="btn btn-primary" type="button" data-action="open-sample-modal" data-id="${escapeHtml(referral.id)}">${ico('testTube',16)} ${referral.status === 'rejected' ? 'Зарегистрировать повторный образец' : 'Зарегистрировать образец'}</button></div>`;
+  }
+  if (canEnterResults || canReject) {
+    content += `<div class="action-row">
+      ${canEnterResults ? `<button class="btn btn-primary" type="button" data-action="open-result-modal" data-id="${escapeHtml(referral.id)}">${ico('edit',16)} Внести результаты</button>` : ''}
+      ${canReject ? `<button class="btn btn-danger-soft" type="button" data-action="open-rejection-modal" data-id="${escapeHtml(referral.id)}">${ico('alert',16)} Симулировать брак</button>` : ''}
+    </div>`;
+  }
+  if (canSend) {
+    content += `<div class="action-row"><button class="btn btn-teal" type="button" data-action="send-result" data-id="${escapeHtml(referral.id)}">${ico('send',16)} Отправить результаты в МИС</button></div>`;
+  }
+
+  if (referral.status === 'delivered' && result?.delivered) {
+    content += `<div class="action-row"><span class="badge badge-green">Цикл завершён · результат в МИС</span></div>`;
+  }
+
+  return `<section class="detail-card" aria-labelledby="lisDetailTitle"><div id="lisDetailTitle">${header}</div><div class="detail-body">${content}</div></section>`;
+}
+
+/* ---------- Журнал обмена ---------- */
+function renderJournalPage() {
+  const pending = state.referrals.filter((r) => r.status === 'created').sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const messages = state.messages.slice().sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const delivered = state.messages.filter((m) => m.status === 'delivered').length;
+  const errors = state.messages.filter((m) => m.status === 'error' || m.status === 'ready').length;
+  const outbox = pending.map((ref) => {
+    const patient = referralPatient(ref);
+    return `
+      <div class="outbox-item">
+        <div class="outbox-main">
+          <strong>${escapeHtml(getReferralTest(ref))}</strong>
+          <div class="meta">
+            <code>${escapeHtml(ref.id)}</code>
+            <span>${escapeHtml(getShortName(patient))}</span>
+            ${getPriorityBadge(ref.priority)}
+            <span>${formatDateTime(ref.createdAt)}</span>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" data-action="send-referral" data-id="${escapeHtml(ref.id)}">${ico('send',14)} Инициировать отправку</button>
+      </div>`;
+  }).join('');
+  const cards = messages.map((m) => renderMessageCard(m)).join('');
+  const actions = `<button class="btn btn-secondary" type="button" data-action="navigate" data-system="mis">${ico('building',16)} В МИС</button>`;
+  return `
+    ${pageHeader({
+      eyebrow:'Интеграция МИС ↔ ЛИС', iconName:'arrowLeftRight', title:'Журнал обмена',
+      subtitle:'Контролируйте доставку сообщений, связанные объекты и ошибки формата. Повторная отправка обновляет существующее сообщение по ключу идемпотентности.',
+      actions
+    })}
+    <div class="journal-summary">
+      <div class="j-sum"><span>${ico('send',14)} Ожидают отправки</span><strong>${pending.length}</strong></div>
+      <div class="j-sum"><span>${ico('checkCircle',14)} Доставлено</span><strong>${delivered}</strong></div>
+      <div class="j-sum"><span>${ico('alert',14)} Требуют внимания</span><strong style="color:var(--red)">${errors}</strong></div>
+      <div class="j-sum"><span>${ico('database',14)} Всего сообщений</span><strong>${state.messages.length}</strong></div>
+    </div>
+    <div class="section-stack">
+      <section class="card">
+        <div class="card-head">
+          <div><h2>${ico('upload',17)} Исходящие направления МИС → ЛИС</h2><p>Направления, ожидающие инициирования передачи</p></div>
+          <span class="count-chip">${pending.length}</span>
+        </div>
+        <div class="card-body">
+          ${pending.length ? `<div class="outbox-list">${outbox}</div>` : `<div class="lis-empty">Исходящих направлений нет. Все созданные направления уже переданы в ЛИС.</div>`}
+          <div class="idempotency-note">${ico('shieldCheck',15)}<div>Одно направление создаёт ровно одно сообщение. Повторное нажатие кнопки не приведёт к появлению дубликата.</div></div>
+        </div>
+      </section>
+      <section class="card">
+        <div class="card-head">
+          <div><h2>${ico('journal',17)} Сообщения интеграции</h2><p>ID, тип, исходная система, статус доставки и логи ошибок</p></div>
+          <span class="badge badge-blue">${messages.length}</span>
+        </div>
+        <div class="card-body">
+          ${messages.length ? `<div class="journal-massage-list">${cards}</div>` : `
+            <div class="list-empty"><div class="empty-icon">${ico('journal',23)}</div><strong>Сообщений пока нет</strong><span>Передайте направление из блока выше или отправьте результат исследования из ЛИС.</span></div>`}
+          <div class="idempotency-note">${ico('link',15)}<div>Ключ идемпотентности формируется по связанному объекту. Повторная отправка с тем же ключом обновляет запись журнала, а не создаёт новую.</div></div>
+        </div>
+      </section>
+    </div>`;
+}
+
+function renderMessageCard(m) {
+  const isError = m.status === 'error';
+  const isReady = m.status === 'ready';
+  const cls = isError ? 'is-error' : isReady ? 'is-ready' : '';
+  const headCls = isError ? 'is-error' : isReady ? 'is-ready' : '';
+  const statusBadge = getStatusBadge(m.status);
+  const logs = (m.logs || []).map((log) => `
+    <div class="log-line ${log.level === 'error' ? 'is-error' : log.level === 'success' ? 'is-success' : ''}">
+      <time>${formatTime(log.at)}</time><span>${escapeHtml(log.text)}</span>
+    </div>`).join('');
+  let action = '';
+  if (isError && !m.reencoded) {
+    action = `<button class="btn btn-warning-soft btn-sm" type="button" data-action="recode-message" data-id="${escapeHtml(m.id)}">${ico('refresh',14)} Перекодировать UTF-8</button>`;
+  } else if (isReady) {
+    action = `<button class="btn btn-primary btn-sm" type="button" data-action="retry-message" data-id="${escapeHtml(m.id)}">${ico('send',14)} Отправить повторно</button>`;
+  }
+  return `
+    <article class="message-card ${cls}">
+      <div class="message-head ${headCls}">
+        <div class="message-title">
+          <code>${escapeHtml(m.id)}</code>
+          <span class="msg-type">${escapeHtml(m.kind === 'referral' ? 'Направление' : 'Результаты анализа')}</span>
+          ${statusBadge}
+        </div>
+        <span class="tiny text-muted">${formatDateTime(m.createdAt)}</span>
+      </div>
+      <div class="message-meta">
+        <div><label>Тип</label><strong>${escapeHtml(m.kind === 'referral' ? 'Направление МИС → ЛИС' : 'Результаты ЛИС → МИС')}</strong></div>
+        <div><label>Исходная система</label><strong>${escapeHtml(m.source)}</strong></div>
+        <div><label>Связанный объект</label><strong class="mono-id">${escapeHtml(m.relatedId)}</strong></div>
+        <div><label>Попытки · кодировка</label><strong>${escapeHtml(m.attempts)} · ${escapeHtml(m.encoding || 'UTF-8')}</strong></div>
+      </div>
+      <div class="message-log">
+        <div class="log-box ${isError ? 'is-error' : ''}">
+          <h4>${ico('fileText',13)} Лог обработки ${isError ? '· ошибка' : ''}</h4>
+          ${logs || '<div class="log-line"><span>Запись сформирована.</span></div>'}
+        </div>
+      </div>
+      ${action ? `<div class="message-actions">${action}</div>` : ''}
+    </article>`;
+}
+
+/* ---------- Итоги ---------- */
+function renderResultsPage() {
+  const score = getScore();
+  const count = getCompletedCount();
+  const allDone = isAllComplete();
+  const finalDone = Boolean(state.completed[10]);
+  const elapsed = state.startedAt ? formatDuration(Date.now() - new Date(state.startedAt).getTime()) : '—';
+  const failed = SCENARIOS.length - count;
+  const scenariosRows = SCENARIOS.map((s) => {
+    const done = Boolean(state.completed[s.id]);
+    return `
+      <tr>
+        <td class="table-num">${s.id}</td>
+        <td>
+          <div class="scenario-name">${escapeHtml(s.title)}</div>
+          <div class="scenario-note">${s.final ? 'обязательный зачётный этап' : escapeHtml(s.criteria[0])}</div>
+        </td>
+        <td class="status-cell">${done ? '<span class="badge badge-green">Выполнено</span>' : '<span class="badge badge-gray">Не выполнено</span>'}</td>
+        <td class="table-points">${done ? (s.points > 0 ? `+${s.points}` : 'зачёт') : '—'}</td>
+      </tr>`;
+  }).join('');
+  const errors = state.errors.slice().sort((a,b) => new Date(b.at) - new Date(a.at));
+  const errorHtml = errors.length ? errors.map((e) => {
+    const s = getScenario(e.scenarioId);
+    return `<div class="error-entry"><div class="e-meta"><span>${s ? `Сценарий ${s.id} · ${escapeHtml(s.title)}` : 'Общее действие'}</span><span>${formatDateTime(e.at)}</span></div><p>${escapeHtml(e.message)}</p></div>`;
+  }).join('') : `<div class="empty-errors">${ico('checkCircle',24)}Ошибок не зафиксировано. Отличная аккуратность!</div>`;
+  const finalBanner = allDone ? `
+    <div class="final-banner">
+      <div class="final-banner-main">
+        <div class="final-banner-icon">${ico('checkCircle',21)}</div>
+        <div><h2>Итоговый комплексный процесс завершён</h2><p>Все 10 сценариев выполнены. Ведомость готова к выгрузке в Moodle.</p></div>
+      </div>
+      <button class="btn btn-primary" type="button" data-action="download-report">${ico('download',16)} Скачать отчёт для Moodle</button>
+    </div>` : '';
+  return `
+    ${pageHeader({
+      eyebrow:'Итоговая ведомость', iconName:'chart', title:'Результаты обучения',
+      subtitle:'Итог по 100-балльной шкале, статус каждого сценария и журнал допущенных ошибок. Отчёт выгружается в TXT и прикрепляется к элементу «Задание» в Moodle.',
+      actions:`<button class="btn btn-secondary" type="button" data-action="open-help">${ico('help',16)} Инструкция</button>`
+    })}
+    ${finalBanner}
+    <div class="results-hero">
+      <section class="score-panel" aria-label="Итоговый балл">
+        <div class="score-caption">${ico('activity',14)} ${finalDone ? 'Итоговый балл' : 'Балл за оцениваемые сценарии'}</div>
+        <div class="big-score"><strong>${score}</strong><span>/ 100</span></div>
+        <div class="score-sub">Выполнено ${count} из ${SCENARIOS.length} сценариев${failed ? ` · осталось ${failed}` : ' · программа пройдена полностью'}${!finalDone && score === 100 ? ' · итог не выставлен без сценария 10' : ''}</div>
+        <div class="progress-track"><div class="progress-fill" style="width:${Math.min(100,score)}%"></div></div>
+        <div class="score-note-small"><span>Зачётный этап: ${finalDone ? 'выполнен' : 'не выполнен'}</span><span>${escapeHtml(elapsed)}</span></div>
+      </section>
+      <section class="results-side">
+        <div>
+          <h2>${allDone ? 'Готово к сдаче' : 'Продолжайте обучение'}</h2>
+          <p>${allDone ? 'Вы прошли все задания. Скачайте итоговый файл и прикрепите его к элементу «Задание» в Moodle.' : 'Вы можете скачать текущую ведомость в любой момент. Для полного зачёта завершите все сценарии, включая итоговый процесс с пациентом Сидоровым.'}</p>
+          <div class="grade-badges">
+            <span class="badge badge-blue">${getCompletedPointsCount()} сцен. с баллами</span>
+            <span class="badge ${finalDone ? 'badge-green' : 'badge-amber'}">Итоговый процесс: ${finalDone ? 'зачёт' : 'не завершён'}</span>
+            <span class="badge badge-gray">${state.patients.length} пациентов</span>
+          </div>
+        </div>
+        <div class="report-download">
+          <button class="btn btn-primary btn-lg btn-block" type="button" data-action="download-report">${ico('download',19)} Скачать отчёт для Moodle</button>
+          <button class="btn btn-teal btn-block" type="button" data-action="scorm-finish">${ico('send',16)} Отправить результат в Moodle (SCORM)</button>
+          <button class="btn btn-secondary btn-sm btn-block" type="button" data-action="preview-report">${ico('fileText',15)} Просмотреть текст отчёта</button>
+          <div class="report-hint">${ico('info',13)} TXT · UTF-8 · имя, группа, балл и лог ошибок</div>
+        </div>
+      </section>
+    </div>
+    <div class="results-grid">
+      <section class="card" style="overflow:auto">
+        <div class="card-head">
+          <div><h2>${ico('clipboard',17)} Карта сценариев</h2><p>Итог по каждому учебному заданию</p></div>
+          <span class="badge badge-blue">${score} / 100</span>
+        </div>
+        <table class="scenario-table">
+          <thead><tr><th>№</th><th>Сценарий</th><th class="status-cell">Статус</th><th class="table-points">Баллы</th></tr></thead>
+          <tbody>${scenariosRows}</tbody>
+        </table>
+      </section>
+      <section class="card">
+        <div class="card-head">
+          <div><h2>${ico('alert',17)} Лог ошибок</h2><p>Фиксируются ошибки заполнения и действий</p></div>
+          <span class="badge ${errors.length ? 'badge-red' : 'badge-green'}">${errors.length}</span>
+        </div>
+        <div class="card-body">
+          <div class="error-list">${errorHtml}</div>
+        </div>
+      </section>
+    </div>`;
+}
+
+/* =========================================================
+   СЦЕНАРИИ, ДЕЙСТВИЯ И ВАЛИДАЦИЯ
+   ========================================================= */
+
+function formatNumber(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return '—';
+  return new Intl.NumberFormat('ru-RU',{ maximumFractionDigits:2 }).format(n);
+}
+function parseInputNumber(value) {
+  if (value == null) return NaN;
+  return Number(String(value).trim().replace(',', '.'));
+}
+
+/* ---------- Инициализация ---------- */
+/* ---------- SCORM (Moodle) ---------- */
+const SCORM = {
+  api: null, connected: false,
+  findAPI(win) {
+    let n = 0;
+    while (win && n < 12) {
+      if (win.API && win.API.LMSInitialize) return win.API;
+      if (win.API_1484_11 && win.API_1484_11.Initialize) return win.API_1484_11;
+      try { win = win.parent; } catch (e) { win = null; }
+      n++;
+    }
+    return null;
+  },
+  init() {
+    this.api = this.findAPI(window);
+    if (this.api) {
+      this.connected = true;
+      try { this.api.LMSInitialize(''); } catch (e) {}
+      try { this.api.LMSSetValue('cmi.core.lesson_status', 'incomplete'); } catch (e) {}
+      this.commit();
+    }
+  },
+  set(k, v) { if (!this.api) return; try { this.api.LMSSetValue(k, v); } catch (e) {} },
+  commit() { if (!this.api) return; try { this.api.LMSCommit(''); } catch (e) {} },
+  finish() { if (!this.api) return; try { this.api.LMSFinish(''); } catch (e) {} }
+};
+
+function scormFinish() {
+  const score = getScore();
+  const allDone = isAllComplete();
+  SCORM.set('cmi.core.score.raw', String(score));
+  SCORM.set('cmi.core.score.min', '0');
+  SCORM.set('cmi.core.score.max', '100');
+  SCORM.set('cmi.core.lesson_status', allDone ? 'passed' : 'completed');
+  SCORM.commit();
+  if (SCORM.connected) {
+    showToast(`Результат ${score}/100 отправлен в Moodle · статус: ${allDone ? 'зачтено' : 'завершено'}`, 'success', 'Оценка сохранена', 5200);
+  } else {
+    showToast(`Автономный режим: балл ${score}/100 не передан. Загрузите модуль как SCORM-пакет.`, 'info', 'Результат', 5200);
+  }
+}
+
+function init() {
+  hydrateIcons(document);
+  document.addEventListener('click', handleDocumentClick);
+  document.addEventListener('submit', handleDocumentSubmit);
+  document.addEventListener('input', (event) => {
+    if (event.target.classList) event.target.classList.remove('is-invalid');
+    if (event.target.closest('#start-form')) {
+      const startError = $('#start-error');
+      if (startError) startError.classList.add('is-hidden');
+    }
+  });
+  document.addEventListener('change', (event) => {
+    if (event.target.id === 'start-consent') {
+      const label = event.target.closest('.consent-label');
+      if (label) label.classList.remove('is-invalid');
+    }
+  });
+  document.addEventListener('keydown', handleKeydown);
+  const modalRoot = $('#modalRoot');
+  if (modalRoot) {
+    modalRoot.addEventListener('click', (event) => {
+      if (event.target.classList && event.target.classList.contains('modal-backdrop')) closeModal();
+    });
+  }
+  const input = $('#start-name');
+  if (input) window.setTimeout(() => input.focus(), 100);
+  SCORM.init();
+  window.addEventListener('beforeunload', () => { SCORM.commit(); SCORM.finish(); });
+  initCookieNotice();
+}
+
+function handleKeydown(event) {
+  if (event.key === 'Escape') {
+    if (state.ui.modalOpen) { closeModal(); return; }
+    if (state.ui.sidebarOpen) closeSidebar();
+  }
+  if (event.key === 'Tab' && state.ui.modalOpen) {
+    const modal = $('#modalRoot .modal');
+    if (!modal) return;
+    const focusable = $$('button:not([disabled]), [href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])', modal).filter((el) => el.offsetParent !== null);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  }
+}
+
+function handleDocumentClick(event) {
+  const actionElement = event.target.closest('[data-action]');
+  if (!actionElement) return;
+  const action = actionElement.dataset.action;
+  const id = actionElement.dataset.id;
+  switch (action) {
+    case 'close-modal': closeModal(); break;
+    case 'toggle-sidebar': toggleSidebar(); break;
+    case 'close-sidebar': closeSidebar(); break;
+    case 'navigate': if (actionElement.dataset.system) navigate(actionElement.dataset.system); break;
+    case 'open-scenario': openScenarioModal(Number(actionElement.dataset.scenario)); break;
+    case 'open-help': openHelpModal(); break;
+    case 'open-privacy': openPrivacyModal(); break;
+    case 'open-consent': openConsentModal(); break;
+    case 'accept-cookies': acceptCookies(); break;
+    case 'open-sitemap': openSitemap(); break;
+    case 'sitemap-go': closeModal(); navigate(actionElement.dataset.system); break;
+    case 'open-patient-modal': openPatientModal(); break;
+    case 'select-patient': selectPatient(id); break;
+    case 'clear-search':
+      state.ui.searchQuery = '';
+      state.ui.searchDone = false;
+      renderAll();
+      break;
+    case 'open-referral-modal': openReferralModal(id); break;
+    case 'open-lis-referral': openLisReferral(id); break;
+    case 'open-sample-modal': openSampleModal(id); break;
+    case 'open-rejection-modal': openRejectionModal(id); break;
+    case 'open-result-modal': openResultModal(id); break;
+    case 'send-referral': sendReferralToLis(id); break;
+    case 'send-result': sendResultToMis(id); break;
+    case 'recode-message': recodeMessage(id); break;
+    case 'retry-message': retryResultDelivery(id); break;
+    case 'download-report': downloadReport(); break;
+    case 'preview-report': previewReport(); break;
+    case 'copy-report': copyReportText(); break;
+    case 'scorm-finish': scormFinish(); break;
+    case 'reset-session': openResetModal(); break;
+    case 'confirm-reset': confirmReset(); break;
+    default: break;
+  }
+}
+
+function handleDocumentSubmit(event) {
+  const form = event.target;
+  if (!form || form.tagName !== 'FORM') return;
+  event.preventDefault();
+  switch (form.id) {
+    case 'start-form': handleStartSubmit(form); break;
+    case 'patient-search-form': handlePatientSearch(form); break;
+    case 'patient-form': handlePatientSubmit(form); break;
+    case 'referral-form': handleReferralSubmit(form); break;
+    case 'sample-form': handleSampleSubmit(form); break;
+    case 'rejection-form': handleRejectionSubmit(form); break;
+    case 'result-form': handleResultSubmit(form); break;
+    default: break;
+  }
+}
+
+/* ---------- Старт ---------- */
+function handleStartSubmit(form) {
+  const name = form.elements.studentName.value.trim();
+  const group = form.elements.studentGroup.value.trim();
+  const errorEl = $('#start-error');
+  const mark = (id) => { const el = document.getElementById(id); if (el) el.classList.add('is-invalid'); };
+  if (!name || !group) {
+    const details = [];
+    if (!name) details.push('Укажите ФИО студента');
+    if (!group) details.push('Укажите номер группы');
+    if (!name) mark('start-name');
+    if (!group) mark('start-group');
+    if (errorEl) {
+      errorEl.className = 'form-alert alert-error';
+      errorEl.innerHTML = `${ico('alert',17)}<div><strong>Заполните обязательные поля</strong><div class="alert-detail">${escapeHtml(details.join('. '))}.</div></div>`;
+    }
+    recordError(0, details.join('. '));
+    return;
+  }
+  if (name.length < 3) {
+    mark('start-name');
+    if (errorEl) {
+      errorEl.className = 'form-alert alert-error';
+      errorEl.innerHTML = `${ico('alert',17)}<div><strong>Проверьте ФИО</strong><div class="alert-detail">ФИО должно содержать не менее 3 символов.</div></div>`;
+    }
+    recordError(0, 'Слишком короткое ФИО студента');
+    return;
+  }
+  const consent = form.elements.consent;
+  if (!consent || !consent.checked) {
+    const consentLabel = consent ? consent.closest('.consent-label') : null;
+    if (consentLabel) {
+      consentLabel.classList.add('is-invalid');
+      consentLabel.scrollIntoView({ block:'center', behavior:'smooth' });
+      consentLabel.classList.remove('consent-flash');
+      void consentLabel.offsetWidth;
+      consentLabel.classList.add('consent-flash');
+    }
+    if (errorEl) {
+      errorEl.className = 'form-alert alert-error';
+      errorEl.innerHTML = `${ico('alert',17)}<div><strong>Требуется согласие</strong><div class="alert-detail">Для продолжения отметьте галочку «согласие на обработку персональных данных».</div></div>`;
+    }
+    recordError(0, 'Не дано согласие на обработку персональных данных');
+    return;
+  }
+  if (errorEl) errorEl.classList.add('is-hidden');
+  state.student = { name, group };
+  state.startedAt = nowISO();
+  $('#startScreen').classList.add('is-hidden');
+  $('#app').classList.remove('is-hidden');
+  renderAll();
+  showToast(`Студент: ${name} · группа ${group}`, 'success', 'Занятие начато');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+/* ---------- Пациенты ---------- */
+function selectPatient(id) {
+  if (!findPatient(id)) return;
+  state.ui.selectedPatientId = id;
+  renderAll();
+}
+
+function handlePatientSearch(form) {
+  const query = form.elements.query.value.trim();
+  if (!query) {
+    const input = form.querySelector('input');
+    if (input) input.classList.add('is-invalid');
+    showToast('Введите ID карты или ФИО для поиска', 'warning', 'Поиск не выполнен');
+    return;
+  }
+  clearInvalid();
+  state.ui.searchQuery = query;
+  state.ui.searchDone = true;
+  const results = getSearchResults();
+  const exact = state.patients.find((p) => normalize(p.id) === normalize(query));
+  if (results.length) {
+    state.ui.selectedPatientId = (exact || results[0]).id;
+  }
+  if (exact && isIvanov(exact)) {
+    state.flags.searchIvanovById = true;
+    if (state.flags.duplicateIvanovAttempted) awardScenario(2);
+    showToast(`Карта ${exact.id} найдена по ID`, 'success', 'Пациент найден');
+  } else if (results.length) {
+    showToast(`Найдено карт: ${results.length}`, 'info', 'Результаты поиска');
+  } else {
+    showToast(`По запросу «${query}» ничего не найдено`, 'warning', 'Карта не найдена');
+  }
+  renderAll();
+}
+
+function openPatientModal() {
+  openModal({
+    title:'Новая карта пациента',
+    subtitle:'МИС · Регистрация синтетического пациента',
+    iconName:'userPlus',
+    body:`
+      <form id="patient-form" novalidate>
+        <div class="modal-subcard">${ico('shieldCheck',15)} <strong>Синтетические данные.</strong> Не вводите реальные персональные данные пациентов.</div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="p-last">Фамилия <span class="req">*</span></label>
+            <input id="p-last" name="lastName" type="text" maxlength="60" placeholder="Иванов" autofocus>
+          </div>
+          <div class="field">
+            <label for="p-first">Имя <span class="req">*</span></label>
+            <input id="p-first" name="firstName" type="text" maxlength="60" placeholder="Пётр">
+          </div>
+        </div>
+        <div class="field">
+          <label for="p-middle">Отчество <span class="tiny text-muted">необязательно</span></label>
+          <input id="p-middle" name="middleName" type="text" maxlength="60" placeholder="Отчество">
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="p-year">Год рождения <span class="req">*</span></label>
+            <input id="p-year" name="birthYear" type="number" min="1900" max="${new Date().getFullYear()}" placeholder="1985">
+          </div>
+          <div class="field">
+            <label for="p-sex">Пол <span class="req">*</span></label>
+            <select id="p-sex" name="sex">
+              <option value="">Выберите пол</option>
+              <option value="male">Мужской</option>
+              <option value="female">Женский</option>
+            </select>
+          </div>
+        </div>
+        <div id="form-alert" class="form-alert is-hidden" role="alert"></div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" data-action="close-modal">Отмена</button>
+          <button class="btn btn-primary" type="submit">${ico('userPlus',16)} Создать карточку</button>
+        </div>
+      </form>`
+  });
+}
+
+function handlePatientSubmit(form) {
+  clearInvalid();
+  const lastName = form.elements.lastName.value.trim();
+  const firstName = form.elements.firstName.value.trim();
+  const middleName = form.elements.middleName.value.trim();
+  const birthYear = parseInputNumber(form.elements.birthYear.value);
+  const sex = form.elements.sex.value;
+  const currentYear = new Date().getFullYear();
+  const errors = [];
+  const invalid = [];
+  if (!lastName) { errors.push('не указана фамилия'); invalid.push('p-last'); }
+  if (!firstName) { errors.push('не указано имя'); invalid.push('p-first'); }
+  if (!form.elements.birthYear.value.trim()) { errors.push('не указан год рождения'); invalid.push('p-year'); }
+  else if (!Number.isInteger(birthYear) || birthYear < 1900 || birthYear > currentYear) { errors.push(`год рождения должен быть в диапазоне 1900–${currentYear}`); invalid.push('p-year'); }
+  if (!['male','female'].includes(sex)) { errors.push('не указан пол'); invalid.push('p-sex'); }
+  if (errors.length) {
+    markInvalid(invalid);
+    showFormAlert('error','Проверьте обязательные поля', errors.join('; '));
+    recordError(1, `Регистрация пациента: ${errors.join('; ')}`);
+    return;
+  }
+
+  const duplicate = state.patients.find((p) =>
+    normalize(p.lastName) === normalize(lastName) &&
+    normalize(p.firstName) === normalize(firstName) &&
+    Number(p.birthYear) === Number(birthYear) &&
+    p.sex === sex
+  );
+  if (duplicate) {
+    state.flags.duplicateAttempted = true;
+    if (isIvanov(duplicate)) {
+      state.flags.duplicateIvanovAttempted = true;
+      if (state.flags.searchIvanovById) awardScenario(2);
+    }
+    showFormAlert('warning','Обнаружен дубликат карты', `Пациент ${getPatientName(duplicate)} (${duplicate.birthYear} г. р., ${formatSex(duplicate.sex).toLowerCase()}) уже зарегистрирован в МИС под ID ${duplicate.id}. Создание второй карты заблокировано.`);
+    showToast(`Обнаружен дубликат карты ${duplicate.id}`, 'warning', 'Проверка дубликатов');
+    renderAll();
+    return;
+  }
+
+  const patient = {
+    id:nextPatientId(),
+    lastName, firstName, middleName, birthYear:Number(birthYear), sex,
+    createdAt:nowISO(),
+    createdBy:state.student?.name || 'Студент'
+  };
+  state.patients.push(patient);
+  state.ui.selectedPatientId = patient.id;
+  if (isIvanov(patient)) awardScenario(1);
+  closeModal();
+  renderAll();
+  showToast(`Карта ${patient.id} создана. Найдите её по ID в поиске.`, 'success', 'Пациент зарегистрирован', 5200);
+}
+
+/* ---------- Направления ---------- */
+function openReferralModal(patientId) {
+  const patient = findPatient(patientId);
+  if (!patient) { showToast('Сначала выберите пациента', 'warning'); return; }
+  openModal({
+    title:'Создание направления',
+    subtitle:`МИС · ${getPatientName(patient)} · ${patient.id}`,
+    iconName:'send',
+    body:`
+      <form id="referral-form" data-patient="${escapeHtml(patient.id)}" novalidate>
+        <div class="modal-subcard">
+          <strong>${escapeHtml(getPatientName(patient))}</strong><br>
+          ${patient.birthYear} г. р. · ${formatSex(patient.sex)} · ID ${escapeHtml(patient.id)}
+        </div>
+        <div class="field">
+          <label for="r-test">Лабораторное исследование <span class="req">*</span></label>
+          <select id="r-test" name="testType" autofocus>
+            <option value="">Выберите исследование</option>
+            ${Object.entries(TESTS).map(([key, t]) => `<option value="${key}">${escapeHtml(t.name)}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <label for="r-priority">Приоритет <span class="req">*</span></label>
+          <select id="r-priority" name="priority">
+            <option value="">Выберите приоритет</option>
+            <option value="routine">Плановый</option>
+            <option value="cito">Cito (Срочно)</option>
+          </select>
+          <div class="hint">Приоритет Cito используется для срочных клинических исследований.</div>
+        </div>
+        <div class="field">
+          <label for="r-comment">Комментарий врача <span class="tiny text-muted">необязательно</span></label>
+          <textarea id="r-comment" name="comment" maxlength="240" placeholder="Клиническая информация для лаборатории"></textarea>
+        </div>
+        <div id="form-alert" class="form-alert is-hidden" role="alert"></div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" data-action="close-modal">Отмена</button>
+          <button class="btn btn-primary" type="submit">${ico('plus',16)} Создать направление</button>
+        </div>
+      </form>`
+  });
+}
+
+function handleReferralSubmit(form) {
+  clearInvalid();
+  const patient = findPatient(form.dataset.patient);
+  const testType = form.elements.testType.value;
+  const priority = form.elements.priority.value;
+  const comment = form.elements.comment.value.trim();
+  const errors = [];
+  if (!patient) errors.push('карта пациента не найдена');
+  if (!TESTS[testType]) errors.push('не выбрано лабораторное исследование');
+  if (!PRIORITIES[priority]) errors.push('не выбран приоритет');
+  if (errors.length) {
+    if (!TESTS[testType]) { const el = $('#r-test'); if (el) el.classList.add('is-invalid'); }
+    if (!PRIORITIES[priority]) { const el = $('#r-priority'); if (el) el.classList.add('is-invalid'); }
+    showFormAlert('error','Не удалось создать направление', errors.join('; '));
+    recordError(3, `Направление: ${errors.join('; ')}`);
+    return;
+  }
+  const referral = {
+    id:nextReferralId(),
+    patientId:patient.id,
+    testType,
+    priority,
+    comment,
+    status:'created',
+    createdAt:nowISO(),
+    sentAt:null,
+    sampleId:null,
+    resultId:null
+  };
+  state.referrals.push(referral);
+  if (isIvanov(patient) && testType === 'cbc' && priority === 'cito') awardScenario(3);
+  closeModal();
+  renderAll();
+  showToast(`Направление ${referral.id} сформировано. Передайте его через журнал обмена.`, 'success', 'ID направления присвоен', 5600);
+}
+
+function sendReferralToLis(referralId) {
+  const referral = findReferral(referralId);
+  if (!referral) return;
+  const patient = referralPatient(referral);
+  if (!patient) {
+    recordError(4, 'Передача направления: пациент не найден');
+    showToast('Связь с пациентом нарушена', 'error');
+    return;
+  }
+  if (referral.status !== 'created') {
+    showToast('Направление уже передано или находится в работе', 'info', 'Повторная отправка не требуется');
+    renderAll();
+    return;
+  }
+  const existing = messageForReferral(referral.id);
+  if (existing) {
+    showToast(`Сообщение ${existing.id} уже существует. Дубликат не создан.`, 'info', 'Идемпотентность');
+    if (referral.status === 'created') {
+      referral.status = 'sent';
+      referral.sentAt = nowISO();
+    }
+    renderAll();
+    return;
+  }
+  const message = {
+    id:nextMessageId(),
+    kind:'referral',
+    relatedId:referral.id,
+    source:'МИС',
+    target:'ЛИС',
+    status:'delivered',
+    encoding:'UTF-8',
+    idempotencyKey:`referral:${referral.id}:MIS-LIS`,
+    createdAt:nowISO(),
+    deliveredAt:nowISO(),
+    attempts:1,
+    reencoded:false,
+    hadError:false,
+    logs:[
+      { at:nowISO(), level:'info', text:`Сформировано сообщение по направлению ${referral.id}.` },
+      { at:nowISO(), level:'info', text:'Проверка связей ID пациента и направления — успешно.' },
+      { at:nowISO(), level:'success', text:`Доставлено в ЛИС. Ключ идемпотентности: referral:${referral.id}:MIS-LIS.` }
+    ]
+  };
+  state.messages.push(message);
+  referral.status = 'sent';
+  referral.sentAt = nowISO();
+  referral.messageId = message.id;
+  if (isIvanov(patient) && referral.testType === 'cbc' && referral.priority === 'cito') awardScenario(4);
+  renderAll();
+  showToast(`Направление ${referral.id} передано в ЛИС. Откройте блок «Новые направления».`, 'success', 'Передача выполнена', 5600);
+}
+
+/* ---------- ЛИС: образцы ---------- */
+function openLisReferral(referralId) {
+  const referral = findReferral(referralId);
+  if (!referral) return;
+  state.ui.selectedLisId = referral.id;
+  state.ui.system = 'lis';
+  closeSidebar();
+  renderAll();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function openSampleModal(referralId) {
+  const referral = findReferral(referralId);
+  if (!referral) return;
+  const patient = referralPatient(referral);
+  if (!['sent','rejected'].includes(referral.status)) {
+    showToast('Регистрация образца для этого направления недоступна', 'warning');
+    return;
+  }
+  const previous = currentSample(referral);
+  openModal({
+    title:referral.status === 'rejected' ? 'Повторная регистрация образца' : 'Регистрация образца',
+    subtitle:`ЛИС · ${getReferralTest(referral)} · ${referral.id}`,
+    iconName:'testTube',
+    body:`
+      <form id="sample-form" data-referral="${escapeHtml(referral.id)}" novalidate>
+        <div class="modal-subcard">
+          <strong>${escapeHtml(getPatientName(patient))}</strong><br>
+          ${escapeHtml(getReferralTest(referral))} · ${getPriorityLabel(referral.priority)}
+          ${referral.status === 'rejected' ? `<br><span style="color:var(--red)">Предыдущий образец забракован. Создаётся новый образец и штрихкод.</span>` : ''}
+        </div>
+        <div class="field">
+          <label for="s-material">Тип материала <span class="req">*</span></label>
+          <select id="s-material" name="material" autofocus>
+            <option value="">Выберите тип биоматериала</option>
+            ${Object.entries(MATERIALS).map(([key, label]) => `<option value="${key}" ${previous?.material === key ? 'selected' : ''}>${escapeHtml(label)}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <label for="s-volume">Объём, мл <span class="tiny text-muted">необязательно</span></label>
+          <input id="s-volume" name="volume" type="number" min="0.1" step="0.1" placeholder="4.0">
+        </div>
+        <div class="callout">${ico('barcode')}<div><strong>Штрихкод будет сформирован автоматически</strong>После регистрации направление перейдёт в статус «Принят в работу».</div></div>
+        <div id="form-alert" class="form-alert is-hidden" role="alert"></div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" data-action="close-modal">Отмена</button>
+          <button class="btn btn-primary" type="submit">${ico('barcode',16)} Сгенерировать штрихкод</button>
+        </div>
+      </form>`
+  });
+}
+
+function handleSampleSubmit(form) {
+  clearInvalid();
+  const referral = findReferral(form.dataset.referral);
+  const material = form.elements.material.value;
+  const volume = form.elements.volume.value.trim();
+  if (!referral) { showToast('Направление не найдено', 'error'); return; }
+  if (!['sent','rejected'].includes(referral.status)) {
+    showFormAlert('error','Регистрация недоступна','Направление уже находится в работе или завершено.');
+    return;
+  }
+  if (!MATERIALS[material]) {
+    const select = $('#s-material');
+    if (select) select.classList.add('is-invalid');
+    showFormAlert('error','Не выбран тип материала','Укажите тип биоматериала перед генерацией штрихкода.');
+    recordError(5, 'Регистрация образца без выбора типа материала');
+    return;
+  }
+  const patient = referralPatient(referral);
+  const sampleId = nextSampleId();
+  const sample = {
+    id:sampleId,
+    referralId:referral.id,
+    material,
+    volume:volume ? Number(volume) : null,
+    barcode:nextBarcode(),
+    collectedAt:nowISO(),
+    status:'accepted',
+    rejection:null
+  };
+  state.samples.push(sample);
+  referral.sampleId = sample.id;
+  referral.status = 'accepted';
+  referral.acceptedAt = nowISO();
+  referral.rejectedAt = null;
+  if (patient && isIvanov(patient) && referral.testType === 'cbc' && material === 'edta') awardScenario(5);
+  closeModal();
+  renderAll();
+  showToast(`Образец ${sample.id} принят в работу. Штрихкод: ${sample.barcode}`, 'success', 'Штрихкод сгенерирован', 5200);
+}
+
+/* ---------- ЛИС: брак ---------- */
+function openRejectionModal(referralId) {
+  const referral = findReferral(referralId);
+  if (!referral) return;
+  const sample = currentSample(referral);
+  const result = activeResultForReferral(referral);
+  if (!sample || sample.status !== 'accepted') {
+    showToast('Для симуляции брака нужен принятый образец', 'warning');
+    return;
+  }
+  if (result?.delivered) {
+    showToast('Результат уже доставлен в МИС — образец нельзя забраковать', 'warning');
+    return;
+  }
+  openModal({
+    title:'Симуляция брака биоматериала',
+    subtitle:`ЛИС · ${referral.id} · ${sample.barcode}`,
+    iconName:'alert',
+    body:`
+      <form id="rejection-form" data-referral="${escapeHtml(referral.id)}" novalidate>
+        <div class="alert-warning form-alert" style="margin-top:0">${ico('triangleAlert',17)}<div><strong>Учебная симуляция</strong><div class="alert-detail">${result ? 'Подтверждённый результат будет аннулирован, потребуется повторный забор и новое подтверждение.' : 'Образец будет забракован, направление вернётся в статус «Требуется повторный забор».'}</div></div></div>
+        <div class="field">
+          <label for="j-defect">Дефект образца <span class="req">*</span></label>
+          <select id="j-defect" name="defect" autofocus>
+            <option value="">Выберите дефект</option>
+            <option value="Гемолиз образца">Гемолиз образца</option>
+            <option value="Недостаточный объём">Недостаточный объём</option>
+            <option value="Сгусток крови">Сгусток крови</option>
+            <option value="Повреждённая пробирка">Повреждённая пробирка</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="j-reason">Причина отклонения <span class="req">*</span></label>
+          <select id="j-reason" name="reason">
+            <option value="">Выберите причину</option>
+            <option value="Нарушение правил транспортировки">Нарушение правил транспортировки</option>
+            <option value="Нарушение температурного режима">Нарушение температурного режима</option>
+            <option value="Ошибка взятия биоматериала">Ошибка взятия биоматериала</option>
+            <option value="Поздняя доставка в лабораторию">Поздняя доставка в лабораторию</option>
+          </select>
+        </div>
+        <div id="form-alert" class="form-alert is-hidden" role="alert"></div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" data-action="close-modal">Отмена</button>
+          <button class="btn btn-danger" type="submit">${ico('alert',16)} Зафиксировать брак</button>
+        </div>
+      </form>`
+  });
+}
+
+function handleRejectionSubmit(form) {
+  clearInvalid();
+  const referral = findReferral(form.dataset.referral);
+  const defect = form.elements.defect.value;
+  const reason = form.elements.reason.value;
+  if (!referral) { showToast('Направление не найдено', 'error'); return; }
+  const sample = currentSample(referral);
+  if (!sample || sample.status !== 'accepted') {
+    showFormAlert('error','Образец недоступен','Нет принятого образца для фиксации брака.');
+    return;
+  }
+  const errors = [];
+  if (!defect) errors.push('не выбран дефект образца');
+  if (!reason) errors.push('не выбрана причина отклонения');
+  if (errors.length) {
+    if (!defect) { const el = $('#j-defect'); if (el) el.classList.add('is-invalid'); }
+    if (!reason) { const el = $('#j-reason'); if (el) el.classList.add('is-invalid'); }
+    showFormAlert('error','Заполните данные о браке', errors.join('; '));
+    recordError(6, `Симуляция брака: ${errors.join('; ')}`);
+    return;
+  }
+  const patient = referralPatient(referral);
+  const activeResult = activeResultForReferral(referral);
+  if (activeResult) {
+    if (activeResult.delivered) {
+      showFormAlert('error','Результат уже доставлен','Нельзя аннулировать доставленный результат в учебной модели.');
+      return;
+    }
+    activeResult.status = 'voided';
+    activeResult.voidedAt = nowISO();
+    activeResult.deliveryStatus = 'voided';
+    const message = messageForResult(activeResult.id);
+    if (message) {
+      message.status = 'cancelled';
+      message.cancelledAt = nowISO();
+      message.logs.push({ at:nowISO(), level:'error', text:'Сообщение отменено: образец забракован, результат аннулирован.' });
+      if (message.hadError) {
+        state.flags.resultErrorSimulated = state.messages.some((m) => m.status === 'error' || m.status === 'ready');
+      }
+    }
+  }
+  sample.status = 'rejected';
+  sample.rejectedAt = nowISO();
+  sample.rejection = { defect, reason, at:nowISO() };
+  referral.status = 'rejected';
+  referral.rejectedAt = nowISO();
+  referral.resultId = null;
+  if (patient && isIvanov(patient) && referral.testType === 'cbc' && defect === 'Гемолиз образца' && reason === 'Нарушение правил транспортировки') {
+    awardScenario(6);
+  }
+  closeModal();
+  renderAll();
+  showToast(`Зафиксирован брак: ${defect}. Направление требует повторного забора.`, 'warning', 'Образец забракован', 5600);
+}
+
+/* ---------- ЛИС: результаты ---------- */
+function openResultModal(referralId) {
+  const referral = findReferral(referralId);
+  if (!referral) return;
+  const sample = currentSample(referral);
+  const patient = referralPatient(referral);
+  if (!sample || sample.status !== 'accepted') {
+    showToast('Для внесения результатов нужен принятый образец', 'warning');
+    return;
+  }
+  if (referral.status === 'delivered' || activeResultForReferral(referral)?.delivered) {
+    showToast('Результат уже доставлен в МИС', 'info');
+    return;
+  }
+  if (activeResultForReferral(referral)) {
+    showToast('Результат уже подтверждён. Отправьте его в МИС.', 'info');
+    return;
+  }
+  openModal({
+    title:'Внесение результатов',
+    subtitle:`ЛИС · ${getReferralTest(referral)} · ${referral.id}`,
+    iconName:'edit',
+    size:'',
+    body:`
+      <form id="result-form" data-referral="${escapeHtml(referral.id)}" novalidate>
+        <div class="modal-subcard">
+          <strong>${escapeHtml(getPatientName(patient))}</strong><br>
+          Образец ${escapeHtml(sample.id)} · ${escapeHtml(getMaterialLabel(sample.material))} · ${escapeHtml(sample.barcode)}
+        </div>
+        <div class="result-form-grid">
+          <div class="field">
+            <label for="res-hgb">Гемоглобин, г/л <span class="req">*</span></label>
+            <input id="res-hgb" name="hgb" type="text" inputmode="decimal" placeholder="130–175" autofocus>
+            <div class="hint">Референс: 130–175 г/л</div>
+          </div>
+          <div class="field">
+            <label for="res-rbc">Эритроциты, млн/мкл <span class="req">*</span></label>
+            <input id="res-rbc" name="rbc" type="text" inputmode="decimal" placeholder="3,9–5,5">
+            <div class="hint">Референс: 3,9–5,5 млн/мкл</div>
+          </div>
+        </div>
+        <div class="callout">${ico('info')}<div><strong>Проверка референсных значений</strong>Система проверит оба показателя и не позволит подтвердить результат вне референса.</div></div>
+        <div id="form-alert" class="form-alert is-hidden" role="alert"></div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" data-action="close-modal">Отмена</button>
+          <button class="btn btn-primary" type="submit">${ico('check',16)} Подтвердить</button>
+        </div>
+      </form>`
+  });
+}
+
+function handleResultSubmit(form) {
+  clearInvalid();
+  const referral = findReferral(form.dataset.referral);
+  const hgbRaw = form.elements.hgb.value.trim();
+  const rbcRaw = form.elements.rbc.value.trim();
+  const hgb = parseInputNumber(hgbRaw);
+  const rbc = parseInputNumber(rbcRaw);
+  if (!referral) { showToast('Направление не найдено', 'error'); return; }
+  const sample = currentSample(referral);
+  const patient = referralPatient(referral);
+  if (!sample || sample.status !== 'accepted') {
+    showFormAlert('error','Образец не принят','Результаты можно внести только для принятого образца.');
+    return;
+  }
+  const errors = [];
+  const invalid = [];
+  if (!hgbRaw) { errors.push('не указан гемоглобин'); invalid.push('res-hgb'); }
+  else if (!Number.isFinite(hgb)) { errors.push('гемоглобин должен быть числом'); invalid.push('res-hgb'); }
+  else if (hgb < REFERENCE.hgb[0] || hgb > REFERENCE.hgb[1]) { errors.push(`гемоглобин ${formatNumber(hgb)} г/л вне референса 130–175`); invalid.push('res-hgb'); }
+  if (!rbcRaw) { errors.push('не указаны эритроциты'); invalid.push('res-rbc'); }
+  else if (!Number.isFinite(rbc)) { errors.push('эритроциты должны быть числом'); invalid.push('res-rbc'); }
+  else if (rbc < REFERENCE.rbc[0] || rbc > REFERENCE.rbc[1]) { errors.push(`эритроциты ${formatNumber(rbc)} млн/мкл вне референса 3,9–5,5`); invalid.push('res-rbc'); }
+  if (errors.length) {
+    markInvalid(invalid);
+    showFormAlert('error','Результат не подтверждён', `${errors.join('; ')}.`);
+    recordError(7, `Внесение результатов: ${errors.join('; ')}`);
+    return;
+  }
+  if (hgb !== 140 || rbc !== 4.5) {
+    markInvalid(['res-hgb','res-rbc']);
+    showFormAlert('warning','Значения не соответствуют заданию', 'Для демонстрационного сценария укажите гемоглобин 140 г/л и эритроциты 4,5 млн/мкл. Оба значения укладываются в референс.');
+    recordError(7, `Для сценария использованы значения HGB ${formatNumber(hgb)} и RBC ${formatNumber(rbc)} вместо 140 и 4,5`);
+    return;
+  }
+  if (activeResultForReferral(referral)) {
+    showFormAlert('info','Результат уже существует','Используйте уже подтверждённый результат либо аннулируйте его через симуляцию брака.');
+    return;
+  }
+  const result = {
+    id:nextResultId(),
+    referralId:referral.id,
+    patientId:referral.patientId,
+    values:{ hgb, rbc },
+    status:'confirmed',
+    confirmedAt:nowISO(),
+    delivered:false,
+    deliveredAt:null,
+    messageId:null
+  };
+  state.results.push(result);
+  referral.resultId = result.id;
+  referral.status = 'result_ready';
+  referral.resultReadyAt = nowISO();
+  if (patient && isIvanov(patient) && referral.testType === 'cbc') awardScenario(7);
+  closeModal();
+  renderAll();
+  showToast(`Результат ${result.id} подтверждён. Передайте его в МИС.`, 'success', 'Результат готов', 5200);
+}
+
+function buildResultMessage(result, status, errorText = '') {
+  const now = nowISO();
+  const key = `result:${result.id}:LIS-MIS`;
+  const logs = [
+    { at:now, level:'info', text:`Сформировано сообщение результатов ${result.id}.` },
+    { at:now, level:'info', text:`Проверка связей ID: направление ${result.referralId}, пациент ${result.patientId} — успешно.` }
+  ];
+  if (status === 'error') {
+    logs.push({ at:now, level:'error', text:`Передача в МИС отклонена. ${errorText}` });
+  } else {
+    logs.push({ at:now, level:'success', text:`Доставлено в МИС. Ключ идемпотентности: ${key}.` });
+  }
+  return {
+    id:nextMessageId(),
+    kind:'result',
+    relatedId:result.id,
+    source:'ЛИС',
+    target:'МИС',
+    status,
+    encoding:status === 'error' ? 'Windows-1251' : 'UTF-8',
+    idempotencyKey:key,
+    createdAt:now,
+    deliveredAt:status === 'delivered' ? now : null,
+    attempts:1,
+    reencoded:false,
+    hadError:status === 'error',
+    errorText:errorText || '',
+    logs
+  };
+}
+
+function sendResultToMis(referralId) {
+  const referral = findReferral(referralId);
+  if (!referral) return;
+  const result = activeResultForReferral(referral);
+  const patient = referralPatient(referral);
+  if (!result) {
+    recordError(8, 'Передача результатов: результат не подтверждён');
+    showToast('Сначала внесите и подтвердите результаты', 'warning');
+    return;
+  }
+  if (result.delivered) {
+    showToast('Результат уже доставлен в МИС', 'info', 'Повторная отправка не требуется');
+    renderAll();
+    return;
+  }
+  if (!patient || result.patientId !== referral.patientId || result.referralId !== referral.id) {
+    recordError(8, 'Нарушены связи ID пациента, направления и результата');
+    showToast('Нарушены связи ID — передача заблокирована', 'error');
+    return;
+  }
+  const existing = messageForResult(result.id);
+  if (existing) {
+    if (existing.status === 'delivered') {
+      showToast(`Сообщение ${existing.id} уже доставлено`, 'info', 'Идемпотентность');
+      renderAll();
+      return;
+    }
+    if (existing.status === 'ready') { retryResultDelivery(existing.id); return; }
+    if (existing.status === 'error') {
+      showToast(`Сообщение ${existing.id} ожидает исправления в журнале. Повторный клик не создаёт дубликат.`, 'warning', 'Ошибка формата сообщения', 5600);
+      renderAll();
+      return;
+    }
+  }
+  if (!state.flags.resultErrorSimulated) {
+    state.flags.resultErrorSimulated = true;
+    const message = buildResultMessage(result, 'error', 'Ошибка формата сообщения при передаче. Ожидалась кодировка UTF-8, получена Windows-1251.');
+    state.messages.push(message);
+    result.messageId = message.id;
+    result.deliveryStatus = 'error';
+    renderAll();
+    showToast('Ошибка формата сообщения при передаче. Изучите лог в журнале обмена.', 'error', 'Сбой интеграции', 6800);
+    return;
+  }
+  const message = buildResultMessage(result, 'delivered');
+  state.messages.push(message);
+  result.messageId = message.id;
+  deliverResultToMis(result, message);
+  renderAll();
+  showToast(`Результаты ${result.id} доставлены в МИС. В карте пациента сформирован бланк.`, 'success', 'Передача завершена', 5200);
+}
+
+function recodeMessage(messageId) {
+  const message = state.messages.find((m) => m.id === messageId);
+  if (!message) return;
+  if (message.kind !== 'result' || message.status !== 'error') {
+    showToast('Перекодирование доступно только для сообщения с ошибкой формата', 'warning');
+    return;
+  }
+  message.reencoded = true;
+  message.status = 'ready';
+  message.encoding = 'UTF-8';
+  state.flags.reencoded = true;
+  message.logs.push({ at:nowISO(), level:'success', text:'Выполнено перекодирование сообщения в UTF-8. Ошибка формата устранена, разрешена повторная отправка.' });
+  renderAll();
+  showToast('Сообщение перекодировано в UTF-8. Выполните повторную отправку.', 'success', 'Кодировка исправлена', 5200);
+}
+
+function retryResultDelivery(messageId) {
+  const message = state.messages.find((m) => m.id === messageId);
+  if (!message) return;
+  if (message.kind !== 'result') {
+    showToast('Это сообщение не требует повторной отправки', 'info');
+    return;
+  }
+  if (!message.reencoded) {
+    showToast('Сначала перекодируйте сообщение в UTF-8', 'warning');
+    return;
+  }
+  if (message.status === 'delivered') {
+    showToast('Сообщение уже доставлено. Дубликат не создан.', 'info', 'Идемпотентность');
+    return;
+  }
+  if (message.status !== 'ready') {
+    showToast('Сообщение не готово к повторной отправке', 'warning');
+    return;
+  }
+  const result = findResult(message.relatedId);
+  if (!result) {
+    recordError(9, 'Повторная отправка: результат не найден');
+    showToast('Связанный результат не найден', 'error');
+    return;
+  }
+  if (result.delivered) {
+    message.status = 'delivered';
+    renderAll();
+    showToast('Результат уже доставлен. Дубликат не создан.', 'info');
+    return;
+  }
+  message.attempts += 1;
+  message.encoding = 'UTF-8';
+  message.logs.push({ at:nowISO(), level:'info', text:`Повторная отправка сообщения ${message.id} после перекодирования.` });
+  deliverResultToMis(result, message, { retry:true });
+  renderAll();
+  showToast('Сообщение успешно доставлено повторно. Новая запись в журнале не создана.', 'success', 'Ошибка исправлена', 5600);
+}
+
+function deliverResultToMis(result, message, options = {}) {
+  const referral = findReferral(result.referralId);
+  const patient = findPatient(result.patientId);
+  if (!referral || !patient) {
+    recordError(8, 'Доставка результата: нарушены связи пациента и направления');
+    showToast('Критическая ошибка связей ID — результат не доставлен', 'error');
+    return false;
+  }
+  if (result.delivered) return true;
+  const now = nowISO();
+  result.delivered = true;
+  result.deliveredAt = now;
+  result.status = 'delivered';
+  result.deliveryStatus = 'delivered';
+  result.messageId = message.id;
+  referral.status = 'delivered';
+  referral.deliveredAt = now;
+  referral.resultId = result.id;
+  message.status = 'delivered';
+  message.deliveredAt = now;
+  message.encoding = 'UTF-8';
+  if (!message.deliveredAt || !message.logs.some((l) => l.level === 'success' && l.text.includes('Доставлено в МИС'))) {
+    message.logs.push({ at:now, level:'success', text:'Доставлено в МИС. Связи ID проверены, бланк результата создан в карте пациента.' });
+  }
+  if (isIvanov(patient) && referral.testType === 'cbc') {
+    awardScenario(8);
+    state.flags.firstResultDelivered = true;
+  }
+  if (options.retry && message.hadError && message.reencoded && journalMessageCountForResult(result.id) === 1) {
+    awardScenario(9);
+  }
+  evaluateFinalScenario();
+  return true;
+}
+
+/* ---------- Служебные сценарии / справка ---------- */
+function openScenarioModal(id) {
+  const s = getScenario(id);
+  if (!s) return;
+  const done = Boolean(state.completed[id]);
+  const pointsLabel = s.points > 0 ? `${s.points} баллов` : 'зачёт (0 баллов)';
+  const criteria = s.criteria.map((c) => `<div class="criteria-line ${done ? '' : 'is-pending'}">${done ? ico('checkCircle',15) : ico('chevronRight',15)}<span>${escapeHtml(c)}</span></div>`).join('');
+  openModal({
+    title:`Сценарий ${s.id}. ${s.title}`,
+    subtitle:'Карта задания и критерии оценивания',
+    iconName:'clipboard',
+    body:`
+      <div class="scenario-detail">
+        <div class="scenario-detail-meta">
+          <span class="badge ${done ? 'badge-green' : 'badge-blue'}">${done ? 'Выполнено' : 'Не выполнено'}</span>
+          <span class="badge ${s.final ? 'badge-violet' : 'badge-amber'}">${pointsLabel}</span>
+          <span class="badge badge-gray">${done ? `Зачтено ${formatDateTime(state.completed[id].at)}` : 'Ожидает выполнения'}</span>
+        </div>
+        <p>${escapeHtml(s.description)}</p>
+        <div class="form-section-label">Критерии выполнения</div>
+        <div class="scenario-criteria">${criteria}</div>
+        ${s.tip && !s.final ? `<div class="task-note">${ico('info',14)} <strong>Ориентир:</strong> ${escapeHtml(s.tip)}</div>` : ''}
+        ${s.final ? `<div class="task-note">${ico('info',14)} Это обязательный зачётный этап. Пошаговые подсказки для него намеренно не показываются: используйте изученные возможности МИС и ЛИС.</div>` : ''}
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" data-action="close-modal">Закрыть</button>
+          <button class="btn btn-primary" type="button" data-action="close-modal">Понятно</button>
+        </div>
+      </div>`
+  });
+}
+
+function openHelpModal() {
+  openModal({
+    title:'Как работать с тренажёром',
+    subtitle:'Краткая инструкция по сценариям и выгрузке результата',
+    iconName:'help',
+    size:'lg',
+    body:`
+      <div class="scenario-detail">
+        <p>Тренажёр моделирует два контура: <strong>МИС</strong> (картотека, направления, результаты) и <strong>ЛИС</strong> (приём направлений, образцы, результаты). Переключайтесь между системами и журналом через верхнее меню.</p>
+        <div class="form-section-label">Порядок работы</div>
+        <div class="scenario-criteria">
+          <div class="criteria-line">${ico('checkCircle',15)}<span>Заполните ФИО и группу на стартовом экране — данные попадут в отчёт.</span></div>
+          <div class="criteria-line">${ico('checkCircle',15)}<span>В МИС создайте карточку пациента, найдите её по ID и сформируйте лабораторное направление.</span></div>
+          <div class="criteria-line">${ico('checkCircle',15)}<span>В Журнале обмена инициируйте передачу направления в ЛИС и контролируйте статус доставки.</span></div>
+          <div class="criteria-line">${ico('checkCircle',15)}<span>В ЛИС зарегистрируйте образец, при необходимости смоделируйте брак и внесите результаты.</span></div>
+          <div class="criteria-line">${ico('checkCircle',15)}<span>Отправьте результат в МИС. При ошибке формата откройте журнал, перекодируйте UTF-8 и повторите отправку.</span></div>
+          <div class="criteria-line">${ico('checkCircle',15)}<span>Самостоятельно проведите пациента Сидорова А.В. по всей цепочке для итогового зачёта.</span></div>
+        </div>
+        <div class="form-section-label">Баллы и отчёт</div>
+        <p>Максимум — 100 баллов за сценарии 1–9. Сценарий 10 — обязательный зачётный этап без дополнительных баллов. В разделе «Итоги» доступна кнопка <strong>«Скачать отчёт для Moodle»</strong>: сформируется TXT-файл с ФИО, группой, датой, баллом, списком выполненных сценариев и логом ошибок.</p>
+        <div class="task-note">${ico('shield',14)} Все данные синтетические и обрабатываются только в браузере. Внешние запросы отсутствуют. Прикрепляйте скачанный TXT-файл к элементу «Задание» в Moodle.</div>
+        <div class="modal-actions">
+          <button class="btn btn-primary" type="button" data-action="close-modal">Продолжить обучение</button>
+        </div>
+      </div>`
+  });
+}
+
+/* ---------- Правовая информация (152-ФЗ, 436-ФЗ, 149-ФЗ) ---------- */
+const SITE_OWNER = 'ФГБПОУ «Медицинский колледж» (МК РАМН)';
+const SITE_CONTACT = 'glebe.ru@yandex.ru, +7 999 354-07-70';
+const COOKIE_KEY = 'mis-lis-consent-v1';
+
+function openPrivacyModal() {
+  openModal({
+    title:'Политика конфиденциальности',
+    subtitle:'Обработка персональных данных в соответствии с Федеральным законом № 152-ФЗ',
+    iconName:'shield',
+    size:'lg',
+    body:`
+      <div class="scenario-detail">
+        <p>Настоящая политика определяет порядок обработки персональных данных в учебном тренажёре «МИС–ЛИС: цифровая лаборатория».</p>
+        <div class="form-section-label">1. Оператор персональных данных</div>
+        <p>${escapeHtml(SITE_OWNER)}. Контактная информация: ${escapeHtml(SITE_CONTACT)}.</p>
+        <div class="form-section-label">2. Какие данные обрабатываются</div>
+        <div class="scenario-criteria">
+          <div class="criteria-line">${ico('user',15)}<span>ФИО студента и номер учебной группы (вводятся на стартовом экране);</span></div>
+          <div class="criteria-line">${ico('chart',15)}<span>ход выполнения сценариев и итоговый балл (формируются в браузере).</span></div>
+        </div>
+        <div class="form-section-label">3. Цели обработки</div>
+        <p>Проведение учебного занятия, формирование и выгрузка итогового отчёта для системы Moodle.</p>
+        <div class="form-section-label">4. Правовое основание</div>
+        <p>Согласие субъекта персональных данных (ч. 1 ст. 6, ст. 9 Федерального закона от 27.07.2006 № 152-ФЗ).</p>
+        <div class="form-section-label">5. Порядок и сроки хранения</div>
+        <p>Данные обрабатываются <strong>исключительно локально в браузере</strong>, не передаются на внешние серверы и третьим лицам. Хранение продолжается до очистки данных браузера либо до отзыва согласия. Для запоминания факта согласия используется локальное хранилище браузера (cookie).</p>
+        <div class="form-section-label">6. Права субъекта персональных данных</div>
+        <p>Вы вправе отозвать согласие, запросить уточнение, блокирование или уничтожение персональных данных (ст. 14, 21 Федерального закона № 152-ФЗ). Для этого обратитесь по контактам оператора.</p>
+        <div class="modal-actions">
+          <button class="btn btn-primary" type="button" data-action="close-modal">Понятно</button>
+        </div>
+      </div>`
+  });
+}
+
+function openConsentModal() {
+  openModal({
+    title:'Согласие на обработку персональных данных',
+    subtitle:'Федеральный закон от 27.07.2006 № 152-ФЗ «О персональных данных»',
+    iconName:'clipboard',
+    size:'lg',
+    body:`
+      <div class="scenario-detail">
+        <p>Я, субъект персональных данных, свободно, своей волей и в своём интересе даю согласие оператору ${escapeHtml(SITE_OWNER)} на обработку моих персональных данных.</p>
+        <div class="form-section-label">Состав данных и цели</div>
+        <div class="scenario-criteria">
+          <div class="criteria-line">${ico('user',15)}<span>ФИО, номер учебной группы — для формирования итогового отчёта;</span></div>
+          <div class="criteria-line">${ico('chart',15)}<span>результаты выполнения сценариев — для оценки учебной работы.</span></div>
+        </div>
+        <p>Обработка осуществляется в автономном режиме в браузере; данные не передаются третьим лицам. Согласие действует до момента его отзыва. Отзыв согласия осуществляется путём направления обращения по контактам оператора.</p>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" data-action="close-modal">Закрыть</button>
+          <button class="btn btn-primary" type="button" data-action="open-privacy">Политика конфиденциальности</button>
+        </div>
+      </div>`
+  });
+}
+
+function acceptCookies() {
+  try { localStorage.setItem(COOKIE_KEY, 'accepted'); } catch (_) {}
+  const el = $('#cookieNotice');
+  if (el) el.classList.add('is-hidden');
+}
+
+function initCookieNotice() {
+  let accepted = false;
+  try { accepted = localStorage.getItem(COOKIE_KEY) === 'accepted'; } catch (_) {}
+  const el = $('#cookieNotice');
+  if (el && !accepted) el.classList.remove('is-hidden');
+}
+
+function openSitemap() {
+  openModal({
+    title:'Карта сайта',
+    subtitle:'Структура тренажёра и все разделы',
+    iconName:'list',
+    size:'lg',
+    body:`
+      <div class="scenario-detail">
+        <div class="form-section-label">Разделы тренажёра</div>
+        <div class="sitemap-grid">
+          <button class="sitemap-item" type="button" data-action="close-modal" title="Вы уже на стартовом экране">
+            <span class="si-icon">${ico('play',17)}</span>
+            <span><strong>Стартовый экран</strong><span>Ввод ФИО и группы, согласие на обработку ПДн, начало занятия</span></span>
+          </button>
+          <button class="sitemap-item" type="button" data-action="sitemap-go" data-system="mis">
+            <span class="si-icon">${ico('building',17)}</span>
+            <span><strong>МИС</strong><span>Картотека пациентов, поиск по ID, лабораторные направления</span></span>
+          </button>
+          <button class="sitemap-item" type="button" data-action="sitemap-go" data-system="lis">
+            <span class="si-icon">${ico('flask',17)}</span>
+            <span><strong>ЛИС</strong><span>Приём направлений, образцы и штрихкоды, внесение результатов</span></span>
+          </button>
+          <button class="sitemap-item" type="button" data-action="sitemap-go" data-system="journal">
+            <span class="si-icon">${ico('arrowLeftRight',17)}</span>
+            <span><strong>Журнал обмена</strong><span>Сообщения МИС ↔ ЛИС, статусы доставки, ошибки интеграции</span></span>
+          </button>
+          <button class="sitemap-item" type="button" data-action="sitemap-go" data-system="results">
+            <span class="si-icon">${ico('chart',17)}</span>
+            <span><strong>Итоги</strong><span>Ведомость баллов, скачивание отчёта для Moodle</span></span>
+          </button>
+          <button class="sitemap-item" type="button" data-action="open-help">
+            <span class="si-icon">${ico('help',17)}</span>
+            <span><strong>Как работать</strong><span>Инструкция по сценариям и порядку действий</span></span>
+          </button>
+          <button class="sitemap-item" type="button" data-action="open-privacy">
+            <span class="si-icon">${ico('shield',17)}</span>
+            <span><strong>Политика конфиденциальности</strong><span>Обработка персональных данных (152-ФЗ)</span></span>
+          </button>
+          <button class="sitemap-item" type="button" data-action="open-consent">
+            <span class="si-icon">${ico('clipboard',17)}</span>
+            <span><strong>Согласие на обработку ПДн</strong><span>Текст согласия (152-ФЗ)</span></span>
+          </button>
+        </div>
+        <p class="small" style="color:var(--muted);margin-top:12px">Разделы МИС, ЛИС, Журнал и Итоги доступны после начала занятия. Дисциплина «Информатика» · ФГБПОУ «Медицинский колледж» (МК РАМН). Возрастная маркировка — 12+.</p>
+      </div>`
+  });
+}
+
+/* ---------- Сброс ---------- */
+function openResetModal() {
+  openModal({
+    title:'Сбросить занятие?',
+    subtitle:'Все созданные карты, направления и результаты будут удалены',
+    iconName:'rotate',
+    size:'sm',
+    body:`
+      <p class="small" style="color:var(--muted);line-height:1.6">Действие необратимо. После сброса потребуется заново указать ФИО и номер группы. Скачайте отчёт заранее, если хотите сохранить текущие результаты.</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" type="button" data-action="close-modal">Отмена</button>
+        <button class="btn btn-danger" type="button" data-action="confirm-reset">${ico('rotate',16)} Сбросить занятие</button>
+      </div>`
+  });
+}
+
+function confirmReset() {
+  closeModal();
+  state = makeInitialState();
+  lastScore = null;
+  $('#app').classList.add('is-hidden');
+  $('#startScreen').classList.remove('is-hidden');
+  const nameInput = $('#start-name');
+  const groupInput = $('#start-group');
+  if (nameInput) { nameInput.value = ''; nameInput.classList.remove('is-invalid'); }
+  if (groupInput) { groupInput.value = ''; groupInput.classList.remove('is-invalid'); }
+  const errorEl = $('#start-error');
+  if (errorEl) { errorEl.classList.add('is-hidden'); errorEl.innerHTML = ''; }
+  const toasts = $('#toastRoot');
+  if (toasts) toasts.innerHTML = '';
+  hydrateIcons(document);
+  window.scrollTo({ top:0, behavior:'smooth' });
+  window.setTimeout(() => { if (nameInput) nameInput.focus(); }, 100);
+}
+
+/* ---------- Отчёт для Moodle ---------- */
+function splitFullNameForReport() {
+  return state.student?.name || 'Не указано';
+}
+function buildReportText() {
+  const now = new Date();
+  const generated = formatDateTime(now.toISOString());
+  const started = state.startedAt ? formatDateTime(state.startedAt) : '—';
+  const score = getScore();
+  const completedScenarios = SCENARIOS.filter((s) => state.completed[s.id]);
+  const failedScenarios = SCENARIOS.filter((s) => !state.completed[s.id]);
+  const lines = [];
+  lines.push('МИС–ЛИС: ЦИФРОВАЯ ЛАБОРАТОРИЯ МЕДИЦИНСКИХ ИНФОРМАЦИОННЫХ СИСТЕМ');
+  lines.push('ОТЧЁТ О РЕЗУЛЬТАТАХ УЧЕБНОГО ТРЕНАЖЁРА ДЛЯ MOODLE');
+  lines.push('='.repeat(70));
+  lines.push('');
+  lines.push(`ФИО студента: ${splitFullNameForReport()}`);
+  lines.push(`Номер группы: ${state.student?.group || 'Не указано'}`);
+  lines.push(`Дата и время формирования: ${generated}`);
+  lines.push(`Начало занятия: ${started}`);
+  if (state.startedAt) lines.push(`Продолжительность: ${formatDuration(now.getTime() - new Date(state.startedAt).getTime())}`);
+  lines.push('');
+  const finalProgressDone = Boolean(state.completed[10]);
+  lines.push(`ИТОГОВЫЙ БАЛЛ: ${score} из 100${finalProgressDone ? '' : ' (предварительный — итоговый процесс не завершён)'}`);
+  lines.push(`Выполнено сценариев: ${getCompletedCount()} из ${SCENARIOS.length}`);
+  lines.push(`Сценариев с баллами: ${getCompletedPointsCount()} из 9`);
+  lines.push(`Итоговый комплексный процесс: ${state.completed[10] ? 'ЗАЧЁТ' : 'НЕ ЗАВЕРШЁН'}`);
+  lines.push('');
+  lines.push('ВЫПОЛНЕННЫЕ СЦЕНАРИИ');
+  lines.push('-'.repeat(70));
+  if (completedScenarios.length) {
+    completedScenarios.forEach((s) => {
+      lines.push(`[ВЫПОЛНЕН] Сценарий ${s.id}. ${s.title} — ${s.points > 0 ? `${s.points} баллов` : 'зачёт'}${state.completed[s.id]?.at ? ` (${formatDateTime(state.completed[s.id].at)})` : ''}`);
+    });
+  } else {
+    lines.push('Выполненных сценариев нет.');
+  }
+  lines.push('');
+  lines.push('НЕВЫПОЛНЕННЫЕ СЦЕНАРИИ');
+  lines.push('-'.repeat(70));
+  if (failedScenarios.length) {
+    failedScenarios.forEach((s) => lines.push(`[НЕ ВЫПОЛНЕН] Сценарий ${s.id}. ${s.title} — ${s.points > 0 ? `${s.points} баллов` : 'зачёт'}`));
+  } else {
+    lines.push('Все сценарии выполнены.');
+  }
+  lines.push('');
+  lines.push('ЛОГ ДОПУЩЕННЫХ ОШИБОК');
+  lines.push('-'.repeat(70));
+  if (state.errors.length) {
+    state.errors.slice().sort((a,b) => new Date(a.at) - new Date(b.at)).forEach((e) => {
+      const s = getScenario(e.scenarioId);
+      lines.push(`[${formatDateTime(e.at)}] ${s ? `Сценарий ${s.id} (${s.title})` : 'Общее действие'}: ${e.message}`);
+    });
+  } else {
+    lines.push('Ошибок не зафиксировано.');
+  }
+  lines.push('');
+  lines.push('СИСТЕМНЫЕ ПОКАЗАТЕЛИ');
+  lines.push('-'.repeat(70));
+  lines.push(`Карт пациентов: ${state.patients.length}`);
+  lines.push(`Направлений: ${state.referrals.length}`);
+  lines.push(`Образцов биоматериала: ${state.samples.length}`);
+  lines.push(`Результатов: ${state.results.length}`);
+  lines.push(`Сообщений в журнале интеграции: ${state.messages.length}`);
+  lines.push(`Сообщений с ошибкой формата за сессию: ${state.messages.filter((m) => m.hadError).length}`);
+  lines.push(`Неустранённых ошибок интеграции: ${state.messages.filter((m) => m.status === 'error' || m.status === 'ready').length}`);
+  lines.push(`Дубликаты сообщений по ключу идемпотентности: ${state.messages.length - new Set(state.messages.map((m) => m.idempotencyKey)).size}`);
+  lines.push('');
+  lines.push('='.repeat(70));
+  lines.push('Отчёт сформирован автоматически в автономном HTML-тренажёре.');
+  lines.push('Файл предназначен для прикрепления к элементу «Задание» в Moodle.');
+  lines.push('Синтетические данные. Персональные данные пациентов не использовались.');
+  return lines.join('\r\n');
+}
+
+function buildReportFileName() {
+  const group = (state.student?.group || 'group').replace(/[^\wа-яА-ЯёЁ-]+/g, '_').slice(0,32);
+  const d = new Date();
+  const date = `${d.getFullYear()}-${padNumber(d.getMonth()+1,2)}-${padNumber(d.getDate(),2)}`;
+  return `MIS-LIS_otchet_${group}_${date}.txt`;
+}
+
+function downloadReport() {
+  if (!state.student) {
+    showToast('Сначала укажите ФИО и группу на стартовом экране', 'warning');
+    return;
+  }
+  const text = buildReportText();
+  const blob = new Blob(['\uFEFF' + text], { type:'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = buildReportFileName();
+  a.rel = 'noopener';
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  window.setTimeout(() => {
+    URL.revokeObjectURL(url);
+    a.remove();
+  }, 1200);
+  showToast('TXT-файл сформирован и передан на скачивание. Прикрепите его к заданию в Moodle.', 'success', 'Отчёт для Moodle готов', 6000);
+}
+
+function previewReport() {
+  if (!state.student) return;
+  openModal({
+    title:'Отчёт для Moodle',
+    subtitle:`${splitFullNameForReport()} · группа ${state.student.group}`,
+    iconName:'fileText',
+    size:'lg',
+    body:`
+      <pre class="report-preview" id="report-preview-text">${escapeHtml(buildReportText())}</pre>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" type="button" data-action="copy-report">${ico('copy',16)} Скопировать</button>
+        <button class="btn btn-primary" type="button" data-action="download-report">${ico('download',16)} Скачать .txt</button>
+      </div>`
+  });
+}
+
+function copyReportText() {
+  const text = buildReportText();
+  const done = () => showToast('Текст отчёта скопирован в буфер обмена', 'success');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('Текст отчёта скопирован', 'success');
+  } catch (_) {
+    showToast('Не удалось скопировать автоматически. Выделите текст отчёта вручную.', 'warning');
+  }
+  ta.remove();
+}
+
+/* ---------- Запуск ---------- */
+init();
+})();
+
+</script>
+</body>
+</html>
