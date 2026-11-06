@@ -10,17 +10,15 @@
 
 ## Запуск
 
-Дважды щёлкните `start.command` в Finder. Скрипт:
+**macOS** — дважды щёлкните `start.command` в Finder.
 
-1. проверит наличие Python 3;
-2. запустит локальный HTTP-сервер на `http://localhost:8080`;
-3. откроет Google Chrome.
+**Windows** — дважды щёлкните `start.bat` (нужен Python 3, при установке
+отметьте «Add Python to PATH»).
 
-Остановка — `Control + C` в окне Терминала либо:
+Скрипт проверяет наличие Python 3, запускает локальный HTTP-сервер на
+`http://localhost:8080` и открывает браузер.
 
-```bash
-kill "$(cat .server.pid)"
-```
+Остановка — закройте окно сервера (macOS — `Control + C` в Терминале).
 
 Не открывайте `index.html` напрямую через `file://`: браузер заблокирует загрузку
 форм из папки `forms/`.
@@ -52,7 +50,8 @@ js/dictionaries.js  МКБ-10, лекарства, диеты, автодопо�
 forms/              21 HTML-бланк
 assets/             герб колледжа, SVG-иконки
 sitemap.xml         карта сайта
-start.command       автозапуск сервера и Chrome
+start.command       автозапуск сервера и Chrome (macOS)
+start.bat           автозапуск сервера и браузера (Windows)
 mis-lis-trainer.html  тренажёр МИС–ЛИС для Moodle (один файл)
 ```
 
